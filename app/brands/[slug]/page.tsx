@@ -1,0 +1,7 @@
+import { notFound } from 'next/navigation'
+import { ArrowUpRight } from 'lucide-react'
+import Link from 'next/link'
+import { PageSection, PageShell } from '@/components/site'
+import { brands } from '@/lib/site-data'
+export function generateStaticParams() { return brands.map((brand) => ({ slug: brand.slug })) }
+export default async function BrandPage({ params }: { params: Promise<{ slug: string }> }) { const { slug } = await params; const brand = brands.find((item) => item.slug === slug); if (!brand) notFound(); return <PageShell eyebrow="Partner profile" title={brand.name} intro={brand.description}><PageSection><div className="grid gap-12 lg:grid-cols-[1fr_0.7fr]"><div><p className="label mb-5">Arab Lab / {brand.name}</p><h2 className="font-heading text-3xl font-bold text-white">A focused technology partner for your next validated workflow.</h2><p className="mt-5 max-w-xl leading-7 text-mist">Speak with our team about application fit, availability, technical specifications and local service coverage.</p><Link href="/contact" className="mt-8 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-orange">Discuss your application <ArrowUpRight className="size-4" /></Link></div><div className="border border-navy-2 bg-navy-1 p-7"><p className="label">Positioning</p><p className="mt-5 font-heading text-xl font-semibold leading-8 text-white">{brand.description}</p></div></div></PageSection></PageShell> }

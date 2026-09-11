@@ -1,0 +1,5 @@
+import { ArrowUpRight } from 'lucide-react'
+import Link from 'next/link'
+import { PageSection, PageShell } from '@/components/site'
+import { offices } from '@/lib/site-data'
+export default function LocationsPage() { return <PageShell eyebrow="Locations" title="Regional presence, local response." intro="Four offices keep Arab Lab close to laboratory teams across the UAE, Saudi Arabia and Egypt."><PageSection><div className="grid gap-5 md:grid-cols-2">{offices.map((office) => <article key={office.name} className="border border-navy-2 bg-navy-1 p-7"><p className="label">{office.short || 'Regional office'}</p><h2 className="mt-10 font-heading text-2xl font-bold text-white">{office.name}</h2><p className="mt-4 max-w-xs text-sm leading-6 text-mist">{office.address}</p><Link href="https://www.google.com/maps" target="_blank" className="mt-8 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-orange">Get directions <ArrowUpRight className="size-4" /></Link></article>)}</div></PageSection></PageShell> }

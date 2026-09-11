@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@theme inline {
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Poppins', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --color-navy-0: var(--navy-0); --color-navy-1: var(--navy-1); --color-navy-2: var(--navy-2);
+  --color-orange: var(--orange); --color-amber: var(--amber); --color-mist: var(--mist); --color-paper: var(--paper); --color-ink: var(--ink);
+  --color-background: var(--background); --color-foreground: var(--foreground); --color-card: var(--card); --color-card-foreground: var(--card-foreground); --color-border: var(--border); --color-input: var(--input); --color-ring: var(--ring); --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground); --color-muted-foreground: var(--muted-foreground);
+}
+:root { color-scheme: dark; --navy-0:#0A1E30; --navy-1:#12293F; --navy-2:#1E3A52; --orange:#E68A1F; --amber:#F5A623; --white:#FFFFFF; --mist:#93A8BD; --paper:#F6F8FA; --ink:#0F2438; --background:var(--navy-0); --foreground:var(--white); --card:var(--navy-1); --card-foreground:var(--white); --border:var(--navy-2); --input:var(--navy-2); --ring:var(--orange); --primary:var(--orange); --primary-foreground:var(--navy-0); --muted-foreground:var(--mist); }
+* { border-color: var(--border); }
+html { background: var(--navy-0); scroll-behavior: smooth; }
+body { margin: 0; background: var(--navy-0); color: var(--white); font-family: 'Inter', sans-serif; }
+.font-heading { font-family: 'Poppins', sans-serif; }
+.font-mono { font-family: 'IBM Plex Mono', monospace; }
+.label { color: var(--orange); font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; }
+::selection { background: var(--orange); color: var(--navy-0); }
+:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
