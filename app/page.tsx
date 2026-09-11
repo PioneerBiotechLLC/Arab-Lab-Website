@@ -1,22 +1,91 @@
-import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowDownRight, ArrowUpRight } from 'lucide-react'
-import { CardLink, ConnectorLine, PageSection, SectionIntro, SiteFooter, SiteHeader } from '@/components/site'
-import { brands, offices, processNodes } from '@/lib/site-data'
+import { ArrowUpRight } from 'lucide-react'
+import { Spotlight } from '@/components/motion'
+import { PageTransition } from '@/components/page-transition'
+import { Spine } from '@/components/spine'
+import { AccentTile, BrandTile, ButtonLink, CardLink, ClosingCta, DarkBand, NumberedCard, OfficeTiles, PageSection, SectionIntro, StatStrip } from '@/components/site'
+import { eyebrowOnDark } from '@/lib/utils'
+import { icon } from '@/lib/icons'
+import { brandNames, brands, company, departments, markets, offices, programs, solutions } from '@/lib/site-data'
+
+const stats: [string, string][] = [
+  [String(brands.length), 'Partner manufacturers'],
+  [String(offices.length), 'Regional offices'],
+  [String(markets.length), 'Operating markets'],
+  [String(departments.length), 'Specialist departments'],
+]
+const [feature, ...problems] = solutions
+
+// The spine's stops, in page order. Tags mirror the section numbering; labels appear on hover/focus.
+const stops = [
+  { id: 'program', tag: '01', label: 'Our program' },
+  { id: 'solutions', tag: '02', label: 'Solutions' },
+  { id: 'partners', tag: '03', label: 'Partners' },
+  { id: 'coverage', tag: '04', label: 'Coverage' },
+  { id: 'contact', tag: '05', label: 'Talk to us' },
+]
+
+// A sensor readout: flat, a settling transient, then steady. Drawn once on load, then it cools into the dotted motif.
+const tracePath = 'M0 28 H130 L146 28 L156 8 L166 50 L176 12 L186 44 L196 18 L206 36 L218 24 L232 31 L248 27 L268 28.5 L290 28 H1000'
 
 export default function Home() {
-  return <><SiteHeader /><main>
-    <section className="relative min-h-[560px] overflow-hidden border-b border-navy-2 bg-navy-0 lg:min-h-[680px]">
-      <Image src="/hero-bg.jpeg" alt="" fill priority sizes="100vw" className="object-cover object-[70%_center]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-navy-0 via-navy-0/40 to-transparent" />
-      <div className="relative mx-auto flex h-full max-w-7xl items-center px-5 pt-10 pb-24 lg:px-8 lg:pt-14 lg:pb-36">
-        <div className="max-w-2xl"><h1 className="font-heading text-4xl font-bold leading-[1.08] tracking-tight text-white md:text-5xl lg:text-6xl"><span className="block whitespace-nowrap">Your lab is smart?</span><span className="block whitespace-nowrap">We&apos;ll make it <span className="text-orange">smarter!</span></span></h1><p className="mt-7 max-w-2xl text-lg leading-8 text-mist">Arab Lab is the trusted partner connecting global manufacturers to biopharmaceutical, R&amp;D, chemical and pathological labs across the MENA region.</p><div className="mt-9 flex flex-wrap items-center gap-8"><Link href="/contact" className="flex items-center gap-2 font-heading text-sm font-semibold text-orange hover:text-amber">Request a quote <ArrowUpRight className="size-4" /></Link><Link href="/brands" className="flex items-center gap-2 font-heading text-sm font-semibold text-mist hover:text-white">View our brands <ArrowDownRight className="size-4" /></Link></div></div>
+  return <PageTransition><main id="content" tabIndex={-1} className="relative outline-none">
+    <Spine stops={stops} />
+
+    <section className="bg-white">
+      <div className="relative overflow-hidden">
+        {/* Oversized wrapper so the scroll parallax never exposes an edge. */}
+        <div className="hero-parallax absolute inset-x-0 -top-[10%] -bottom-[10%]"><picture><source media="(max-width: 1023px)" srcSet="/hero/hero-mobile.webp" /><img src="/hero/hero.webp" alt="" fetchPriority="high" decoding="async" className="absolute inset-0 h-full w-full object-cover object-[70%_center]" /></picture></div>
+        <div className="absolute inset-0 bg-white/85 lg:bg-transparent lg:bg-linear-to-r lg:from-white lg:via-white/85 lg:to-white/15" />
+        <div className="relative mx-auto max-w-7xl px-5 pt-16 pb-40 lg:px-8 lg:pt-28 lg:pb-52">
+          {/* The readout. Starts at the spine's x (origin node) and runs to the content edge; the spine continues down from the origin. */}
+          <div className="relative -ml-2.5 h-14 lg:-ml-[1.375rem]" aria-hidden>
+            <svg className="absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 1000 56" preserveAspectRatio="none"><path className="trace-line" pathLength={1} d={tracePath} /><path className="trace-dots" pathLength={1} d={tracePath} /></svg>
+            <span data-spine-origin className="trace-origin" />
+          </div>
+          <div className="max-w-2xl">
+            <h1 className="hero-title font-heading text-4xl font-bold leading-[1.08] tracking-[-0.015em] text-ink md:text-5xl md:tracking-[-0.02em] lg:text-6xl lg:tracking-[-0.03em]"><span className="block">Your lab is smart?</span><span className="block">We&apos;ll make it <span className="text-orange">smarter!</span></span></h1>
+            <div className="hero-after">
+              <p className="mt-7 max-w-xl text-lg leading-8 text-muted-foreground">{company.positioning}</p>
+              <div className="mt-10 flex flex-wrap items-center gap-4"><ButtonLink href="/contact">Request a quote</ButtonLink><ButtonLink href="/brands" variant="secondary">View our brands</ButtonLink></div>
+            </div>
+          </div>
+        </div>
       </div>
+      {/* Glass stat strip straddling the hero edge. */}
+      <div className="hero-strip relative z-10 mx-auto -mt-20 max-w-7xl px-5 lg:-mt-24 lg:px-8"><StatStrip stats={stats} /></div>
     </section>
-    <PageSection className="bg-navy-1"><SectionIntro eyebrow="01 / How we work" title="From specification to supported uptime." /><ConnectorLine nodes={processNodes} /></PageSection>
-    <PageSection><SectionIntro eyebrow="02 / Industries we serve" title="Equipment that fits the work." /><div className="grid gap-5 md:grid-cols-2"><CardLink eyebrow="Life science" title="Pharma & Biotech" body="Bioprocessing, cell culture, molecular biology and QC workflows for regulated environments." href="/solutions#pharma" /><CardLink eyebrow="Quality control" title="Food & Beverage" body="Rapid microbial testing, analytical enzymes and quality systems for production labs." href="/solutions#food" /></div></PageSection>
-    <PageSection className="bg-navy-1"><SectionIntro eyebrow="03 / Our partners" title="Global technology. Local accountability." intro="We represent focused manufacturers whose products solve specific laboratory problems." /><div className="grid grid-cols-2 border-l border-t border-navy-2 md:grid-cols-4">{brands.map((brand) => <Link href={`/brands/${brand.slug}`} key={brand.slug} className="flex min-h-32 items-end border-b border-r border-navy-2 p-5 transition-colors hover:bg-navy-0"><span className="font-heading text-lg font-bold text-white">{brand.name}</span></Link>)}</div><Link href="/brands" className="mt-7 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-orange">All brands <ArrowUpRight className="size-4" /></Link></PageSection>
-    <PageSection><SectionIntro eyebrow="04 / Regional coverage" title="Close to your laboratory." /><ConnectorLine nodes={offices.map((office) => ({ title: office.name + (office.short ? ` (${office.short})` : ''), description: office.address }))} /></PageSection>
-    <section className="bg-navy-1"><div className="mx-auto flex max-w-7xl flex-col gap-7 px-5 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-8"><div><p className="label mb-4">Ready when you are</p><h2 className="font-heading text-3xl font-bold text-white md:text-5xl">Talk to a specialist.</h2></div><Link href="/contact" className="flex w-fit items-center gap-2 font-heading text-sm font-semibold text-orange hover:text-amber">Start a conversation <ArrowUpRight className="size-4" /></Link></div></section>
-  </main><SiteFooter /></>
+
+    <PageSection id="program" className="bg-paper">
+      <SectionIntro eyebrow="01 / Our program" title="Four service lines, one partner." />
+      <Spotlight><ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{programs.map((program, index) => <li key={program.id}><NumberedCard index={index + 1} icon={icon(program.id)} eyebrow={program.eyebrow} title={program.title} body={program.body} href={`/solutions#${program.id}`} /></li>)}</ol></Spotlight>
+    </PageSection>
+
+    <PageSection id="solutions">
+      <SectionIntro eyebrow="02 / Solutions" title="Organised by the problem your lab needs to solve." intro="Each solution links through to the partner whose technology addresses it." />
+      <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {/* Feature tile: the one dark material in the grid gives the bento a focal point; its glow follows the pointer. */}
+        <Link href={`/solutions#${feature.id}`} data-spot className="spot-strong group relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded-3xl bg-ink p-8 text-white shadow-float md:col-span-2 lg:row-span-2 md:p-10">
+          <span aria-hidden className="pointer-events-none absolute -top-24 -right-24 size-80 rounded-full bg-brand/25 blur-3xl" />
+          <span aria-hidden className="pointer-events-none absolute -bottom-32 -left-16 size-72 rounded-full bg-white/5 blur-3xl" />
+          <div className="relative">
+            {icon(feature.id, 'mb-4 size-6 text-orange-on-dark')}
+            <p className={eyebrowOnDark}>{brandNames(feature.brands)}</p>
+            <h3 className="mt-3 font-heading text-3xl font-bold tracking-[-0.02em] md:text-4xl">{feature.title}</h3>
+            <p className="mt-3 max-w-md text-sm leading-6 text-white/75">{feature.body}</p>
+            <span className="mt-6 inline-flex items-center gap-2 font-heading text-sm font-semibold text-orange-on-dark">Explore <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span>
+          </div>
+        </Link>
+        {problems.map((item, index) => <div key={item.id} className={index === problems.length - 1 ? 'md:col-span-2 lg:col-span-1' : ''}><CardLink icon={icon(item.id)} eyebrow={brandNames(item.brands)} title={item.title} body={item.body} href={`/solutions#${item.id}`} /></div>)}
+      </Spotlight>
+    </PageSection>
+
+    <PageSection id="partners" className="bg-paper">
+      <SectionIntro eyebrow="03 / Our partners" title="Global technology. Local accountability." intro="Seven partner manufacturers, each addressing a specific laboratory problem." />
+      <Spotlight className="grid grid-cols-2 gap-4 md:grid-cols-4">{brands.map((brand) => <BrandTile key={brand.slug} brand={brand} />)}<AccentTile href="/brands" label="All brands" /></Spotlight>
+    </PageSection>
+
+    <DarkBand id="coverage" overlap eyebrow="04 / Regional coverage" title="Close to your laboratory." intro={`${offices.length} offices across ${markets.length} markets keep sales, technical and service teams within reach.`}><OfficeTiles /></DarkBand>
+    <ClosingCta id="contact" />
+  </main></PageTransition>
 }

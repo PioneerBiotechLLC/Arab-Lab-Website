@@ -13,3 +13,10 @@ __v0_jsx-dev-runtime.ts
 node_modules
 .next/
 .DS_Store
+# Generated asset candidates (large PNG/MP4 drafts). approvals.json and prompts stay tracked.
+design-src/generated/candidates/
+design-src/generated/contact-sheet.html
+
+# Local tooling
+tsconfig.tsbuildinfo
+.claude/skills/

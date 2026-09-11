@@ -1,60 +1,188 @@
 'use client'
 
+import { ViewTransition } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRight } from 'lucide-react'
+import { usePathname } from 'next/navigation'
+import { ArrowUpRight, Globe, Mail, MapPin, Phone } from 'lucide-react'
+import { CountUp, Spotlight } from '@/components/motion'
+import { PageTransition } from '@/components/page-transition'
+import { delay, eyebrowOnDark } from '@/lib/utils'
+import { brandBySlug, contact, markets, offices } from '@/lib/site-data'
 
+// Specific destinations only — the logo is the way home, so there is no generic "Home" entry.
 const navItems = [
-  ['Home', '/'], ['About', '/about'], ['Solutions', '/solutions'], ['Brands', '/brands'], ['Locations', '/locations'], ['Contact', '/contact'],
+  ['About', '/about'], ['Solutions', '/solutions'], ['Brands', '/brands'], ['Locations', '/locations'], ['Contact', '/contact'],
 ]
 
+const button = {
+  primary: 'inline-flex items-center py-3 gap-2 rounded-full bg-orange px-6 font-heading text-sm font-semibold text-white shadow-card hover:bg-amber',
+  secondary: 'inline-flex items-center py-3 gap-2 rounded-full border border-line bg-white/70 px-6 font-heading text-sm font-semibold text-ink backdrop-blur hover:border-ink',
+  onDark: 'inline-flex items-center py-3 gap-2 rounded-full border border-white/20 bg-white/5 px-6 font-heading text-sm font-semibold text-white backdrop-blur hover:border-white/50 hover:bg-white/10',
+}
+
+export function ButtonLink({ href, variant = 'primary', children, ...rest }: { href: string; variant?: keyof typeof button; children: React.ReactNode; target?: string; rel?: string }) {
+  return <Link href={href} className={`btn ${button[variant]}`} {...rest}>{children}<span aria-hidden className="btn-node" /></Link>
+}
+
 export function Logo({ full = false }: { full?: boolean }) {
-  return <Link href="/" className="group inline-flex items-center gap-3" aria-label="Arab Lab home">
-    <Image src="/logo-mark.png" alt="" width={1219} height={1107} priority className="h-10 w-auto shrink-0" />
+  return <Link href="/" transitionTypes={['nav-back']} className="group inline-flex items-center gap-3 py-0.5" aria-label="Arab Lab home">
+    <Image src="/logo-mark.webp" alt="" width={512} height={465} priority className="h-10 w-auto shrink-0" />
     <span className="flex flex-col">
-      <span className="font-heading text-lg font-bold leading-none tracking-tight text-white">ARAB <span className="text-orange">LAB</span></span>
-      {full && <span className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-mist">Scientific equipment L.L.C.</span>}
+      <span className="font-heading text-lg font-bold leading-none tracking-tight text-ink">ARAB <span className="text-orange">LAB</span></span>
+      {full && <span className="mt-1 font-mono text-xs text-muted-foreground">Scientific equipment L.L.C.</span>}
     </span>
   </Link>
 }
 
 export function SiteHeader() {
-  return <header className="sticky top-0 z-50 border-b border-navy-2/70 bg-navy-0/95 backdrop-blur">
-    <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+  const pathname = usePathname()
+  const currentIndex = navItems.findIndex(([, href]) => pathname === href || pathname.startsWith(`${href}/`))
+  // Translucent chrome that solidifies with scroll (::before, scroll-driven); the ::after gradient is a soft scroll edge in place of a 1px divider.
+  // Named for view transitions so it stays fixed while page content slides beneath it.
+  return <header data-header style={{ viewTransitionName: 'site-header' }} className="sticky top-0 z-50 bg-white/60 backdrop-blur-xl after:pointer-events-none after:absolute after:inset-x-0 after:top-full after:h-6 after:bg-linear-to-b after:from-white/70 after:to-transparent">
+    <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-y-2 px-5 py-4 lg:px-8">
       <Logo full />
-      <Link href="/contact" className="flex items-center gap-2 font-heading text-sm font-semibold text-orange transition-colors hover:text-amber">Get In Touch <ArrowUpRight className="size-4" /></Link>
+      <Link href="/contact" transitionTypes={['nav-forward']} className="btn order-2 flex items-center gap-2 py-3 font-heading text-sm font-semibold text-orange hover:text-amber lg:order-3">Get In Touch<span aria-hidden className="btn-node" /></Link>
+      <nav aria-label="Primary" className="order-3 flex basis-full gap-6 overflow-x-auto text-sm font-medium whitespace-nowrap lg:order-2 lg:basis-auto lg:overflow-visible">
+        {navItems.map(([label, href], index) => {
+          const current = index === currentIndex
+          // Moving right along the nav is "forward": content slides left; moving left slides right.
+          return <Link key={href} href={href} transitionTypes={[index > currentIndex ? 'nav-forward' : 'nav-back']} aria-current={current ? 'page' : undefined} className="relative px-1 py-3 text-muted-foreground hover:text-ink aria-[current=page]:text-ink">
+            {label}
+            {current && <ViewTransition name="nav-indicator" share="nav-indicator" default="none"><span aria-hidden className="absolute inset-x-0 bottom-1.5 h-0.5 rounded-full bg-orange" /></ViewTransition>}
+          </Link>
+        })}
+      </nav>
     </div>
   </header>
 }
 
 export function SiteFooter() {
-  return <footer className="border-t border-navy-2 bg-navy-0">
+  return <footer className="border-t border-border bg-white">
     <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 lg:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
-      <div><Logo full /><p className="mt-6 max-w-xs text-sm leading-6 text-mist">Technical equipment and lifecycle support for laboratories across the Gulf and North Africa.</p><p className="mt-8 font-mono text-[10px] uppercase tracking-[0.16em] text-mist/70">© 2026 Arab Lab Scientific Equipment L.L.C.</p></div>
-      <div><p className="label mb-5">Offices</p><div className="grid gap-4 text-sm leading-5 text-mist"><p><strong className="text-white">Ras Al Khaimah</strong><br />408, Julphar Tower, Al Hisn Road</p><p><strong className="text-white">Dubai</strong><br />Aud Metha, Bur Dubai</p><p><strong className="text-white">Riyadh</strong><br />3808 Al Urubah Rd, Al Wurud</p><p><strong className="text-white">Cairo</strong><br />87, Dar Masr, Al Kronfel</p></div></div>
-      <div><p className="label mb-5">Explore</p><div className="grid gap-3 text-sm text-mist">{navItems.map(([label, href]) => <Link key={href} href={href} className="hover:text-white">{label}</Link>)}<span className="mt-5 border-t border-navy-2 pt-4 text-xs">Privacy Policy · Terms</span></div></div>
+      <div><Logo full /><p className="mt-6 max-w-xs text-sm leading-6 text-muted-foreground">A trusted partner for Life Science industries across {markets.join(', ')}.</p><p className="mt-8 font-mono text-xs text-muted-foreground">© 2026 Arab Lab Scientific Equipment L.L.C.</p></div>
+      <div><p className="label mb-5">Offices</p><div className="grid gap-4 text-sm leading-5 text-muted-foreground">{offices.map((office) => <p key={office.name}><Link href="/locations" className="inline-block min-w-11 py-3 font-semibold text-ink hover:text-orange">{office.name}</Link><br />{office.address.split(', ').slice(0, 2).join(', ')}</p>)}</div></div>
+      <div><p className="label mb-5">Explore</p><div className="grid text-sm text-muted-foreground">{navItems.map(([label, href]) => <Link key={href} href={href} className="py-3 hover:text-ink">{label}</Link>)}<a href={contact.website} className="py-3 hover:text-ink" target="_blank" rel="noreferrer">{contact.websiteDisplay}</a><span className="mt-5 border-t border-border pt-4 text-xs">Privacy Policy · Terms</span></div></div>
     </div>
   </footer>
 }
 
-export function ConnectorLine({ nodes }: { nodes: { title: string; description: string }[] }) {
-  return <div className="grid gap-7 md:grid-cols-4 md:gap-0">{nodes.map((node, index) => <div key={node.title} className="relative flex gap-4 md:block md:pr-8">
-    <div className="relative flex shrink-0 flex-col items-center md:block"><span className="relative z-10 block size-3 rounded-full bg-orange ring-4 ring-orange/10" /><span className="absolute left-1.5 top-3 h-full border-l border-dashed border-orange/50 md:hidden" /></div>
-    <div className="-mt-1 md:mt-5"><p className="font-heading text-base font-bold text-white">{node.title}</p><p className="mt-2 max-w-[190px] text-sm leading-6 text-mist">{node.description}</p></div>
-    {index < nodes.length - 1 && <span className="absolute left-3 top-1.5 hidden w-full border-t border-dashed border-orange/50 md:block" />}
-  </div>)}</div>
+// Tracking tightens with size: -0.01em at 30px, -0.02em at 48px.
+export function SectionIntro({ eyebrow, title, intro, children }: { eyebrow: string; title: string; intro?: string; children?: React.ReactNode }) {
+  const body = intro ?? children
+  return <div className="mb-12 max-w-2xl"><p className="label mb-4">{eyebrow}</p><h2 className="font-heading text-3xl font-bold tracking-[-0.01em] text-ink text-balance md:text-5xl md:tracking-[-0.02em]">{title}</h2>{body && <p className="mt-5 text-base leading-7 text-muted-foreground">{body}</p>}</div>
 }
 
-export function SectionIntro({ eyebrow, title, children }: { eyebrow: string; title: string; children?: React.ReactNode }) {
-  return <div className="mb-12 max-w-2xl"><p className="label mb-4">{eyebrow}</p><h2 className="font-heading text-3xl font-bold tracking-tight text-white text-balance md:text-5xl">{title}</h2>{children && <p className="mt-5 text-base leading-7 text-mist">{children}</p>}</div>
+export function StatStrip({ stats }: { stats: [string, string][] }) {
+  return <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-border/70 shadow-float backdrop-blur-xl md:grid-cols-4">
+    {stats.map(([value, label]) => <div key={label} className="flex flex-col-reverse gap-3 bg-white/90 px-6 py-7"><dt className="font-mono text-xs font-medium text-ink">{label}</dt><dd className="font-heading text-4xl font-bold tracking-[-0.02em] text-ink"><CountUp value={value} /></dd></div>)}
+  </dl>
 }
 
-export function PageShell({ children, eyebrow, title, intro }: { children: React.ReactNode; eyebrow: string; title: string; intro?: string }) {
-  return <><SiteHeader /><main><section className="border-b border-navy-2 bg-navy-0"><div className="mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28"><p className="label mb-5">{eyebrow}</p><h1 className="max-w-4xl font-heading text-4xl font-bold tracking-tight text-white text-balance md:text-6xl">{title}</h1>{intro && <p className="mt-6 max-w-2xl text-lg leading-8 text-mist">{intro}</p>}</div></section>{children}</main><SiteFooter /></>
+// Inner-page hero: paper ground with a brand glow and a staggered entrance; an optional stat strip straddles its bottom edge like the homepage.
+export function PageShell({ children, eyebrow, title, intro, actions, stats }: { children: React.ReactNode; eyebrow: string; title: string; intro?: string; actions?: React.ReactNode; stats?: [string, string][] }) {
+  return <PageTransition><main id="content" tabIndex={-1} className="outline-none">
+    <section className={`relative overflow-hidden bg-paper ${stats ? '' : 'border-b border-border'}`}>
+      <span aria-hidden className="pointer-events-none absolute -top-48 -right-40 size-[36rem] rounded-full bg-brand/10 blur-3xl" />
+      <div className={`relative mx-auto max-w-7xl px-5 pt-20 lg:px-8 lg:pt-28 ${stats ? 'pb-36 lg:pb-40' : 'pb-20 lg:pb-28'}`}>
+        <p className="label rise mb-5" style={delay(0)}>{eyebrow}</p>
+        <h1 className="rise max-w-4xl font-heading text-4xl font-bold tracking-[-0.015em] text-ink text-balance md:text-6xl md:tracking-[-0.03em]" style={delay(1)}>{title}</h1>
+        {intro && <p className="rise mt-6 max-w-2xl text-lg leading-8 text-muted-foreground" style={delay(2)}>{intro}</p>}
+        {actions && <div className="rise mt-9 flex flex-wrap gap-4" style={delay(3)}>{actions}</div>}
+      </div>
+    </section>
+    {stats && <div className="rise relative z-10 mx-auto -mt-16 max-w-7xl px-5 lg:-mt-20 lg:px-8" style={delay(4)}><StatStrip stats={stats} /></div>}
+    {children}
+  </main></PageTransition>
 }
 
-export function CardLink({ eyebrow, title, body, href }: { eyebrow: string; title: string; body: string; href: string }) {
-  return <Link href={href} className="group block border border-navy-2 bg-navy-1 p-7 transition-colors hover:border-orange/70"><p className="label">{eyebrow}</p><h3 className="mt-10 font-heading text-2xl font-bold text-white">{title}</h3><p className="mt-3 text-sm leading-6 text-mist">{body}</p><span className="mt-8 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-orange">Explore <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span></Link>
+export function PageSection({ children, className = '', id }: { children: React.ReactNode; className?: string; id?: string }) { return <section id={id} className={`border-b border-border ${className}`}><div className="mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28">{children}</div></section> }
+
+// Heavier material for a structural region. With `overlap`, it leaves room for a ClosingCta card to sit across its bottom edge.
+export function DarkBand({ eyebrow, title, intro, children, overlap = false, id }: { eyebrow: string; title: string; intro?: string; children?: React.ReactNode; overlap?: boolean; id?: string }) {
+  return <section id={id} className={`relative overflow-hidden bg-ink text-white ${overlap ? 'pb-40 lg:pb-48' : ''}`}>
+    <span aria-hidden className="pointer-events-none absolute -top-40 -left-40 size-[32rem] rounded-full bg-brand/15 blur-3xl" />
+    <div className="relative mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28">
+      <div className="mb-12 max-w-2xl"><p className={`${eyebrowOnDark} mb-4`}>{eyebrow}</p><h2 className="font-heading text-3xl font-bold tracking-[-0.01em] text-balance md:text-5xl md:tracking-[-0.02em]">{title}</h2>{intro && <p className="mt-5 text-base leading-7 text-white/75">{intro}</p>}</div>
+      {children}
+    </div>
+  </section>
 }
 
-export function PageSection({ children, className = '' }: { children: React.ReactNode; className?: string }) { return <section className={`border-b border-navy-2 ${className}`}><div className="mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28">{children}</div></section> }
+const glassTile = 'block rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur'
+export function GlassTile({ href, icon, badge, title, body }: { href?: string; icon?: React.ReactNode; badge?: string; title: string; body: string }) {
+  const header = icon || badge
+  const content = <>
+    {header && <div className="flex items-center justify-between">{icon ?? <span />}{badge && <span className="rounded-full border border-brand/40 px-2 py-0.5 font-mono text-xs text-orange-on-dark">{badge}</span>}</div>}
+    <p className={`${header ? 'mt-8' : ''} font-heading text-xl font-bold`}>{title}</p>
+    <p className="mt-2 text-sm font-medium leading-6 text-white/80">{body}</p>
+  </>
+  return href ? <Link href={href} data-spot className={`${glassTile} spot-strong hover:border-white/25 hover:bg-white/10`}>{content}</Link> : <div data-spot className={`${glassTile} spot-strong`}>{content}</div>
+}
+
+export function OfficeTiles() {
+  return <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{offices.map((office) => <GlassTile key={office.name} href="/locations" icon={<MapPin className="size-5 text-brand" />} badge={office.short || undefined} title={office.name} body={office.address} />)}</Spotlight>
+}
+
+// Elevated card with an oversized watermark numeral that drifts with scroll. A link when `href` is given, static otherwise; `children` render below the body.
+export function NumberedCard({ index, eyebrow, title, body, href, id, icon, children }: { index: number; eyebrow?: string; title: string; body?: string; href?: string; id?: string; icon?: React.ReactNode; children?: React.ReactNode }) {
+  const base = 'relative block h-full overflow-hidden rounded-2xl border bg-white p-7 shadow-card'
+  const content = <>
+    <span aria-hidden className="drift pointer-events-none absolute -top-6 -right-2 font-heading text-[7rem] leading-none font-bold tracking-[-0.06em] text-ink/[0.05]">{String(index).padStart(2, '0')}</span>
+    {icon && <span className="mb-4 flex size-10 items-center justify-center rounded-xl bg-paper text-orange">{icon}</span>}
+    {eyebrow && <span className="label">{eyebrow}</span>}
+    <p className={`${icon ? 'mt-8' : 'mt-16'} font-heading text-xl font-bold text-ink`}>{title}</p>
+    {body && <p className="mt-2 text-sm leading-6 text-muted-foreground">{body}</p>}
+    {children}
+    {href && <span className="mt-6 flex items-center gap-2 font-mono text-xs text-orange">Explore <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span>}
+  </>
+  return href ? <Link id={id} href={href} data-spot className={`group ${base} border-line hover:border-orange/60`}>{content}</Link> : <div id={id} data-spot className={`${base} border-border`}>{content}</div>
+}
+
+// Pill links to the partner pages behind a solution.
+export function BrandChips({ slugs }: { slugs: string[] }) {
+  return <div className="relative mt-5 flex flex-wrap gap-2">{slugs.map((slug) => { const brand = brandBySlug(slug); return brand && <Link key={slug} href={`/brands/${slug}`} className="inline-flex items-center gap-1 rounded-full border border-line bg-white px-4 py-3.5 text-xs font-semibold text-ink hover:border-orange hover:text-orange">{brand.name} <ArrowUpRight className="size-3" /></Link> })}</div>
+}
+
+export function CardLink({ eyebrow, title, body, href, icon }: { eyebrow: string; title: string; body: string; href: string; icon?: React.ReactNode }) {
+  return <Link href={href} data-spot className="group block h-full rounded-2xl border border-line bg-white p-7 shadow-card hover:border-orange/60">{icon && <span className="mb-4 flex size-10 items-center justify-center rounded-xl bg-paper text-orange">{icon}</span>}<p className="label">{eyebrow}</p><h3 className={`${icon ? 'mt-6' : 'mt-10'} font-heading text-2xl font-bold text-ink`}>{title}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{body}</p><span className="mt-8 flex items-center gap-2 font-mono text-xs text-orange">Explore <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span></Link>
+}
+
+// Brand tile with a watermark initial; `detailed` adds the summary and a profile link.
+export function BrandTile({ brand, detailed = false }: { brand: { name: string; slug: string; summary: string }; detailed?: boolean }) {
+  return <Link href={`/brands/${brand.slug}`} data-spot className={`group relative flex overflow-hidden rounded-2xl border border-line bg-white shadow-card hover:border-orange/60 ${detailed ? 'min-h-64 flex-col justify-between p-7' : 'min-h-36 items-end p-5'}`}>
+    <span aria-hidden className={`drift pointer-events-none absolute -top-5 -right-3 font-heading leading-none font-bold text-ink/[0.04] ${detailed ? 'text-[9rem]' : 'text-[6.5rem]'}`}>{brand.name[0]}</span>
+    {detailed
+      ? <><div className="relative"><p className="label">Partner manufacturer</p><h2 className="mt-10 font-heading text-2xl font-bold text-ink">{brand.name}</h2></div><div className="relative"><p className="text-sm leading-6 text-muted-foreground">{brand.summary}</p><span className="mt-8 flex items-center gap-2 font-mono text-xs text-orange">View profile <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span></div></>
+      : <span className="relative font-heading text-lg font-bold text-ink">{brand.name}</span>}
+  </Link>
+}
+
+// Solid accent tile that completes a grid and carries its "see all" action.
+export function AccentTile({ href, label, tall = false }: { href: string; label: string; tall?: boolean }) {
+  return <Link href={href} className={`group flex flex-col justify-between rounded-2xl bg-orange text-white shadow-card hover:bg-amber ${tall ? 'min-h-64 p-7' : 'min-h-36 p-5'}`}><ArrowUpRight className="size-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /><span className="font-heading text-lg font-bold">{label}</span></Link>
+}
+
+const contactTile = 'flex items-center gap-4 rounded-2xl border border-line bg-paper p-5 text-ink hover:border-orange'
+const contactRow = 'flex items-center gap-4 py-3 text-ink hover:text-orange'
+export function ContactTiles({ flat = false }: { flat?: boolean }) {
+  const tile = flat ? contactRow : contactTile
+  return <div className={flat ? 'grid divide-y divide-border' : 'grid gap-3'}>
+    <a href={`mailto:${contact.email}`} className={tile}><Mail className="size-5 text-orange" /><span className="text-sm font-medium">{contact.email}</span></a>
+    <a href={`tel:${contact.phone}`} className={tile}><Phone className="size-5 text-orange" /><span className="text-sm font-medium">{contact.phoneDisplay}</span></a>
+    <a href={contact.website} target="_blank" rel="noreferrer" className={tile}><Globe className="size-5 text-orange" /><span className="text-sm font-medium">{contact.websiteDisplay}</span></a>
+  </div>
+}
+
+// Closing card. With `overlap` it rides across the bottom edge of the DarkBand before it; otherwise it sits on its own paper section.
+export function ClosingCta({ overlap = true, id }: { overlap?: boolean; id?: string }) {
+  return <section id={id} className={`relative z-10 pb-20 lg:pb-28 ${overlap ? '-mt-24 lg:-mt-32' : 'bg-paper pt-20 lg:pt-28'}`}>
+    <div className="mx-auto max-w-7xl px-5 lg:px-8">
+      <div className="grid gap-10 rounded-3xl bg-white p-8 shadow-float md:grid-cols-[1.2fr_1fr] md:items-center md:p-14">
+        <div><p className="label mb-4">Ready when you are</p><h2 className="font-heading text-3xl font-bold tracking-[-0.01em] text-ink md:text-5xl md:tracking-[-0.02em]">Talk to a specialist.</h2><p className="mt-5 max-w-md text-base leading-7 text-muted-foreground">Tell us what the lab needs to measure, make or release. We route every request to the right Arab Lab department.</p><div className="mt-8 flex flex-wrap gap-4"><ButtonLink href="/contact">Start a conversation</ButtonLink><ButtonLink href="/solutions" variant="secondary">Browse solutions</ButtonLink></div></div>
+        <ContactTiles flat />
+      </div>
+    </div>
+  </section>
+}

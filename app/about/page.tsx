@@ -1,3 +1,34 @@
-import { PageSection, PageShell, SectionIntro } from '@/components/site'
+import { Spotlight } from '@/components/motion'
+import { ButtonLink, ClosingCta, DarkBand, NumberedCard, OfficeTiles, PageSection, PageShell, SectionIntro } from '@/components/site'
+import { brands, company, departments, leadership, markets, offices } from '@/lib/site-data'
+import { icon } from '@/lib/icons'
 
-export default function AboutPage() { return <PageShell eyebrow="About Arab Lab" title="A technical partner for critical laboratory work." intro="Arab Lab is the sister company of GEO-Science, established in 2001 in Abu Dhabi and an early partner to ADNOC."><PageSection><div className="grid gap-12 lg:grid-cols-2"><div><SectionIntro eyebrow="Our story" title="Built around trust, not transactions." /></div><p className="max-w-xl text-lg leading-8 text-mist">We connect laboratory teams with the instruments, consumables and support required to make accurate decisions. Our work spans biopharmaceutical production, diagnostics, research, chemical analysis and food safety across three operating markets. Rahma Omran Al-Shamsi leads Arab Lab as CEO and is affiliated with the UAE International Investors Council.</p></div></PageSection><PageSection className="bg-navy-1"><SectionIntro eyebrow="Departments" title="Specialists at every handoff." /><div className="grid gap-px border border-navy-2 bg-navy-2 sm:grid-cols-2 lg:grid-cols-3">{['Commercial','Sales','Life Science','Analytical','Service','Operational'].map((item) => <div key={item} className="bg-navy-1 p-7"><span className="font-heading text-xl font-bold text-white">{item}</span><p className="mt-3 text-sm leading-6 text-mist">Focused capability for a precise part of your laboratory workflow.</p></div>)}</div></PageSection></PageShell> }
+const facts: [string, string][] = [
+  [company.groupFounded, 'Group founded'],
+  [String(markets.length), 'Operating markets'],
+  [String(departments.length), 'Specialist departments'],
+  [String(brands.length), 'Partner manufacturers'],
+]
+
+export default function AboutPage() {
+  return <PageShell eyebrow="About Arab Lab" title="A trusted partner for Life Science industries." intro={company.positioning} stats={facts}
+    actions={<><ButtonLink href="/contact">Talk to a specialist</ButtonLink><ButtonLink href="/brands" variant="secondary">Our partners</ButtonLink></>}>
+    <PageSection>
+      <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+        <div><SectionIntro eyebrow="Our story" title="Built on a group with a track record." /><p className="max-w-xl text-lg leading-8 text-muted-foreground">{company.heritage}</p><p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground">Arab Lab is based in Ras Al Khaimah and serves the biopharma and pharmaceutical industry and laboratories sector across the region. {company.affiliation}</p></div>
+        <div className="grid gap-4">
+          <div className="rounded-3xl border border-border bg-paper p-8 shadow-card"><p className="label">Leadership</p><p className="mt-5 font-heading text-xl font-semibold leading-8 text-ink">{leadership.name}</p><p className="mt-1 text-sm text-muted-foreground">{leadership.role} · {leadership.note}</p></div>
+          <div className="rounded-3xl border border-border bg-paper p-8 shadow-card"><p className="label">Our mission</p><blockquote className="mt-5 font-heading text-xl font-semibold leading-8 text-ink">“{company.mission}”</blockquote></div>
+        </div>
+      </div>
+    </PageSection>
+    <PageSection className="bg-paper">
+      <SectionIntro eyebrow="Departments" title="Specialists at every handoff." intro={`${departments.length} departments, each owning a precise part of the laboratory workflow.`} />
+      <Spotlight className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{departments.map((department, index) => <NumberedCard key={department.name} index={index + 1} icon={icon(department.name)} eyebrow="Department" title={department.name}>
+        <ul className="mt-4 grid gap-2 text-sm leading-6">{department.people.map(([name, role]) => <li key={name}><span className="block font-semibold text-ink">{name}</span><span className="block text-muted-foreground">{role}</span></li>)}</ul>
+      </NumberedCard>)}</Spotlight>
+    </PageSection>
+    <DarkBand overlap eyebrow="Where we operate" title="Close to your laboratory." intro={`${offices.length} offices across ${markets.join(', ')}.`}><OfficeTiles /></DarkBand>
+    <ClosingCta />
+  </PageShell>
+}

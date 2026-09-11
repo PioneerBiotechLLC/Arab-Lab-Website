@@ -1,5 +1,18 @@
-import { ArrowUpRight } from 'lucide-react'
-import Link from 'next/link'
-import { PageSection, PageShell } from '@/components/site'
-import { brands } from '@/lib/site-data'
-export default function BrandsPage() { return <PageShell eyebrow="Brands" title="Technology with a reason to be here." intro="We represent manufacturers selected for their application fit, technical depth and ability to support regulated laboratory work."><PageSection><div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{brands.map((brand) => <Link key={brand.slug} href={`/brands/${brand.slug}`} className="group flex min-h-64 flex-col justify-between border border-navy-2 bg-navy-1 p-7 hover:border-orange/70"><div><p className="label">Partner manufacturer</p><h2 className="mt-10 font-heading text-2xl font-bold text-white">{brand.name}</h2></div><div><p className="text-sm leading-6 text-mist">{brand.description}</p><span className="mt-8 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-orange">View profile <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span></div></Link>)}</div></PageSection></PageShell> }
+import { Spotlight } from '@/components/motion'
+import { AccentTile, BrandTile, ButtonLink, ClosingCta, DarkBand, GlassTile, PageSection, PageShell, SectionIntro } from '@/components/site'
+import { brandNames, brands, solutions } from '@/lib/site-data'
+import { icon } from '@/lib/icons'
+
+export default function BrandsPage() {
+  return <PageShell eyebrow="Brands" title="Seven partners. One program." intro="Each partner manufacturer addresses a specific laboratory problem — from rapid sterility testing to process filtration and culture media."
+    actions={<><ButtonLink href="/contact">Discuss your application</ButtonLink><ButtonLink href="/solutions" variant="secondary">Browse by problem</ButtonLink></>}>
+    <PageSection>
+      <SectionIntro eyebrow="Partner manufacturers" title={`${brands.length} focused partners.`} />
+      <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{brands.map((brand) => <BrandTile key={brand.slug} brand={brand} detailed />)}<AccentTile href="/contact" label="Discuss your application" tall /></Spotlight>
+    </PageSection>
+    <DarkBand overlap eyebrow="What each partner solves" title="Matched to the laboratory problem.">
+      <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">{solutions.map((item) => <GlassTile key={item.id} href={`/solutions#${item.id}`} icon={icon(item.id, 'size-5 text-brand')} badge={brandNames(item.brands)} title={item.title} body={item.body} />)}</Spotlight>
+    </DarkBand>
+    <ClosingCta />
+  </PageShell>
+}
