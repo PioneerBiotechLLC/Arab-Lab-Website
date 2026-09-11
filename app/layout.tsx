@@ -2,14 +2,19 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Inter, IBM_Plex_Mono, Poppins } from 'next/font/google'
 import { SiteFooter, SiteHeader } from '@/components/site'
-import { company } from '@/lib/site-data'
+import { company, contact } from '@/lib/site-data'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const poppins = Poppins({ subsets: ['latin'], weight: ['600', '700'], variable: '--font-poppins' })
 const plex = IBM_Plex_Mono({ subsets: ['latin'], weight: ['500'], variable: '--font-plex' })
 
-export const metadata: Metadata = { title: 'Arab Lab | Scientific Equipment', description: company.positioning, generator: 'v0.app' }
+// metadataBase makes the OG/Twitter image URLs absolute in production; Vercel previews resolve to their own host.
+export const metadata: Metadata = {
+  metadataBase: new URL(process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : contact.website),
+  title: 'Arab Lab | Scientific Equipment',
+  description: company.positioning,
+}
 export const viewport: Viewport = { colorScheme: 'light', themeColor: '#FFFFFF', userScalable: true }
 
 // Header and footer live here so they persist across navigations — one fixed spatial anchor while page content transitions.
