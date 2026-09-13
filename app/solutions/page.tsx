@@ -12,7 +12,7 @@ export default function SolutionsPage() {
     </PageSection>
     <PageSection className="bg-paper">
       <SectionIntro title="Four service lines." />
-      <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{programs.map((program, index) => <NumberedCard key={program.id} id={program.id} index={index + 1} icon={icon(program.id)} eyebrow={program.eyebrow} title={program.title} body={program.body} href="/contact" />)}</Spotlight>
+      <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{programs.map((program, index) => <NumberedCard key={program.id} id={program.id} index={index + 1} icon={icon(program.id)} title={program.title} body={program.body} href="/contact" />)}</Spotlight>
     </PageSection>
     <DarkBand overlap title={`“${company.mission}”`} />
     <ClosingCta />

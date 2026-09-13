@@ -310,16 +310,6 @@ Avoid: neon, purple or teal sci-fi glow, dark moody lighting, lens flare, crowde
 Editorial architectural photograph: modern glass high-rise towers on the coastal corniche of Ras Al Khaimah, UAE, with the pale Hajar mountains behind in soft morning haze. Calm sea in the foreground, pastel sky, low saturation, no people prominent, no text or signage legible. 35mm, f/8, level horizon, quiet and precise. Photorealistic. Avoid: postcard saturation, sunset orange sky, HDR.
 ```
 
-## dubai
-
-- **Save as:** `public/locations/dubai.webp`
-- **Spec:** 1600×1000 · 3:2 · WebP ≤ 180 KB
-- **Used by:** /locations office card — Dubai
-
-```
-Editorial architectural photograph of Bur Dubai along Dubai Creek in soft morning light: low traditional buildings and wind towers along the water with the modern skyline pale and distant behind, an abra boat mid-creek. Low saturation, hazy pastel sky, no legible signage. 35mm, f/8, level horizon. Photorealistic. Avoid: sunset colours, HDR, crowds.
-```
-
 ## riyadh
 
 - **Save as:** `public/locations/riyadh.webp`

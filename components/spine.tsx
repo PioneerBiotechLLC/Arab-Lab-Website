@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-type Stop = { id: string; tag: string; label: string }
+type Stop = { id: string; label: string }
 type Node = Stop & { y: number; dark: boolean }
 
 // The connector-line motif as the page's spine: one dotted trace from the hero's origin node to the last section,
@@ -59,9 +59,8 @@ export function Spine({ stops }: { stops: Stop[] }) {
   return <nav ref={ref} className="spine" aria-label="Page sections">
     <span className="spine-track" aria-hidden />
     <span className="spine-draw" aria-hidden />
-    {nodes.map((node) => <a key={node.id} href={`#${node.id}`} className="spine-node" data-y={node.y} data-dark={node.dark || undefined} style={{ top: node.y }} aria-label={`${node.tag} ${node.label}`}>
+    {nodes.map((node) => <a key={node.id} href={`#${node.id}`} className="spine-node" data-y={node.y} data-dark={node.dark || undefined} style={{ top: node.y }} aria-label={node.label}>
       <span className="spine-dot" aria-hidden />
-      <span className="spine-tag" aria-hidden>{node.tag}<em>{node.label}</em></span>
     </a>)}
   </nav>
 }

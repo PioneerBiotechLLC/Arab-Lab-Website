@@ -16,13 +16,13 @@ const stats: [string, string][] = [
 ]
 const [feature, ...problems] = solutions
 
-// The spine's stops, in page order. Tags mirror the section numbering; labels appear on hover/focus.
+// The spine's stops, in page order. Labels are for assistive tech only; the nodes themselves are unlabelled dots.
 const stops = [
-  { id: 'program', tag: '01', label: 'Our program' },
-  { id: 'solutions', tag: '02', label: 'Solutions' },
-  { id: 'partners', tag: '03', label: 'Partners' },
-  { id: 'coverage', tag: '04', label: 'Coverage' },
-  { id: 'contact', tag: '05', label: 'Talk to us' },
+  { id: 'program', label: 'Our program' },
+  { id: 'solutions', label: 'Solutions' },
+  { id: 'partners', label: 'Partners' },
+  { id: 'coverage', label: 'Coverage' },
+  { id: 'contact', label: 'Talk to us' },
 ]
 
 // A sensor readout: flat, a settling transient, then steady. Drawn once on load, then it cools into the dotted motif.
@@ -58,7 +58,7 @@ export default function Home() {
 
     <PageSection id="program" className="bg-paper">
       <SectionIntro title="Four service lines, one partner." />
-      <Spotlight><ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{programs.map((program, index) => <li key={program.id}><NumberedCard index={index + 1} icon={icon(program.id)} eyebrow={program.eyebrow} title={program.title} body={program.body} href={`/solutions#${program.id}`} /></li>)}</ol></Spotlight>
+      <Spotlight><ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{programs.map((program, index) => <li key={program.id}><NumberedCard index={index + 1} icon={icon(program.id)} title={program.title} body={program.body} href={`/solutions#${program.id}`} /></li>)}</ol></Spotlight>
     </PageSection>
 
     <PageSection id="solutions">

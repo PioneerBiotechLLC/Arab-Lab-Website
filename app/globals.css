@@ -77,13 +77,6 @@ a:active, button:active { transform: scale(.97); }
 .spine-dot { width: 10px; height: 10px; border-radius: 999px; border: 2px solid var(--brand); background: var(--white); transition: background-color 220ms var(--ease-out), box-shadow 220ms var(--ease-out); }
 .spine-node[data-dark] .spine-dot { background: var(--ink); }
 .spine-node[data-lit] .spine-dot { background: var(--brand); box-shadow: 0 0 0 4px rgb(var(--brand-rgb) / .18); }
-.spine-tag { position: absolute; left: calc(50% + 14px); white-space: nowrap; font: 500 12px/1 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; color: var(--orange); opacity: 0; translate: -4px 0; transition: opacity 200ms var(--ease-out), translate 200ms var(--ease-out); }
-.spine-node[data-dark] .spine-tag { color: var(--orange-on-dark); }
-.spine-node[data-lit] .spine-tag { opacity: 1; translate: 0 0; }
-.spine-tag em { font-style: normal; margin-left: .6rem; color: var(--ink); opacity: 0; transition: opacity 150ms var(--ease-out); }
-.spine-node[data-dark] .spine-tag em { color: var(--white); }
-.spine-node:hover .spine-tag em, .spine-node:focus-visible .spine-tag em { opacity: 1; }
-@media (max-width: 63.99rem) { .spine-tag { display: none; } }
 
 /* ───────────── Entrance (inner-page hero) ─────────────
    `backwards` fill holds the hidden `from` state through the stagger delay, then releases the element to its normal styles. */
@@ -141,7 +134,7 @@ a:active, button:active { transform: scale(.97); }
   .hero-title { animation: none !important; clip-path: none; }
   .hero-after, .hero-strip { animation: none !important; opacity: 1; }
   .spine-draw { height: 100% !important; }
-  .spine-dot, .spine-tag, .spine-tag em, [data-spot]::after { transition: none !important; }
+  .spine-dot, [data-spot]::after { transition: none !important; }
 }
 @media (prefers-reduced-transparency: reduce) {
   [data-header] { background: var(--white); backdrop-filter: none; }

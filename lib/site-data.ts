@@ -13,7 +13,6 @@ export const contact = { email: 'info@arablab-scientific.com', phone: '+97172081
 
 export const offices = [
   { name: 'Ras Al Khaimah', short: 'HQ', address: '408, Julphar Tower, Al Hisn Road, Ras Al Khaimah, UAE' },
-  { name: 'Dubai', short: '', address: 'Aud Metha, Bur Dubai, Dubai, UAE' },
   { name: 'Riyadh', short: '', address: '3808 Al Urubah Rd, Al Wurud, Riyadh 12252, Saudi Arabia' },
   { name: 'Cairo', short: '', address: '87, Dar Masr, Al Kronfel, First Settlement, Cairo, Egypt' },
 ]
@@ -35,10 +34,10 @@ export const departments: { name: string; people: [string, string][] }[] = [
 
 // "Our Program" — the four service lines.
 export const programs = [
-  { id: 'pharma', eyebrow: 'Service line', title: 'Arab Lab Pharma & Biotech', body: 'Pharma and bioprocess solutions for various industries and applications.' },
-  { id: 'food', eyebrow: 'Service line', title: 'Arab Lab Food & Beverage', body: 'Complete solutions for the F&B sector.' },
-  { id: 'project', eyebrow: 'Service line', title: 'Arab Lab Project', body: 'Turnkey project delivery for various industries and applications.' },
-  { id: 'consultant', eyebrow: 'Service line', title: 'Pharmaceutical Consultant', body: 'Regulatory consultant and turn-key project services.' },
+  { id: 'pharma', title: 'Arab Lab Pharma & Biotech', body: 'Pharma and bioprocess solutions for various industries and applications.' },
+  { id: 'food', title: 'Arab Lab Food & Beverage', body: 'Complete solutions for the F&B sector.' },
+  { id: 'project', title: 'Arab Lab Project', body: 'Turnkey project delivery for various industries and applications.' },
+  { id: 'consultant', title: 'Pharmaceutical Consultant', body: 'Regulatory consultant and turn-key project services.' },
 ]
 
 export type Brand = {
