@@ -81,17 +81,20 @@ export function StatStrip({ stats }: { stats: [string, string][] }) {
 }
 
 // Inner-page hero: paper ground with a brand glow and a staggered entrance; an optional stat strip straddles its bottom edge like the homepage.
-export function PageShell({ children, title, intro, actions, stats }: { children: React.ReactNode; title: string; intro?: string; actions?: React.ReactNode; stats?: [string, string][] }) {
+export function PageShell({ children, title, intro, actions, stats, media }: { children: React.ReactNode; title: string; intro?: string; actions?: React.ReactNode; stats?: [string, string][]; media?: React.ReactNode }) {
+  // `media` (a partner logo on brand pages) takes the first beat of the entrance and pushes the rest back one.
+  const step = media ? 1 : 0
   return <PageTransition><main id="content" tabIndex={-1} className="outline-none">
     <section className={`relative overflow-hidden bg-paper ${stats ? '' : 'border-b border-border'}`}>
       <span aria-hidden className="pointer-events-none absolute -top-48 -right-40 size-[36rem] rounded-full bg-brand/10 blur-3xl" />
       <div className={`relative mx-auto max-w-7xl px-5 pt-20 lg:px-8 lg:pt-28 ${stats ? 'pb-36 lg:pb-40' : 'pb-20 lg:pb-28'}`}>
-        <h1 className="rise max-w-4xl font-heading text-4xl font-bold tracking-[-0.015em] text-ink text-balance md:text-6xl md:tracking-[-0.03em]" style={delay(0)}>{title}</h1>
-        {intro && <p className="rise mt-6 max-w-2xl text-lg leading-8 text-muted-foreground" style={delay(1)}>{intro}</p>}
-        {actions && <div className="rise mt-9 flex flex-wrap gap-4" style={delay(2)}>{actions}</div>}
+        {media && <div className="rise mb-7" style={delay(0)}>{media}</div>}
+        <h1 className="rise max-w-4xl font-heading text-4xl font-bold tracking-[-0.015em] text-ink text-balance md:text-6xl md:tracking-[-0.03em]" style={delay(step)}>{title}</h1>
+        {intro && <p className="rise mt-6 max-w-2xl text-lg leading-8 text-muted-foreground" style={delay(step + 1)}>{intro}</p>}
+        {actions && <div className="rise mt-9 flex flex-wrap gap-4" style={delay(step + 2)}>{actions}</div>}
       </div>
     </section>
-    {stats && <div className="rise relative z-10 mx-auto -mt-16 max-w-7xl px-5 lg:-mt-20 lg:px-8" style={delay(3)}><StatStrip stats={stats} /></div>}
+    {stats && <div className="rise relative z-10 mx-auto -mt-16 max-w-7xl px-5 lg:-mt-20 lg:px-8" style={delay(step + 3)}><StatStrip stats={stats} /></div>}
     {children}
   </main></PageTransition>
 }
@@ -149,12 +152,19 @@ export function CardLink({ eyebrow, title, body, href, icon }: { eyebrow: string
 }
 
 // Brand tile with a watermark initial; `detailed` adds the summary and a profile link.
+// Every partner logo is normalised to the same 660×200 transparent canvas by `pnpm logos`,
+// so one box sizes all seven and the marks read at a consistent optical weight.
+// Decorative by default: every placement shows the partner's name as text alongside, so a
+// described logo would make a screen reader announce the brand twice.
+export function BrandLogo({ slug, alt = '', className = 'h-9' }: { slug: string; alt?: string; className?: string }) {
+  return <Image src={`/brands/${slug}.webp`} alt={alt} width={660} height={200} className={`${className} w-auto max-w-[70%] object-contain object-left`} />
+}
+
 export function BrandTile({ brand, detailed = false }: { brand: { name: string; slug: string; summary: string }; detailed?: boolean }) {
-  return <Link href={`/brands/${brand.slug}`} data-spot className={`group relative flex overflow-hidden rounded-2xl border border-line bg-white shadow-card hover:border-orange/60 ${detailed ? 'min-h-64 flex-col justify-between p-7' : 'min-h-36 items-end p-5'}`}>
-    <span aria-hidden className={`drift pointer-events-none absolute -top-5 -right-3 font-heading leading-none font-bold text-ink/[0.04] ${detailed ? 'text-[9rem]' : 'text-[6.5rem]'}`}>{brand.name[0]}</span>
+  return <Link href={`/brands/${brand.slug}`} data-spot className={`group relative flex overflow-hidden rounded-2xl border border-line bg-white shadow-card hover:border-orange/60 ${detailed ? 'min-h-64 flex-col justify-between p-7' : 'min-h-36 flex-col justify-between p-5'}`}>
     {detailed
-      ? <><div className="relative"><p className="label">Partner manufacturer</p><h2 className="mt-10 font-heading text-2xl font-bold text-ink">{brand.name}</h2></div><div className="relative"><p className="text-sm leading-6 text-muted-foreground">{brand.summary}</p><span className="mt-8 flex items-center gap-2 font-mono text-xs text-orange">View profile <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span></div></>
-      : <span className="relative font-heading text-lg font-bold text-ink">{brand.name}</span>}
+      ? <><div className="relative"><BrandLogo slug={brand.slug} className="h-9" /><h2 className="mt-7 font-heading text-2xl font-bold text-ink">{brand.name}</h2></div><div className="relative"><p className="text-sm leading-6 text-muted-foreground">{brand.summary}</p><span className="mt-8 flex items-center gap-2 font-mono text-xs text-orange">View profile <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span></div></>
+      : <><BrandLogo slug={brand.slug} /><span className="relative font-heading text-lg font-bold text-ink">{brand.name}</span></>}
   </Link>
 }
 

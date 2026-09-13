@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { Spotlight } from '@/components/motion'
-import { AccentTile, BrandTile, ButtonLink, ClosingCta, NumberedCard, PageSection, PageShell, SectionIntro } from '@/components/site'
+import { AccentTile, BrandLogo, BrandTile, ButtonLink, ClosingCta, NumberedCard, PageSection, PageShell, SectionIntro } from '@/components/site'
 import { brandBySlug, brands, solutionsFor } from '@/lib/site-data'
 
 export function generateStaticParams() { return brands.map((brand) => ({ slug: brand.slug })) }
@@ -14,7 +14,7 @@ export default async function BrandPage({ params }: { params: Promise<{ slug: st
   const others = brands.filter((item) => item.slug !== brand.slug)
   const solves = solutionsFor(brand.slug)
   const [lead, ...rest] = brand.profile
-  return <PageShell title={brand.name} intro={brand.summary}
+  return <PageShell title={brand.name} intro={brand.summary} media={<BrandLogo slug={brand.slug} className="h-12" />}
     actions={<><ButtonLink href="/contact">Discuss your application</ButtonLink><ButtonLink href="/brands" variant="secondary">All partners</ButtonLink></>}>
     <PageSection>
       <div className="grid gap-12 lg:grid-cols-[1fr_0.7fr] lg:items-start">

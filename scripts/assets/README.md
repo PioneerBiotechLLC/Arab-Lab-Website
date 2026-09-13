@@ -37,3 +37,12 @@ Without it the MP4 is copied as-is and the site uses that alone.
 
 Wiring is one pass over the shared components (see section 12 of the plan): `image` prop on `CardLink`/`NumberedCard`, the feature-tile
 cover, a `backdrop` prop on `PageShell` for brand pages, city covers on `/locations`, and the hero `<video>` behind the still.
+
+## Partner logos
+
+Masters sit in `design-src/brands/` exactly as each partner supplied them; `pnpm logos` normalises them
+into `public/brands/<slug>.webp`. Every output shares one 660×200 transparent canvas: the mark is trimmed,
+scaled to a constant ink area (so a compact mark reads as strongly as a long wordmark), capped at 170px
+tall and flush left, which lets one CSS box align all seven. A mark supplied white-on-transparent is
+recoloured to ink, since the site only places logos on white and pale-grey tiles; no other colour is touched.
+Re-run it whenever a partner sends an updated file.
