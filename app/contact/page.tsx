@@ -1,5 +1,6 @@
 'use client'
 import { ChangeEvent, FormEvent, useState } from 'react'
+import Link from 'next/link'
 import { Check } from 'lucide-react'
 import { ContactTiles, DarkBand, OfficeTiles, PageSection, PageShell } from '@/components/site'
 import { markets, offices } from '@/lib/site-data'
@@ -65,6 +66,7 @@ function ContactForm({ support = false }: { support?: boolean }) {
       <button type="submit" disabled={status === 'sending'} aria-busy={status === 'sending'} className="inline-flex items-center py-3 gap-2 rounded-full bg-orange px-6 font-heading text-sm font-semibold text-white shadow-card hover:bg-amber disabled:pointer-events-none disabled:opacity-60">{status === 'sending' ? 'Sending…' : support ? 'Contact Service' : 'Submit request'}</button>
       {status === 'error' && <p role="alert" className="text-sm text-danger">We couldn&apos;t send that. Check your connection and try again.</p>}
     </div>
+    <p className="text-xs leading-5 text-muted-foreground md:col-span-2">We use what you send only to answer this request. See the <Link href="/privacy" className="text-orange underline decoration-orange/40 underline-offset-4 hover:decoration-orange">Privacy Policy</Link>.</p>
   </form>
 }
 
