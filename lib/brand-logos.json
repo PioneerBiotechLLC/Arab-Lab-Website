@@ -1,0 +1,30 @@
+{
+  "eppendorf": {
+    "width": 582,
+    "height": 200
+  },
+  "parker": {
+    "width": 581,
+    "height": 200
+  },
+  "lonza": {
+    "width": 621,
+    "height": 200
+  },
+  "promicol": {
+    "width": 239,
+    "height": 200
+  },
+  "pmm": {
+    "width": 329,
+    "height": 200
+  },
+  "cpc-biotech": {
+    "width": 317,
+    "height": 200
+  },
+  "tailin": {
+    "width": 559,
+    "height": 200
+  }
+}

@@ -48,6 +48,8 @@ export type Brand = {
   profile: string[]
   facts: [string, string][]
   capabilities: { title: string; body: string }[]
+  /** A `symbol` mark does not spell the name, so the name is shown beside it; wordmarks stand alone. */
+  mark?: 'wordmark' | 'symbol'
 }
 
 export const brands: Brand[] = [
@@ -99,7 +101,7 @@ export const brands: Brand[] = [
     ],
   },
   {
-    name: 'Promicol', slug: 'promicol',
+    name: 'Promicol', slug: 'promicol', mark: 'symbol',
     summary: 'Patented rapid microbial-load testing based on ATP bioluminescence, cutting sterility-test turnaround from 14 days to around 2.',
     profile: [
       'Promicol produces a large array of patented products for rapid testing of microbial load, based on the ATP bioluminescence method: reagents isolate microbial ATP specifically, and the light output — measured in Relative Light Units — confirms sterility.',

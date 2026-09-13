@@ -8,6 +8,7 @@ import { ArrowUpRight, Globe, Mail, MapPin, Phone } from 'lucide-react'
 import { CountUp, Spotlight } from '@/components/motion'
 import { PageTransition } from '@/components/page-transition'
 import { delay } from '@/lib/utils'
+import logoSizes from '@/lib/brand-logos.json'
 import { brandBySlug, contact, markets, offices } from '@/lib/site-data'
 
 // Specific destinations only — the logo is the way home, so there is no generic "Home" entry.
@@ -81,20 +82,17 @@ export function StatStrip({ stats }: { stats: [string, string][] }) {
 }
 
 // Inner-page hero: paper ground with a brand glow and a staggered entrance; an optional stat strip straddles its bottom edge like the homepage.
-export function PageShell({ children, title, intro, actions, stats, media }: { children: React.ReactNode; title: string; intro?: string; actions?: React.ReactNode; stats?: [string, string][]; media?: React.ReactNode }) {
-  // `media` (a partner logo on brand pages) takes the first beat of the entrance and pushes the rest back one.
-  const step = media ? 1 : 0
+export function PageShell({ children, title, intro, actions, stats }: { children: React.ReactNode; title: React.ReactNode; intro?: string; actions?: React.ReactNode; stats?: [string, string][] }) {
   return <PageTransition><main id="content" tabIndex={-1} className="outline-none">
     <section className={`relative overflow-hidden bg-paper ${stats ? '' : 'border-b border-border'}`}>
       <span aria-hidden className="pointer-events-none absolute -top-48 -right-40 size-[36rem] rounded-full bg-brand/10 blur-3xl" />
       <div className={`relative mx-auto max-w-7xl px-5 pt-20 lg:px-8 lg:pt-28 ${stats ? 'pb-36 lg:pb-40' : 'pb-20 lg:pb-28'}`}>
-        {media && <div className="rise mb-7" style={delay(0)}>{media}</div>}
-        <h1 className="rise max-w-4xl font-heading text-4xl font-bold tracking-[-0.015em] text-ink text-balance md:text-6xl md:tracking-[-0.03em]" style={delay(step)}>{title}</h1>
-        {intro && <p className="rise mt-6 max-w-2xl text-lg leading-8 text-muted-foreground" style={delay(step + 1)}>{intro}</p>}
-        {actions && <div className="rise mt-9 flex flex-wrap gap-4" style={delay(step + 2)}>{actions}</div>}
+        <h1 className="rise max-w-4xl font-heading text-4xl font-bold tracking-[-0.015em] text-ink text-balance md:text-6xl md:tracking-[-0.03em]" style={delay(0)}>{title}</h1>
+        {intro && <p className="rise mt-6 max-w-2xl text-lg leading-8 text-muted-foreground" style={delay(1)}>{intro}</p>}
+        {actions && <div className="rise mt-9 flex flex-wrap gap-4" style={delay(2)}>{actions}</div>}
       </div>
     </section>
-    {stats && <div className="rise relative z-10 mx-auto -mt-16 max-w-7xl px-5 lg:-mt-20 lg:px-8" style={delay(step + 3)}><StatStrip stats={stats} /></div>}
+    {stats && <div className="rise relative z-10 mx-auto -mt-16 max-w-7xl px-5 lg:-mt-20 lg:px-8" style={delay(3)}><StatStrip stats={stats} /></div>}
     {children}
   </main></PageTransition>
 }
@@ -154,17 +152,23 @@ export function CardLink({ eyebrow, title, body, href, icon }: { eyebrow: string
 // Brand tile with a watermark initial; `detailed` adds the summary and a profile link.
 // Every partner logo is normalised to the same 660×200 transparent canvas by `pnpm logos`,
 // so one box sizes all seven and the marks read at a consistent optical weight.
-// Decorative by default: every placement shows the partner's name as text alongside, so a
-// described logo would make a screen reader announce the brand twice.
-export function BrandLogo({ slug, alt = '', className = 'h-9' }: { slug: string; alt?: string; className?: string }) {
-  return <Image src={`/brands/${slug}.webp`} alt={alt} width={660} height={200} className={`${className} w-auto max-w-[70%] object-contain object-left`} />
+// The logo stands in for the partner's name wherever it appears, so no heading repeats it. A wordmark
+// carries the name itself (alt text does the same for assistive tech); a bare symbol gets the name set
+// beside it as a lockup. Logos share one 660×200 canvas (`pnpm logos`), so one height sizes them all.
+export function BrandMark({ brand, size = 'h-9', text = 'text-xl' }: { brand: { name: string; slug: string; mark?: 'wordmark' | 'symbol' }; size?: string; text?: string }) {
+  const symbol = brand.mark === 'symbol'
+  const dims = (logoSizes as Record<string, { width: number; height: number }>)[brand.slug] ?? { width: 660, height: 200 }
+  return <span className="flex items-center gap-3">
+    <Image src={`/brands/${brand.slug}.webp`} alt={symbol ? '' : brand.name} {...dims} className={`${size} w-auto max-w-full shrink-0`} />
+    {symbol && <span className={`font-heading ${text} font-bold tracking-[-0.01em] text-ink`}>{brand.name}</span>}
+  </span>
 }
 
-export function BrandTile({ brand, detailed = false }: { brand: { name: string; slug: string; summary: string }; detailed?: boolean }) {
-  return <Link href={`/brands/${brand.slug}`} data-spot className={`group relative flex overflow-hidden rounded-2xl border border-line bg-white shadow-card hover:border-orange/60 ${detailed ? 'min-h-64 flex-col justify-between p-7' : 'min-h-36 flex-col justify-between p-5'}`}>
+export function BrandTile({ brand, detailed = false }: { brand: { name: string; slug: string; summary: string; mark?: 'wordmark' | 'symbol' }; detailed?: boolean }) {
+  return <Link href={`/brands/${brand.slug}`} data-spot className={`group relative flex overflow-hidden rounded-2xl border border-line bg-white shadow-card hover:border-orange/60 ${detailed ? 'min-h-64 flex-col justify-between p-7' : 'min-h-36 items-center p-5'}`}>
     {detailed
-      ? <><div className="relative"><BrandLogo slug={brand.slug} className="h-9" /><h2 className="mt-7 font-heading text-2xl font-bold text-ink">{brand.name}</h2></div><div className="relative"><p className="text-sm leading-6 text-muted-foreground">{brand.summary}</p><span className="mt-8 flex items-center gap-2 font-mono text-xs text-orange">View profile <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span></div></>
-      : <><BrandLogo slug={brand.slug} /><span className="relative font-heading text-lg font-bold text-ink">{brand.name}</span></>}
+      ? <><h2><BrandMark brand={brand} size="h-10" /></h2><div><p className="mt-8 text-sm leading-6 text-muted-foreground">{brand.summary}</p><span className="mt-8 flex items-center gap-2 font-mono text-xs text-orange">View profile <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span></div></>
+      : <BrandMark brand={brand} text="text-lg" />}
   </Link>
 }
 

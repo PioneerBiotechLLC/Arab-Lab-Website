@@ -41,8 +41,11 @@ cover, a `backdrop` prop on `PageShell` for brand pages, city covers on `/locati
 ## Partner logos
 
 Masters sit in `design-src/brands/` exactly as each partner supplied them; `pnpm logos` normalises them
-into `public/brands/<slug>.webp`. Every output shares one 660×200 transparent canvas: the mark is trimmed,
-scaled to a constant ink area (so a compact mark reads as strongly as a long wordmark), capped at 170px
-tall and flush left, which lets one CSS box align all seven. A mark supplied white-on-transparent is
+into `public/brands/<slug>.webp`. Each output is a 200px-tall transparent canvas exactly as wide as its mark:
+the mark is trimmed, scaled to a constant ink area (so a compact mark reads as strongly as a long wordmark),
+capped at 170px tall and centred vertically, so one CSS height sizes all seven and each image box is only
+as wide as what it shows. Widths land in `lib/brand-logos.json` for the `<Image>` attributes. On the site the
+logo *is* the partner's heading; a mark that doesn't spell the name (`mark: 'symbol'` in site-data, currently
+Promicol) gets the name set beside it. A mark supplied white-on-transparent is
 recoloured to ink, since the site only places logos on white and pale-grey tiles; no other colour is touched.
 Re-run it whenever a partner sends an updated file.
