@@ -127,7 +127,7 @@ export function OfficeTiles() {
 
 // Elevated card with an oversized watermark numeral that drifts with scroll. A link when `href` is given, static otherwise; `children` render below the body.
 export function NumberedCard({ index, eyebrow, title, body, href, id, icon, children }: { index: number; eyebrow?: string; title: string; body?: string; href?: string; id?: string; icon?: React.ReactNode; children?: React.ReactNode }) {
-  const base = 'relative block h-full overflow-hidden rounded-2xl border bg-white p-7 shadow-card'
+  const base = 'relative flex h-full flex-col overflow-hidden rounded-2xl border bg-white p-7 shadow-card'
   const content = <>
     <span aria-hidden className="drift pointer-events-none absolute -top-6 -right-2 font-heading text-[7rem] leading-none font-bold tracking-[-0.06em] text-ink/[0.05]">{String(index).padStart(2, '0')}</span>
     {icon && <span className="mb-4 flex size-10 items-center justify-center rounded-xl bg-paper text-orange">{icon}</span>}
@@ -135,7 +135,7 @@ export function NumberedCard({ index, eyebrow, title, body, href, id, icon, chil
     <p className={`${icon ? 'mt-8' : 'mt-16'} font-heading text-xl font-bold text-ink`}>{title}</p>
     {body && <p className="mt-2 text-sm leading-6 text-muted-foreground">{body}</p>}
     {children}
-    {href && <span className="mt-6 flex items-center gap-2 font-mono text-xs text-orange">Explore <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span>}
+    {href && <span className="mt-auto flex items-center gap-2 pt-6 font-mono text-xs text-orange">Explore <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span>}
   </>
   return href ? <Link id={id} href={href} data-spot className={`group ${base} border-line hover:border-orange/60`}>{content}</Link> : <div id={id} data-spot className={`${base} border-border`}>{content}</div>
 }
@@ -146,7 +146,7 @@ export function BrandChips({ slugs }: { slugs: string[] }) {
 }
 
 export function CardLink({ eyebrow, title, body, href, icon }: { eyebrow: string; title: string; body: string; href: string; icon?: React.ReactNode }) {
-  return <Link href={href} data-spot className="group block h-full rounded-2xl border border-line bg-white p-7 shadow-card hover:border-orange/60">{icon && <span className="mb-4 flex size-10 items-center justify-center rounded-xl bg-paper text-orange">{icon}</span>}<p className="label">{eyebrow}</p><h3 className={`${icon ? 'mt-6' : 'mt-10'} font-heading text-2xl font-bold text-ink`}>{title}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{body}</p><span className="mt-8 flex items-center gap-2 font-mono text-xs text-orange">Explore <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span></Link>
+  return <Link href={href} data-spot className="group flex h-full flex-col rounded-2xl border border-line bg-white p-7 shadow-card hover:border-orange/60">{icon && <span className="mb-4 flex size-10 items-center justify-center rounded-xl bg-paper text-orange">{icon}</span>}<p className="label">{eyebrow}</p><h3 className={`${icon ? 'mt-6' : 'mt-10'} font-heading text-2xl font-bold text-ink`}>{title}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{body}</p><span className="mt-auto flex items-center gap-2 pt-8 font-mono text-xs text-orange">Explore <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span></Link>
 }
 
 // Brand tile with a watermark initial; `detailed` adds the summary and a profile link.
