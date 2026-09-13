@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation'
 import { ArrowUpRight, Globe, Mail, MapPin, Phone } from 'lucide-react'
 import { CountUp, Spotlight } from '@/components/motion'
 import { PageTransition } from '@/components/page-transition'
-import { delay, eyebrowOnDark } from '@/lib/utils'
+import { delay } from '@/lib/utils'
 import { brandBySlug, contact, markets, offices } from '@/lib/site-data'
 
 // Specific destinations only — the logo is the way home, so there is no generic "Home" entry.
@@ -69,9 +69,9 @@ export function SiteFooter() {
 }
 
 // Tracking tightens with size: -0.01em at 30px, -0.02em at 48px.
-export function SectionIntro({ eyebrow, title, intro, children }: { eyebrow: string; title: string; intro?: string; children?: React.ReactNode }) {
+export function SectionIntro({ title, intro, children }: { title: string; intro?: string; children?: React.ReactNode }) {
   const body = intro ?? children
-  return <div className="mb-12 max-w-2xl"><p className="label mb-4">{eyebrow}</p><h2 className="font-heading text-3xl font-bold tracking-[-0.01em] text-ink text-balance md:text-5xl md:tracking-[-0.02em]">{title}</h2>{body && <p className="mt-5 text-base leading-7 text-muted-foreground">{body}</p>}</div>
+  return <div className="mb-12 max-w-2xl"><h2 className="font-heading text-3xl font-bold tracking-[-0.01em] text-ink text-balance md:text-5xl md:tracking-[-0.02em]">{title}</h2>{body && <p className="mt-5 text-base leading-7 text-muted-foreground">{body}</p>}</div>
 }
 
 export function StatStrip({ stats }: { stats: [string, string][] }) {
@@ -81,18 +81,17 @@ export function StatStrip({ stats }: { stats: [string, string][] }) {
 }
 
 // Inner-page hero: paper ground with a brand glow and a staggered entrance; an optional stat strip straddles its bottom edge like the homepage.
-export function PageShell({ children, eyebrow, title, intro, actions, stats }: { children: React.ReactNode; eyebrow: string; title: string; intro?: string; actions?: React.ReactNode; stats?: [string, string][] }) {
+export function PageShell({ children, title, intro, actions, stats }: { children: React.ReactNode; title: string; intro?: string; actions?: React.ReactNode; stats?: [string, string][] }) {
   return <PageTransition><main id="content" tabIndex={-1} className="outline-none">
     <section className={`relative overflow-hidden bg-paper ${stats ? '' : 'border-b border-border'}`}>
       <span aria-hidden className="pointer-events-none absolute -top-48 -right-40 size-[36rem] rounded-full bg-brand/10 blur-3xl" />
       <div className={`relative mx-auto max-w-7xl px-5 pt-20 lg:px-8 lg:pt-28 ${stats ? 'pb-36 lg:pb-40' : 'pb-20 lg:pb-28'}`}>
-        <p className="label rise mb-5" style={delay(0)}>{eyebrow}</p>
-        <h1 className="rise max-w-4xl font-heading text-4xl font-bold tracking-[-0.015em] text-ink text-balance md:text-6xl md:tracking-[-0.03em]" style={delay(1)}>{title}</h1>
-        {intro && <p className="rise mt-6 max-w-2xl text-lg leading-8 text-muted-foreground" style={delay(2)}>{intro}</p>}
-        {actions && <div className="rise mt-9 flex flex-wrap gap-4" style={delay(3)}>{actions}</div>}
+        <h1 className="rise max-w-4xl font-heading text-4xl font-bold tracking-[-0.015em] text-ink text-balance md:text-6xl md:tracking-[-0.03em]" style={delay(0)}>{title}</h1>
+        {intro && <p className="rise mt-6 max-w-2xl text-lg leading-8 text-muted-foreground" style={delay(1)}>{intro}</p>}
+        {actions && <div className="rise mt-9 flex flex-wrap gap-4" style={delay(2)}>{actions}</div>}
       </div>
     </section>
-    {stats && <div className="rise relative z-10 mx-auto -mt-16 max-w-7xl px-5 lg:-mt-20 lg:px-8" style={delay(4)}><StatStrip stats={stats} /></div>}
+    {stats && <div className="rise relative z-10 mx-auto -mt-16 max-w-7xl px-5 lg:-mt-20 lg:px-8" style={delay(3)}><StatStrip stats={stats} /></div>}
     {children}
   </main></PageTransition>
 }
@@ -100,11 +99,11 @@ export function PageShell({ children, eyebrow, title, intro, actions, stats }: {
 export function PageSection({ children, className = '', id }: { children: React.ReactNode; className?: string; id?: string }) { return <section id={id} className={`border-b border-border ${className}`}><div className="mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28">{children}</div></section> }
 
 // Heavier material for a structural region. With `overlap`, it leaves room for a ClosingCta card to sit across its bottom edge.
-export function DarkBand({ eyebrow, title, intro, children, overlap = false, id }: { eyebrow: string; title: string; intro?: string; children?: React.ReactNode; overlap?: boolean; id?: string }) {
+export function DarkBand({ title, intro, children, overlap = false, id }: { title: string; intro?: string; children?: React.ReactNode; overlap?: boolean; id?: string }) {
   return <section id={id} className={`relative overflow-hidden bg-ink text-white ${overlap ? 'pb-40 lg:pb-48' : ''}`}>
     <span aria-hidden className="pointer-events-none absolute -top-40 -left-40 size-[32rem] rounded-full bg-brand/15 blur-3xl" />
     <div className="relative mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28">
-      <div className="mb-12 max-w-2xl"><p className={`${eyebrowOnDark} mb-4`}>{eyebrow}</p><h2 className="font-heading text-3xl font-bold tracking-[-0.01em] text-balance md:text-5xl md:tracking-[-0.02em]">{title}</h2>{intro && <p className="mt-5 text-base leading-7 text-white/75">{intro}</p>}</div>
+      <div className="mb-12 max-w-2xl"><h2 className="font-heading text-3xl font-bold tracking-[-0.01em] text-balance md:text-5xl md:tracking-[-0.02em]">{title}</h2>{intro && <p className="mt-5 text-base leading-7 text-white/75">{intro}</p>}</div>
       {children}
     </div>
   </section>
@@ -180,7 +179,7 @@ export function ClosingCta({ overlap = true, id }: { overlap?: boolean; id?: str
   return <section id={id} className={`relative z-10 pb-20 lg:pb-28 ${overlap ? '-mt-24 lg:-mt-32' : 'bg-paper pt-20 lg:pt-28'}`}>
     <div className="mx-auto max-w-7xl px-5 lg:px-8">
       <div className="grid gap-10 rounded-3xl bg-white p-8 shadow-float md:grid-cols-[1.2fr_1fr] md:items-center md:p-14">
-        <div><p className="label mb-4">Ready when you are</p><h2 className="font-heading text-3xl font-bold tracking-[-0.01em] text-ink md:text-5xl md:tracking-[-0.02em]">Talk to a specialist.</h2><p className="mt-5 max-w-md text-base leading-7 text-muted-foreground">Tell us what the lab needs to measure, make or release. We route every request to the right Arab Lab department.</p><div className="mt-8 flex flex-wrap gap-4"><ButtonLink href="/contact">Start a conversation</ButtonLink><ButtonLink href="/solutions" variant="secondary">Browse solutions</ButtonLink></div></div>
+        <div><h2 className="font-heading text-3xl font-bold tracking-[-0.01em] text-ink md:text-5xl md:tracking-[-0.02em]">Talk to a specialist.</h2><p className="mt-5 max-w-md text-base leading-7 text-muted-foreground">Tell us what the lab needs to measure, make or release. We route every request to the right Arab Lab department.</p><div className="mt-8 flex flex-wrap gap-4"><ButtonLink href="/contact">Start a conversation</ButtonLink><ButtonLink href="/solutions" variant="secondary">Browse solutions</ButtonLink></div></div>
         <ContactTiles flat />
       </div>
     </div>

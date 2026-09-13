@@ -69,10 +69,10 @@ function ContactForm({ support = false }: { support?: boolean }) {
 }
 
 export default function ContactPage() {
-  return <PageShell eyebrow="Contact" title="A clear next step." intro="Choose the path that matches your need. We route each request to the right Arab Lab department.">
-    <PageSection><div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]"><div><p className="label mb-4">01 / Request a quote</p><h2 className="font-heading text-3xl font-bold tracking-[-0.01em] text-ink">Specify the requirement.</h2><p className="mt-5 leading-7 text-muted-foreground">Share the product, quantity and office preference. We will respond with the next practical step.</p></div><ContactForm /></div></PageSection>
-    <PageSection className="bg-paper"><div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]"><div><p className="label mb-4">02 / Service & support</p><h2 className="font-heading text-3xl font-bold tracking-[-0.01em] text-ink">Keep the lab moving.</h2><p className="mt-5 leading-7 text-muted-foreground">For installation, maintenance or application support, send the issue directly to Service.</p></div><ContactForm support /></div></PageSection>
-    <PageSection><div className="grid gap-12 md:grid-cols-2"><div><p className="label mb-4">03 / Direct contact</p><h2 className="font-heading text-3xl font-bold tracking-[-0.01em] text-ink">Prefer a direct line?</h2></div><ContactTiles /></div></PageSection>
-    <DarkBand eyebrow="04 / Visit an office" title="Or come and see us." intro={`${offices.length} offices across ${markets.join(', ')}.`}><OfficeTiles /></DarkBand>
+  return <PageShell title="A clear next step." intro="Choose the path that matches your need. We route each request to the right Arab Lab department.">
+    <PageSection><div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]"><div><h2 className="font-heading text-3xl font-bold tracking-[-0.01em] text-ink">Specify the requirement.</h2><p className="mt-5 leading-7 text-muted-foreground">Share the product, quantity and office preference. We will respond with the next practical step.</p></div><ContactForm /></div></PageSection>
+    <PageSection className="bg-paper"><div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]"><div><h2 className="font-heading text-3xl font-bold tracking-[-0.01em] text-ink">Keep the lab moving.</h2><p className="mt-5 leading-7 text-muted-foreground">For installation, maintenance or application support, send the issue directly to Service.</p></div><ContactForm support /></div></PageSection>
+    <PageSection><div className="grid gap-12 md:grid-cols-2"><div><h2 className="font-heading text-3xl font-bold tracking-[-0.01em] text-ink">Prefer a direct line?</h2></div><ContactTiles /></div></PageSection>
+    <DarkBand title="Or come and see us." intro={`${offices.length} offices across ${markets.join(', ')}.`}><OfficeTiles /></DarkBand>
   </PageShell>
 }

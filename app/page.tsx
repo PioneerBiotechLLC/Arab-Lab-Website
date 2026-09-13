@@ -57,12 +57,12 @@ export default function Home() {
     </section>
 
     <PageSection id="program" className="bg-paper">
-      <SectionIntro eyebrow="01 / Our program" title="Four service lines, one partner." />
+      <SectionIntro title="Four service lines, one partner." />
       <Spotlight><ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{programs.map((program, index) => <li key={program.id}><NumberedCard index={index + 1} icon={icon(program.id)} eyebrow={program.eyebrow} title={program.title} body={program.body} href={`/solutions#${program.id}`} /></li>)}</ol></Spotlight>
     </PageSection>
 
     <PageSection id="solutions">
-      <SectionIntro eyebrow="02 / Solutions" title="Organised by the problem your lab needs to solve." intro="Each solution links through to the partner whose technology addresses it." />
+      <SectionIntro title="Organised by the problem your lab needs to solve." intro="Each solution links through to the partner whose technology addresses it." />
       <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {/* Feature tile: the one dark material in the grid gives the bento a focal point; its glow follows the pointer. */}
         <Link href={`/solutions#${feature.id}`} data-spot className="spot-strong group relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded-3xl bg-ink p-8 text-white shadow-float md:col-span-2 lg:row-span-2 md:p-10">
@@ -81,11 +81,11 @@ export default function Home() {
     </PageSection>
 
     <PageSection id="partners" className="bg-paper">
-      <SectionIntro eyebrow="03 / Our partners" title="Global technology. Local accountability." intro="Seven partner manufacturers, each addressing a specific laboratory problem." />
+      <SectionIntro title="Global technology. Local accountability." intro="Seven partner manufacturers, each addressing a specific laboratory problem." />
       <Spotlight className="grid grid-cols-2 gap-4 md:grid-cols-4">{brands.map((brand) => <BrandTile key={brand.slug} brand={brand} />)}<AccentTile href="/brands" label="All brands" /></Spotlight>
     </PageSection>
 
-    <DarkBand id="coverage" overlap eyebrow="04 / Regional coverage" title="Close to your laboratory." intro={`${offices.length} offices across ${markets.length} markets keep sales, technical and service teams within reach.`}><OfficeTiles /></DarkBand>
+    <DarkBand id="coverage" overlap title="Close to your laboratory." intro={`${offices.length} offices across ${markets.length} markets keep sales, technical and service teams within reach.`}><OfficeTiles /></DarkBand>
     <ClosingCta id="contact" />
   </main></PageTransition>
 }
