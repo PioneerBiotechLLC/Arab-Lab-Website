@@ -19,5 +19,5 @@ export const viewport: Viewport = { colorScheme: 'light', themeColor: '#FFFFFF',
 
 // Header and footer live here so they persist across navigations — one fixed spatial anchor while page content transitions.
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={`${inter.variable} ${poppins.variable} ${plex.variable}`}><body className="antialiased"><a href="#content" className="skip-link">Skip to content</a><SiteHeader />{children}<SiteFooter />{process.env.NODE_ENV === 'production' && <Analytics />}</body></html>
+  return <html lang="en" className={`${inter.variable} ${poppins.variable} ${plex.variable}`}><body className="antialiased"><a href="#content" className="skip-link">Skip to content</a><SiteHeader />{children}<SiteFooter /><Analytics /></body></html>
 }
