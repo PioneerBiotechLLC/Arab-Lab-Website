@@ -1,5 +1,6 @@
 import { Resend } from 'resend'
 import { offices } from '@/lib/site-data'
+import { issueToken, screen } from '@/lib/contact-guard'
 
 // Quote and service requests from /contact. Validated here, then emailed through Resend.
 // Env (set in .env.local and on Vercel): RESEND_API_KEY, CONTACT_TO, CONTACT_FROM (an address on a domain verified in Resend).
@@ -10,6 +11,11 @@ const labels: Record<string, string> = { name: 'Name', company: 'Company', email
 const order = ['name', 'company', 'email', 'product', 'quantity', 'office', 'issue']
 const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
 const escapeHtml = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!)
+
+// The form fetches a token when it mounts and sends it back with the submission (see lib/contact-guard.ts).
+export async function GET() {
+  return Response.json({ token: issueToken() }, { headers: { 'Cache-Control': 'no-store' } })
+}
 
 export async function POST(request: Request) {
   let body: Record<string, unknown>
@@ -26,6 +32,14 @@ export async function POST(request: Request) {
   if (missing.length) return Response.json({ error: `Missing: ${missing.map((k) => labels[k]).join(', ')}` }, { status: 422 })
   if (!emailOk(fields.email)) return Response.json({ error: 'Email address looks invalid' }, { status: 422 })
   if (fields.office && !offices.some((o) => o.name === fields.office)) delete fields.office
+
+  // Spam screen. A rejected submission gets the same reply as a real one, so a bot cannot tune against it.
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+  const verdict = screen(body, fields, ip)
+  if (!verdict.ok) {
+    console.info('[contact] dropped', verdict.reason, { ip, company: fields.company })
+    return Response.json({ ok: true })
+  }
 
   const { RESEND_API_KEY, CONTACT_TO, CONTACT_FROM } = process.env
   if (!RESEND_API_KEY || !CONTACT_TO || !CONTACT_FROM) {

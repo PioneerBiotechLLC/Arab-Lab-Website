@@ -1,5 +1,5 @@
 'use client'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Check } from 'lucide-react'
 import { ContactTiles, DarkBand, OfficeTiles, PageSection, PageShell } from '@/components/site'
@@ -36,6 +36,10 @@ function ContactForm({ support = false }: { support?: boolean }) {
   const [values, setValues] = useState<Record<string, string>>(() => Object.fromEntries(fields.map((f) => [f.name, f.options?.[0] ?? ''])))
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [token, setToken] = useState('')
+  const [website, setWebsite] = useState('') // honeypot — stays empty for people
+  // Anti-spam token, issued when the form appears; the server rejects submissions without one or sent within seconds of it.
+  useEffect(() => { fetch('/api/contact', { cache: 'no-store' }).then((r) => r.json()).then((d) => setToken(d.token)).catch(() => {}) }, [])
 
   function check(field: FieldDef, value: string) { setErrors((prev) => ({ ...prev, [field.name]: validate(field, value) })) }
   function update(field: FieldDef, event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
@@ -52,7 +56,7 @@ function ContactForm({ support = false }: { support?: boolean }) {
     if (firstInvalid) { (event.currentTarget.elements.namedItem(firstInvalid.name) as HTMLElement | null)?.focus(); return }
     setStatus('sending')
     try {
-      const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kind, ...values }) })
+      const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kind, ...values, token, website }) })
       if (!res.ok) throw new Error(String(res.status))
       setStatus('sent')
     } catch { setStatus('error') }
@@ -61,6 +65,7 @@ function ContactForm({ support = false }: { support?: boolean }) {
   if (status === 'sent') return <div role="status" className="rounded-3xl border border-orange/60 bg-white p-8 shadow-card"><Check className="text-orange" /><h3 className="mt-5 font-heading text-2xl font-bold text-ink">Request received.</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">Our {support ? 'Service' : 'Commercial'} department will review your details and follow up shortly.</p></div>
 
   return <form onSubmit={submit} noValidate className="grid gap-5 rounded-3xl border border-line bg-white p-6 shadow-card md:grid-cols-2 md:p-8">
+    <div aria-hidden className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden"><label>Website<input type="text" name="website" tabIndex={-1} autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} /></label></div>
     {fields.map((field) => {
       const error = errors[field.name]
       const errorId = `${kind}-${field.name}-error`
