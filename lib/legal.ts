@@ -13,7 +13,7 @@ export type Block =
 export type LegalSection = { id: string; title: string; blocks: Block[] }
 export type LegalDoc = { slug: string; title: string; intro: string; updated: string; sections: LegalSection[] }
 
-const updated = '14 September 2026'
+const updated = '21 September 2026'
 const hq = offices[0]
 const email = `[${contact.email}](mailto:${contact.email})`
 const postal = `${company.name}, ${hq.address}`
@@ -31,8 +31,8 @@ export const privacy: LegalDoc = {
     { id: 'what', title: 'What we collect', blocks: [
       'Most of this site can be read without giving us anything. We collect personal information in three situations:',
       { list: [
-        '**When you send a quote request.** Your name, company, the brand or product you are asking about, a quantity, and the office you would prefer to deal with.',
-        '**When you send a service request.** Your name, company, and your description of the issue or service need. Please do not include personal information about other people in that description.',
+        '**When you send a quote request.** Your name, company and work email address, the brand or product you are asking about, a quantity, and the office you would prefer to deal with.',
+        '**When you send a service request.** Your name, company and work email address, and your description of the issue or service need. Please do not include personal information about other people in that description.',
         '**When you contact us directly.** If you email or call using the details on the site, we receive whatever you choose to send, along with your email address or phone number.',
       ] },
       'We do not ask for payment details, identity documents or account passwords anywhere on this site, and there is no user registration.',
@@ -59,6 +59,7 @@ export const privacy: LegalDoc = {
       { list: [
         '**Arab Lab staff** in the office and department that handle your request.',
         '**Our hosting and infrastructure provider**, Vercel, which processes data on our behalf to run the website.',
+        '**Our email delivery provider**, Resend, which carries each form submission from the website to our inbox as an email and keeps a delivery log on our behalf.',
         '**A partner manufacturer**, only where your enquiry requires their input on a specific product and only the details needed for that purpose. We will tell you when this applies.',
         '**Authorities or advisers**, where the law requires it or where it is needed to establish or defend a legal claim.',
       ] },
@@ -80,7 +81,7 @@ export const privacy: LegalDoc = {
       `To exercise any of these, email ${email}. We may need to confirm your identity before acting on a request, and we will respond within the time the applicable law allows.`,
     ] },
     { id: 'security', title: 'Security', blocks: [
-      'The site is served over HTTPS. Form submissions are validated on our servers and are visible only to Arab Lab staff and our hosting provider. No method of transmission or storage is perfectly secure, so please avoid sending sensitive information through the website; a phone call is better for anything confidential.',
+      'The site is served over HTTPS. Form submissions are validated on our servers, delivered to us by email through Resend, and are visible only to Arab Lab staff and those two providers. No method of transmission or storage is perfectly secure, so please avoid sending sensitive information through the website; a phone call is better for anything confidential.',
     ] },
     { id: 'children', title: 'Children', blocks: [
       'This website is aimed at laboratories, manufacturers and their staff. It is not directed at children and we do not knowingly collect information from anyone under 18.',
@@ -151,12 +152,13 @@ export const dataCollection: LegalDoc = {
       { table: { head: ['Field', 'Form', 'Required', 'Why we ask'], rows: [
         ['Name', 'Quote · Service', 'Yes', 'To address our reply to you'],
         ['Company', 'Quote · Service', 'Yes', 'To identify the organisation and any existing account'],
+        ['Work email', 'Quote · Service', 'Yes', 'So we can reply; it becomes the reply-to address of the notification we receive'],
         ['Brand or product', 'Quote', 'No', 'To route the request to the right product specialist'],
         ['Quantity', 'Quote', 'No', 'To prepare an accurate quotation'],
         ['Preferred office', 'Quote', 'No', 'To hand the request to the office you would rather deal with'],
         ['Issue or service need', 'Service', 'Yes', 'To brief the Service department before they contact you'],
       ] } },
-      'Neither form asks for an email address or phone number. When you send one, we will need a way to reply, so include one in the description or expect us to reach you through your company. Anything else you write in a free-text field is stored with the request.',
+      'Neither form asks for a phone number. Anything else you write in a free-text field is sent with the request.',
     ] },
     { id: 'automatic', title: 'Information collected automatically', blocks: [
       { table: { head: ['Data', 'Collected by', 'Purpose', 'Identifies you?'], rows: [
@@ -176,7 +178,8 @@ export const dataCollection: LegalDoc = {
     ] },
     { id: 'where', title: 'Where the information goes', blocks: [
       { table: { head: ['Information', 'Stored by', 'Seen by', 'Kept for'], rows: [
-        ['Quote and service requests', 'Arab Lab, via our hosting provider\'s infrastructure', 'The Arab Lab office and department handling the request', 'While the enquiry is open and for the period our business records require'],
+        ['Quote and service requests', 'Delivered by email through Resend to an Arab Lab mailbox', 'The Arab Lab office and department handling the request', 'While the enquiry is open and for the period our business records require'],
+        ['Email delivery log for each request', 'Resend', 'Arab Lab administrators', 'Resend\'s standard log retention'],
         ['Server logs', 'Vercel', 'Vercel and Arab Lab administrators, when investigating an issue', 'Vercel\'s standard log retention'],
         ['Analytics', 'Vercel', 'Arab Lab, in aggregate only', 'Vercel\'s standard analytics retention'],
       ] } },

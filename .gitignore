@@ -20,3 +20,5 @@ design-src/generated/contact-sheet.html
 # Local tooling
 tsconfig.tsbuildinfo
 .claude/skills/
+.vercel
+.env*

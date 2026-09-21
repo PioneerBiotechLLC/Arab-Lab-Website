@@ -5,11 +5,12 @@ import { Check } from 'lucide-react'
 import { ContactTiles, DarkBand, OfficeTiles, PageSection, PageShell } from '@/components/site'
 import { markets, offices } from '@/lib/site-data'
 
-type FieldDef = { name: string; label: string; required?: boolean; as?: 'textarea' | 'select'; options?: string[]; wide?: boolean }
+type FieldDef = { name: string; label: string; required?: boolean; as?: 'textarea' | 'select'; type?: 'email'; options?: string[]; wide?: boolean }
 
 const quoteFields: FieldDef[] = [
   { name: 'name', label: 'Name', required: true },
   { name: 'company', label: 'Company', required: true },
+  { name: 'email', label: 'Work email', required: true, type: 'email', wide: true },
   { name: 'product', label: 'Brand or product' },
   { name: 'quantity', label: 'Quantity' },
   { name: 'office', label: 'Preferred office', as: 'select', options: offices.map((office) => office.name), wide: true },
@@ -17,12 +18,17 @@ const quoteFields: FieldDef[] = [
 const supportFields: FieldDef[] = [
   { name: 'name', label: 'Name', required: true },
   { name: 'company', label: 'Company', required: true },
+  { name: 'email', label: 'Work email', required: true, type: 'email', wide: true },
   { name: 'issue', label: 'Issue or service need', required: true, as: 'textarea', wide: true },
 ]
 
 const fieldClass = 'rounded-lg border border-line bg-white px-3 py-3 text-ink outline-none focus:border-orange aria-[invalid=true]:border-danger-border'
 
-function validate(field: FieldDef, value: string) { return field.required && !value.trim() ? `${field.label} is required.` : '' }
+function validate(field: FieldDef, value: string) {
+  if (field.required && !value.trim()) return `${field.label} is required.`
+  if (field.type === 'email' && value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) return 'Enter a valid email address.'
+  return ''
+}
 
 function ContactForm({ support = false }: { support?: boolean }) {
   const kind = support ? 'service' : 'quote'
@@ -59,7 +65,7 @@ function ContactForm({ support = false }: { support?: boolean }) {
       const error = errors[field.name]
       const errorId = `${kind}-${field.name}-error`
       const shared = { name: field.name, value: values[field.name], required: field.required, 'aria-invalid': !!error, 'aria-describedby': error ? errorId : undefined, className: fieldClass, onBlur: () => check(field, values[field.name]), onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => update(field, e) }
-      const control = field.as === 'textarea' ? <textarea rows={4} {...shared} /> : field.as === 'select' ? <select {...shared}>{field.options?.map((o) => <option key={o}>{o}</option>)}</select> : <input {...shared} />
+      const control = field.as === 'textarea' ? <textarea rows={4} {...shared} /> : field.as === 'select' ? <select {...shared}>{field.options?.map((o) => <option key={o}>{o}</option>)}</select> : <input type={field.type ?? 'text'} autoComplete={field.type === 'email' ? 'email' : undefined} inputMode={field.type === 'email' ? 'email' : undefined} {...shared} />
       return <label key={field.name} className={`grid gap-2 text-sm text-muted-foreground ${field.wide ? 'md:col-span-2' : ''}`}>{field.label}{control}{error && <span id={errorId} className="text-xs text-danger">{error}</span>}</label>
     })}
     <div className="flex flex-wrap items-center gap-4 md:col-span-2">
