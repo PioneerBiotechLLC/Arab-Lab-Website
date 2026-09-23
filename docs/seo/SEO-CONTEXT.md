@@ -112,8 +112,8 @@ Blog post keywords are listed in each post's frontmatter (`targetKeyword`).
 
 Full per-claim list with file and line: [`VERIFY.md`](VERIFY.md) (regenerate with `node scripts/seo/verify-markers.ts --md docs/seo/VERIFY.md`; `pnpm seo:verify` prints it).
 
-**Site facts and published pages** (resolve before merging to main; the one on-page marker blocks production builds):
-- `/services/pharmaceutical-consultant`: name the current UAE authority for product registration (MOHAP or the Emirates Drug Establishment). Marker is on the page.
+**Site facts and published pages** (no markers remain on published pages; confirm these off-page facts when you can):
+- `/services/pharmaceutical-consultant`: resolved at merge by leaving the neutral wording "the federal authority in the UAE" and removing the marker. To name the body (MOHAP or the Emirates Drug Establishment), confirm it first.
 - Official Arabic name (عرب لاب?). Kept out of schema until verified (`site.arabicName.verified`).
 - Brand titles and pages say each partner is supplied across the UAE, Saudi Arabia and Egypt (the brief's own pattern). Confirm territory coverage per brand.
 - CPC Biotech: the partner deck says "ready-to-use microbiological soils" (likely Italian *terreni*, i.e. culture media). Site copy says "microbiological media"; confirm the English term.
@@ -173,3 +173,4 @@ Full per-claim list with file and line: [`VERIFY.md`](VERIFY.md) (regenerate wit
 - 2026-09-23 · Phase 6 · Organization (site-wide), WebSite (home), LocalBusiness (offices); About FAQ for the ARABLAB disambiguation; schema-dts typing.
 - 2026-09-23 · Phase 7 · MDX blog with RSS and categories; 10 EN drafts (1,204–1,397 words) and 4 AR drafts; `BLOG-CALENDAR.md` with 12 more posts.
 - 2026-09-23 · Phase 8 · `/ar` home, contact, locations (+3), blog behind an approval gate; RTL header/footer; reciprocal hreflang when approved; off-site checklist; AUDIT.md and VERIFY.md.
+- 2026-09-23 · Merge · Removed the one on-page marker (UAE authority kept as "the federal authority in the UAE"); merged `seo-overhaul` into `main`.

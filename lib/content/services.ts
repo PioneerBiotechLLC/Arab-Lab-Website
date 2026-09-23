@@ -163,7 +163,7 @@ export const serviceContent: ServiceContent[] = [
       {
         title: 'The regulatory landscape',
         paragraphs: [
-          'Pharmaceutical products and facilities in the region are overseen by national regulators: the Saudi Food and Drug Authority (SFDA) in Saudi Arabia, the Egyptian Drug Authority (EDA) in Egypt, and the federal authority in the UAE {{VERIFY: name the current UAE authority for product registration — MOHAP or the Emirates Drug Establishment}}. Each has its own registration pathways, documentation requirements and inspection practices.',
+          'Pharmaceutical products and facilities in the region are overseen by national regulators: the Saudi Food and Drug Authority (SFDA) in Saudi Arabia, the Egyptian Drug Authority (EDA) in Egypt, and the federal authority in the UAE. Each has its own registration pathways, documentation requirements and inspection practices.',
           'Companies entering or expanding in more than one of these markets face different dossiers, timelines and local requirements at the same time. Planning them together avoids duplicated work and surprises late in the process.',
         ],
       },
