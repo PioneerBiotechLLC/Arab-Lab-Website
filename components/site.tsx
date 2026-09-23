@@ -63,12 +63,13 @@ export function SiteHeader() {
   </header>
 }
 
-export function SiteFooter() {
+// `showBlog` is decided on the server (root layout): the link appears once a post is published, or in development.
+export function SiteFooter({ showBlog = false }: { showBlog?: boolean }) {
   return <footer className="border-t border-border bg-white">
     <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 lg:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
       <div><Logo full /><p className="mt-6 max-w-xs text-sm leading-6 text-muted-foreground">A trusted partner for Life Science industries across {markets.join(', ')}.</p><p className="mt-8 font-mono text-xs text-muted-foreground">© 2026 Arab Lab Scientific Equipment L.L.C.</p></div>
       <div><p className="label mb-5">Offices</p><div className="grid gap-4 text-sm leading-5 text-muted-foreground">{offices.map((office) => <p key={office.name}><Link href={`/locations/${office.slug}`} className="inline-block min-w-11 py-3 font-semibold text-ink hover:text-orange">{office.name}</Link><br />{office.address.split(', ').slice(0, 2).join(', ')}</p>)}</div></div>
-      <div><p className="label mb-5">Explore</p><div className="grid text-sm text-muted-foreground">{footerItems.map(([label, href]) => <Link key={href} href={href} className="py-3 hover:text-ink">{label}</Link>)}<a href={contact.website} className="py-3 hover:text-ink" target="_blank" rel="noreferrer">{contact.websiteDisplay}</a><div className="mt-5 flex flex-wrap gap-x-5 border-t border-border pt-2 text-xs"><Link href="/privacy" className="py-3 hover:text-ink">Privacy Policy</Link><Link href="/terms" className="py-3 hover:text-ink">Terms</Link><Link href="/data-collection" className="py-3 hover:text-ink">Data Collection</Link></div></div></div>
+      <div><p className="label mb-5">Explore</p><div className="grid text-sm text-muted-foreground">{[...footerItems, ...(showBlog ? [['Blog', '/blog']] : [])].map(([label, href]) => <Link key={href} href={href} className="py-3 hover:text-ink">{label}</Link>)}<a href={contact.website} className="py-3 hover:text-ink" target="_blank" rel="noreferrer">{contact.websiteDisplay}</a><div className="mt-5 flex flex-wrap gap-x-5 border-t border-border pt-2 text-xs"><Link href="/privacy" className="py-3 hover:text-ink">Privacy Policy</Link><Link href="/terms" className="py-3 hover:text-ink">Terms</Link><Link href="/data-collection" className="py-3 hover:text-ink">Data Collection</Link></div></div></div>
     </div>
   </footer>
 }

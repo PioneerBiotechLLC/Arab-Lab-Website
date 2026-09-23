@@ -3,6 +3,7 @@
 import { site } from './site'
 import { brands, programs, solutions } from './site-data'
 import { officeList } from './site'
+import { publishedPosts } from './blog'
 
 export type RouteEntry = {
   path: string
@@ -28,8 +29,21 @@ export function indexableRoutes(): RouteEntry[] {
     { path: '/locations', lastModified: updated, changeFrequency: 'yearly', priority: 0.7 },
     ...officeList.map((o) => ({ path: `/locations/${o.slug}`, lastModified: updated, changeFrequency: 'yearly' as const, priority: 0.8 })),
     { path: '/contact', lastModified: updated, changeFrequency: 'yearly', priority: 0.8 },
+    ...blogRoutes(),
     { path: '/privacy', lastModified: updated, changeFrequency: 'yearly', priority: 0.2 },
     { path: '/terms', lastModified: updated, changeFrequency: 'yearly', priority: 0.2 },
     { path: '/data-collection', lastModified: updated, changeFrequency: 'yearly', priority: 0.2 },
+  ]
+}
+
+/** Blog index, published posts and categories that have published posts. Nothing is listed until a post is published. */
+function blogRoutes(): RouteEntry[] {
+  const posts = publishedPosts('en')
+  if (!posts.length) return []
+  const categories = [...new Set(posts.map((p) => p.category))]
+  return [
+    { path: '/blog', lastModified: posts[0].updated, changeFrequency: 'weekly', priority: 0.7 },
+    ...posts.map((p) => ({ path: `/blog/${p.slug}`, lastModified: p.updated, changeFrequency: 'monthly' as const, priority: 0.6 })),
+    ...categories.map((c) => ({ path: `/blog/category/${c}`, lastModified: posts[0].updated, changeFrequency: 'weekly' as const, priority: 0.4 })),
   ]
 }

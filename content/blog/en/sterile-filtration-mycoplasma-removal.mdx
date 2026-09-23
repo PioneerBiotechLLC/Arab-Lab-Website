@@ -1,0 +1,91 @@
+---
+title: "Sterile Filtration in Pharmaceutical Manufacturing: Bacteria, Mycoplasma and Filter Integrity"
+seoTitle: "Sterile Filtration in Pharma Manufacturing"
+description: "Sterile filtration in pharmaceutical manufacturing: filter ratings, bacterial retention validation, mycoplasma removal and integrity testing."
+slug: sterile-filtration-mycoplasma-removal
+date: 2026-09-23
+updated: 2026-09-23
+author: Arab Lab Technical Team
+category: bioprocessing
+tags: [sterile filtration, mycoplasma, filter integrity testing, PUPSIT, bioprocessing, Annex 1]
+targetKeyword: sterile filtration pharmaceutical
+relatedSolutions: [process-filtration-single-use]
+relatedBrands: [parker]
+status: draft
+needsNativeReview: false
+faq:
+  - q: "What pore size is a sterilising-grade filter?"
+    a: "Sterilising-grade filters are usually rated at 0.2 or 0.22 µm, but the rating matters less than the validation: the filter must be shown to retain a defined bacterial challenge and produce a sterile filtrate under process conditions."
+  - q: "Why is a 0.2 µm filter not enough for mycoplasma?"
+    a: "Mycoplasma are very small and have no cell wall, so they can deform and pass through filters rated for bacteria. Mycoplasma-retentive filters, commonly rated at 0.1 µm, are used where mycoplasma is a risk."
+  - q: "What is PUPSIT?"
+    a: "Pre-use post-sterilisation integrity testing: testing the sterilised filter assembly before it is used, to detect damage from sterilisation or handling. EU GMP Annex 1 expects it unless a risk assessment justifies an alternative."
+  - q: "What is the difference between bubble point and diffusion tests?"
+    a: "Both are non-destructive integrity tests. Bubble point finds the pressure at which liquid is forced out of the largest pores; diffusion measures gas flow through the wetted membrane below that pressure. Larger filter areas often use diffusion."
+  - q: "Does Arab Lab supply sterile filtration solutions?"
+    a: "Yes. Arab Lab supplies Parker bioprocess filtration, from clarification to sterile filtration and mycoplasma removal, across the UAE, Saudi Arabia and Egypt."
+---
+
+Most biologics and many sterile drugs cannot survive heat, so filtration is the step that makes them sterile. **Sterile filtration in pharmaceutical manufacturing** is deceptively simple: push the fluid through a membrane fine enough to hold back microorganisms. In practice it depends on the right filter train, a validated filter, a mycoplasma strategy where cells are involved, and integrity testing that proves the filter was intact when it mattered. This article walks through each of those.
+
+## The sterile filtration train in pharmaceutical manufacturing
+
+A sterilising filter is rarely used on its own. Placed directly on a crude process stream it would block quickly, raising cost and risking the batch. Instead, filters are arranged in a sequence where each stage protects the next.
+
+- **Clarification** removes cells and debris after harvest, typically with depth filters.
+- **Prefiltration** removes finer particles and colloids that would foul the final membrane.
+- **Bioburden reduction** lowers the microbial load before hold steps or before the final filter.
+- **Sterile filtration** produces the sterile fluid, usually as close to the point of fill as possible.
+- **Mycoplasma removal** is added where cell culture media or other fluids could carry mycoplasma.
+
+Gas and vent filters sit alongside the liquid train, protecting bioreactors, tanks and lines from airborne contamination as they breathe.
+
+## What makes a filter sterilising grade
+
+Filters are sold with a pore-size rating, commonly 0.2 or 0.22 µm for sterile filtration. The rating is a convenient label, not the proof. A sterilising-grade filter is defined by performance: it must retain a standardised bacterial challenge and produce a sterile filtrate.
+
+The standard challenge organism is *Brevundimonas diminuta*, a small bacterium chosen because it represents a worst case for retention {{VERIFY: challenge level of 10^7 CFU per cm² of effective filtration area per ASTM F838}}. Manufacturers qualify their filters with this test, and users confirm that the qualification applies to their process through **process-specific validation**, which checks the filter with the actual product, under the actual pressure, flow, temperature and contact time. Validation also covers compatibility, extractables and leachables, and the effect of the product on the filter's integrity test values.
+
+## Mycoplasma: the organism that slips through
+
+Mycoplasma are among the smallest free-living organisms. They lack a cell wall and can change shape, which lets them pass through membranes rated for bacteria. They are a significant risk in cell culture: contamination can go unnoticed, alter cell behaviour and compromise a product.
+
+Where mycoplasma is a realistic risk, particularly in cell culture media and supplements, manufacturers add **mycoplasma-retentive filtration**. These filters are commonly rated at 0.1 µm and are validated with a mycoplasma challenge {{VERIFY: standard mycoplasma challenge organism, e.g. Acholeplasma laidlawii, and relevant test method}}. Because finer membranes filter more slowly, the filter area and prefiltration need to be sized carefully to keep throughput acceptable.
+
+## Integrity testing: proving the filter was intact
+
+A validated filter protects the product only if it is intact during use. Integrity tests are non-destructive checks that confirm this, correlated during validation to the bacterial retention test.
+
+- **Bubble point** raises gas pressure on a wetted membrane until liquid is forced out of the largest pores. A value below the specification indicates a defect.
+- **Diffusion (forward flow)** measures gas flow through the wetted membrane at a pressure below the bubble point. It is often preferred for larger filter areas.
+- **Pressure hold** measures pressure decay upstream of the filter over time.
+
+Sterilising filters are tested **after use** to confirm they stayed intact throughout filtration. EU GMP Annex 1 also expects a test **before use and after sterilisation** of the assembly, known as PUPSIT, to detect damage caused by sterilisation or installation {{VERIFY: exact Annex 1 clause and wording on PUPSIT and permitted risk-based alternatives}}. Designing assemblies with sterile connections for the test fluid and a downstream vent or bag makes PUPSIT practical without compromising sterility.
+
+## Sizing filters and scaling up
+
+Filter area is a balance. Too little and the filter blocks before the batch is finished, forcing a change mid-process; too much and the cost, hold-up volume and product loss rise. The usual approach is to size from small-scale trials with the real process fluid.
+
+Two small-scale methods are common. A **constant-flow** study records the rise in pressure as fluid passes through a small disc of the membrane, which reflects how most production filters are operated. A **constant-pressure** study, often called a Vmax test, measures how the flow rate decays and predicts the maximum volume a given area can process. In both cases, a safety factor is applied to cover variation between batches and filter lots {{VERIFY: typical safety factors applied when scaling filter area, e.g. 1.5 to 2}}.
+
+Scale-up works best when the same membrane and device format family are used from development to production, so that small-scale results translate predictably. The prefilter and the final filter should be sized together: a better prefilter often saves more final-filter area than it costs.
+
+Process conditions matter as much as area. Temperature changes viscosity, and viscosity changes flux. Protein concentration, pH and conductivity affect fouling and binding. Hold times before filtration can change aggregate levels, which in turn affect how quickly the membrane blocks. Record these conditions in the sizing study so the production filter is chosen for the process as it really runs.
+
+## Common problems and how to avoid them
+
+| Problem | Typical cause | Mitigation |
+|---|---|---|
+| Premature blocking | Too little prefiltration, high particle load | Add or resize prefilters; review the filter train |
+| Failed post-use integrity test | Wetting problems, product residue, real damage | Flush thoroughly, use the validated wetting fluid, investigate before retesting |
+| Product binding | Adsorption of protein or preservative to the membrane | Choose a low-binding membrane, flush and validate recovery |
+| Extractables concerns | New materials or long contact times | Use supplier data and process-specific assessment |
+| Mycoplasma risk overlooked | Media filtered only at 0.2 µm | Add mycoplasma-retentive filtration where cell culture is involved |
+
+## Filtration and single-use systems
+
+Filtration is increasingly delivered as part of pre-sterilised single-use assemblies, which combine filters, tubing, connectors and bags in one validated unit. They reduce cleaning and changeover work and can be designed around PUPSIT from the start. For a closer look at when single-use makes sense, see our article on [single-use bioprocessing](/blog/single-use-bioprocessing-systems).
+
+## How Arab Lab supports sterile filtration
+
+[Parker](/brands/parker) provides biopharmaceutical liquid and gas filters and housings for the whole sequence, from clarification through bioburden reduction to sterile filtration and mycoplasma removal, and incorporates SciLog technology into automated single-use bioprocessing systems. Arab Lab supplies these across the UAE, Saudi Arabia and Egypt. Explore [process filtration and single-use systems](/solutions/process-filtration-single-use), or send your process step, fluid and flow rate through the [contact page](/contact) to discuss the right filter train.

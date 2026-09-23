@@ -9,6 +9,7 @@ import { AccentTile, BrandMark, BrandTile, ButtonLink, ClosingCta, NumberedCard,
 import { brandBySlug, brands, offices, solutionsFor } from '@/lib/site-data'
 import { brandContent } from '@/lib/content/brands'
 import { FaqList, Prose, Rich } from '@/components/content'
+import { RelatedPosts } from '@/components/related-posts'
 import { MapPin } from 'lucide-react'
 
 export function generateStaticParams() { return brands.map((brand) => ({ slug: brand.slug })) }
@@ -63,6 +64,7 @@ export default async function BrandPage({ params }: { params: Promise<{ slug: st
       <FaqList faq={content.faq} />
       <div className="mt-10 flex flex-wrap gap-4"><ButtonLink href="/contact">Request a {brand.name} quote</ButtonLink><ButtonLink href="/solutions" variant="secondary">Browse solutions</ButtonLink></div>
     </PageSection>}
+    <RelatedPosts brand={brand.slug} />
     <PageSection className="bg-paper">
       <SectionIntro title="The rest of the portfolio." />
       <Spotlight className="grid grid-cols-2 gap-4 md:grid-cols-4">{others.map((other) => <BrandTile key={other.slug} brand={other} />)}<AccentTile href="/brands" label="All brands" /></Spotlight>

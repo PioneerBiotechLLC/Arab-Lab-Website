@@ -1,6 +1,6 @@
 // schema.org JSON-LD builders. Every value is plain text: review markers are stripped and inline markdown removed,
 // so structured data never carries editorial notes. Only content visible on the page is marked up.
-import type { BreadcrumbList, FAQPage, LocalBusiness, Organization, PostalAddress, WebSite, WithContext } from 'schema-dts'
+import type { BlogPosting, BreadcrumbList, FAQPage, LocalBusiness, Organization, PostalAddress, WebSite, WithContext } from 'schema-dts'
 import { absoluteUrl, officeList, site, type Office } from './site'
 
 export const plain = (s: string) => s.replace(/\s*\{\{VERIFY:[^}]*\}\}/g, '').replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').trim()
@@ -90,5 +90,25 @@ export function localBusiness(office: Office): WithContext<LocalBusiness> {
     address: postalAddress(office),
     parentOrganization: { '@id': organizationId },
     areaServed: { '@type': 'Country', name: office.countryCode === 'AE' ? 'United Arab Emirates' : office.country },
+  }
+}
+
+export function blogPosting(post: { title: string; description: string; date: string; updated: string; author: string; lang: string; tags: string[]; category: string; url: string; image: string; words: number }): WithContext<BlogPosting> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: plain(post.title),
+    description: plain(post.description),
+    datePublished: post.date,
+    dateModified: post.updated,
+    author: { '@type': 'Organization', name: post.author, url: absoluteUrl('/about') },
+    publisher: { '@id': organizationId },
+    image: absoluteUrl(post.image),
+    mainEntityOfPage: absoluteUrl(post.url),
+    url: absoluteUrl(post.url),
+    inLanguage: post.lang,
+    keywords: post.tags.join(', '),
+    articleSection: post.category,
+    wordCount: post.words,
   }
 }
