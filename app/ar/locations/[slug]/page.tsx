@@ -56,7 +56,7 @@ export default async function ArabicOffice({ params }: { params: Promise<{ slug:
     </PageSection>
     <PageSection>
       <SectionIntro title={arLocations.servicesTitle} />
-      <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{programs.map((p, index) => <NumberedCard key={p.id} index={index + 1} icon={icon(p.id)} title={arHome.services[p.id].title} body={arHome.services[p.id].body} href={`/services/${p.slug}`} />)}</Spotlight>
+      <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{programs.map((p, index) => <NumberedCard key={p.id} index={index + 1} icon={icon(p.id)} title={arHome.services[p.id].title} body={arHome.services[p.id].body} href={`/ar/services/${p.slug}`} />)}</Spotlight>
     </PageSection>
     <DarkBand overlap title={arLocations.othersTitle} intro={arLocations.othersIntro}>
       <Spotlight className="grid gap-4 md:grid-cols-2">{others.map((o) => <GlassTile key={o.slug} href={`/ar/locations/${o.slug}`} icon={<MapPin className="size-5 text-brand" />} badge={o.headquarters ? arLocations.hq : undefined} title={arOfficeNames[o.name]} body={arAddresses[o.slug]} />)}</Spotlight>

@@ -26,3 +26,6 @@ export function languagesFor(enPath: string, arPath = localePath('ar', enPath)) 
 
 /** Locale-specific Open Graph values. */
 export const ogLocale = (locale: Locale) => (locale === 'ar' ? 'ar_AE' : 'en_US') as 'ar_AE' | 'en_US'
+
+/** A list in running text: "A, B, C" in English (the site's existing style), "أ وب وج" in Arabic. */
+export const joinList = (locale: Locale, items: string[]) => items.join(locale === 'ar' ? ' و' : ', ')

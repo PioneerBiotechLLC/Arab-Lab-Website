@@ -5,7 +5,7 @@ import { AccentTile, BrandTile, ButtonLink, CardLink, DarkBand, GlassTile, Numbe
 import { ArClosingCta, ReviewBanner } from '@/components/ar'
 import { MapPin } from 'lucide-react'
 import { pageMetadata } from '@/lib/seo'
-import { arAddresses, arChrome, arHome, arOfficeNames } from '@/lib/ar'
+import { arAddresses, arHome, arOfficeNames } from '@/lib/ar'
 import { arabicApproved, languagesFor } from '@/lib/i18n'
 import { brandNames, brands, departments, markets, offices, programs, solutions } from '@/lib/site-data'
 import { icon } from '@/lib/icons'
@@ -32,7 +32,7 @@ export default function ArabicHome() {
             <h1 className="rise mb-5 max-w-xl font-heading text-base font-semibold leading-7 text-ink text-balance md:text-lg" style={{ '--i': 0 } as React.CSSProperties}>{arHome.h1}</h1>
             <p className="rise font-heading text-4xl font-bold leading-[1.3] text-ink md:text-5xl lg:text-6xl" style={{ '--i': 1 } as React.CSSProperties}><span className="block">{arHome.slogan[0]}</span><span className="block">{arHome.slogan[1]} <span className="text-orange">{arHome.slogan[2]}</span></span></p>
             <p className="rise mt-7 max-w-xl text-lg leading-9 text-muted-foreground" style={{ '--i': 2 } as React.CSSProperties}>{arHome.intro}</p>
-            <div className="rise mt-10 flex flex-wrap items-center gap-4" style={{ '--i': 3 } as React.CSSProperties}><ButtonLink href="/ar/contact">{arHome.primary}</ButtonLink><ButtonLink href="/brands" variant="secondary">{arHome.secondary}</ButtonLink></div>
+            <div className="rise mt-10 flex flex-wrap items-center gap-4" style={{ '--i': 3 } as React.CSSProperties}><ButtonLink href="/ar/contact">{arHome.primary}</ButtonLink><ButtonLink href="/ar/brands" variant="secondary">{arHome.secondary}</ButtonLink></div>
           </div>
         </div>
       </div>
@@ -41,18 +41,17 @@ export default function ArabicHome() {
 
     <PageSection className="bg-paper">
       <SectionIntro title={arHome.servicesTitle} />
-      <Spotlight><ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{programs.map((program, index) => <li key={program.id}><NumberedCard index={index + 1} icon={icon(program.id)} title={arHome.services[program.id].title} body={arHome.services[program.id].body} href={`/services/${program.slug}`} /></li>)}</ol></Spotlight>
+      <Spotlight><ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{programs.map((program, index) => <li key={program.id}><NumberedCard index={index + 1} icon={icon(program.id)} title={arHome.services[program.id].title} body={arHome.services[program.id].body} href={`/ar/services/${program.slug}`} /></li>)}</ol></Spotlight>
     </PageSection>
 
     <PageSection>
       <SectionIntro title={arHome.solutionsTitle} intro={arHome.solutionsIntro} />
-      <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">{solutions.map((item) => <CardLink key={item.id} icon={icon(item.id)} eyebrow={brandNames(item.brands)} title={arHome.solutions[item.id].title} body={arHome.solutions[item.id].body} href={`/solutions/${item.slug}`} />)}</Spotlight>
-      <p className="mt-6 text-sm text-muted-foreground">{arChrome.englishOnly}: صفحات الحلول والعلامات التجارية متاحة حالياً باللغة الإنجليزية.</p>
+      <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">{solutions.map((item) => <CardLink key={item.id} icon={icon(item.id)} eyebrow={brandNames(item.brands)} title={arHome.solutions[item.id].title} body={arHome.solutions[item.id].body} href={`/ar/solutions/${item.slug}`} />)}</Spotlight>
     </PageSection>
 
     <PageSection className="bg-paper">
       <SectionIntro title={arHome.partnersTitle} intro={arHome.partnersIntro} />
-      <Spotlight className="grid grid-cols-2 gap-4 md:grid-cols-4">{brands.map((brand) => <BrandTile key={brand.slug} brand={brand} />)}<AccentTile href="/brands" label={arHome.allBrands} /></Spotlight>
+      <Spotlight className="grid grid-cols-2 gap-4 md:grid-cols-4">{brands.map((brand) => <BrandTile key={brand.slug} brand={brand} />)}<AccentTile href="/ar/brands" label={arHome.allBrands} /></Spotlight>
     </PageSection>
 
     <DarkBand overlap title={arHome.coverageTitle} intro={arHome.coverageIntro}>

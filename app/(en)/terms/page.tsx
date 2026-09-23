@@ -1,9 +1,5 @@
-import type { Metadata } from 'next'
-import { pageMetadata } from '@/lib/seo'
-import { pageSeo, seoProps } from '@/lib/seo-pages'
-import { LegalPage } from '@/components/legal'
-import { terms } from '@/lib/legal'
+import { LegalPage, legalMetadata } from '@/components/legal'
 
-export const metadata: Metadata = pageMetadata({ path: '/terms', ...seoProps(pageSeo['/terms']) })
+export const metadata = legalMetadata('en', 'terms')
 
-export default function Page() { return <LegalPage doc={terms} /> }
+export default function Page() { return <LegalPage slug="terms" locale='en' /> }
