@@ -16,7 +16,7 @@ export default function BrandsPage() {
       <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{brands.map((brand) => <BrandTile key={brand.slug} brand={brand} detailed />)}<AccentTile href="/contact" label="Discuss your application" tall /></Spotlight>
     </PageSection>
     <DarkBand overlap title="Matched to the laboratory problem.">
-      <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">{solutions.map((item) => <GlassTile key={item.id} href={`/solutions#${item.id}`} icon={icon(item.id, 'size-5 text-brand')} badge={brandNames(item.brands)} title={item.title} body={item.body} />)}</Spotlight>
+      <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">{solutions.map((item) => <GlassTile key={item.id} href={`/solutions/${item.slug}`} icon={icon(item.id, 'size-5 text-brand')} badge={brandNames(item.brands)} title={item.title} body={item.body} />)}</Spotlight>
     </DarkBand>
     <ClosingCta />
   </PageShell>

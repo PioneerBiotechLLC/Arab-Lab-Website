@@ -17,6 +17,8 @@ import { brandBySlug, contact, markets, offices } from '@/lib/site-data'
 const navItems = [
   ['About', '/about'], ['Solutions', '/solutions'], ['Brands', '/brands'], ['Locations', '/locations'], ['Contact', '/contact'],
 ]
+// The footer also lists Services, which has no top-level nav slot.
+const footerItems = [...navItems.slice(0, 2), ['Services', '/services'], ...navItems.slice(2)]
 
 const button = {
   primary: 'inline-flex items-center py-3 gap-2 rounded-full bg-orange px-6 font-heading text-sm font-semibold text-white shadow-card hover:bg-amber',
@@ -66,7 +68,7 @@ export function SiteFooter() {
     <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 lg:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
       <div><Logo full /><p className="mt-6 max-w-xs text-sm leading-6 text-muted-foreground">A trusted partner for Life Science industries across {markets.join(', ')}.</p><p className="mt-8 font-mono text-xs text-muted-foreground">© 2026 Arab Lab Scientific Equipment L.L.C.</p></div>
       <div><p className="label mb-5">Offices</p><div className="grid gap-4 text-sm leading-5 text-muted-foreground">{offices.map((office) => <p key={office.name}><Link href="/locations" className="inline-block min-w-11 py-3 font-semibold text-ink hover:text-orange">{office.name}</Link><br />{office.address.split(', ').slice(0, 2).join(', ')}</p>)}</div></div>
-      <div><p className="label mb-5">Explore</p><div className="grid text-sm text-muted-foreground">{navItems.map(([label, href]) => <Link key={href} href={href} className="py-3 hover:text-ink">{label}</Link>)}<a href={contact.website} className="py-3 hover:text-ink" target="_blank" rel="noreferrer">{contact.websiteDisplay}</a><div className="mt-5 flex flex-wrap gap-x-5 border-t border-border pt-2 text-xs"><Link href="/privacy" className="py-3 hover:text-ink">Privacy Policy</Link><Link href="/terms" className="py-3 hover:text-ink">Terms</Link><Link href="/data-collection" className="py-3 hover:text-ink">Data Collection</Link></div></div></div>
+      <div><p className="label mb-5">Explore</p><div className="grid text-sm text-muted-foreground">{footerItems.map(([label, href]) => <Link key={href} href={href} className="py-3 hover:text-ink">{label}</Link>)}<a href={contact.website} className="py-3 hover:text-ink" target="_blank" rel="noreferrer">{contact.websiteDisplay}</a><div className="mt-5 flex flex-wrap gap-x-5 border-t border-border pt-2 text-xs"><Link href="/privacy" className="py-3 hover:text-ink">Privacy Policy</Link><Link href="/terms" className="py-3 hover:text-ink">Terms</Link><Link href="/data-collection" className="py-3 hover:text-ink">Data Collection</Link></div></div></div>
     </div>
   </footer>
 }

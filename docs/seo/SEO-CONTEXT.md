@@ -93,8 +93,13 @@ Blog post keywords are listed in each post's frontmatter (`targetKeyword`).
 14. Brand copy beyond the partner decks is in `lib/content/brands.ts`. Portfolio categories describe each manufacturer's public range, not Arab Lab stock; FAQs avoid distributor-status claims and invite availability checks instead.
 15. Review markers: `{{VERIFY: …}}` in content renders as a visible highlight (`Rich` in `components/content.tsx`) and is stripped from JSON-LD. `pnpm build` runs `scripts/seo/verify-markers.ts` first; on Vercel production it fails while markers remain in published content (drafts excluded; override `SEO_ALLOW_VERIFY=1`). `pnpm seo:verify` lists them.
 16. Breadcrumbs (visible + BreadcrumbList) come from the `breadcrumbs` prop on `PageShell`. FAQs render through `FaqList`, which emits FAQPage for exactly the questions shown. Note: Google shows FAQ rich results only for a few authoritative sites since 2023, so FAQPage mainly helps other engines and AI answers.
+17. Solution pages (`/solutions/[slug]`, 665–870 words) and service pages (`/services/[slug]`, 500–670 words) render from `lib/content/solutions.ts` and `lib/content/services.ts`. A small `/services` hub was added so service breadcrumbs have a parent. `solutions` and `programs` in site-data gained a `slug`; their `id` stays as the `/solutions#…` anchor and asset name.
+18. `/solutions` keeps every section and anchor; each card gained a "Read the full guide" link. Home, `/brands` and brand pages now link to the dedicated solution and service pages instead of anchors. The footer lists Services.
+19. Service copy states Arab Lab facts only (departments, offices, the four service lines as worded on the site). Turnkey and consulting scope is described generally and "agreed per engagement", with no claims about past projects or approvals.
 
 ## VERIFY items
+
+- `/services/pharmaceutical-consultant`: name the current UAE authority for product registration (MOHAP or the Emirates Drug Establishment). Marker is on the page; it blocks production until resolved.
 
 - Brand titles and pages say each partner is supplied across the UAE, Saudi Arabia and Egypt (the brief's own pattern). Confirm territory coverage per brand.
 - CPC Biotech: the partner deck says "ready-to-use microbiological soils" (likely Italian *terreni*, i.e. culture media). Meta copy says "microbiological media"; confirm the English term.
@@ -113,3 +118,4 @@ Filled in during Phase 8. Collected so far:
 - 2026-09-23 · Phase 1 · `lib/site.ts`, www everywhere, canonicals, apex 301, sitemap, robots, verification tags, alt text, audit script.
 - 2026-09-23 · Phase 2 · Unique titles/descriptions on all 16 routes (all within 60/155), per-page OG title/description/card/alt.
 - 2026-09-23 · Phase 3 · Keyword H1 on home; brand pages expanded to 560–670 words with categories, applications, fit, availability and FAQ; breadcrumbs on all inner pages; heading-order and word-count checks; production marker guard.
+- 2026-09-23 · Phase 4 · 6 solution pages, 4 service pages, `/services` hub; internal links re-pointed; `/solutions` kept as hub with anchors.

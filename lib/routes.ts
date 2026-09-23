@@ -1,7 +1,7 @@
 // Every indexable route, in one list. The sitemap, the SEO audit script and hreflang all read from here,
 // so a new page type is registered once. Routes that are noindex (drafts, unapproved Arabic pages) never appear.
 import { site } from './site'
-import { brands } from './site-data'
+import { brands, programs, solutions } from './site-data'
 
 export type RouteEntry = {
   path: string
@@ -19,6 +19,9 @@ export function indexableRoutes(): RouteEntry[] {
     { path: '/', lastModified: updated, changeFrequency: 'monthly', priority: 1 },
     { path: '/about', lastModified: updated, changeFrequency: 'yearly', priority: 0.7 },
     { path: '/solutions', lastModified: updated, changeFrequency: 'monthly', priority: 0.9 },
+    ...solutions.map((s) => ({ path: `/solutions/${s.slug}`, lastModified: updated, changeFrequency: 'monthly' as const, priority: 0.9 })),
+    { path: '/services', lastModified: updated, changeFrequency: 'monthly', priority: 0.8 },
+    ...programs.map((p) => ({ path: `/services/${p.slug}`, lastModified: updated, changeFrequency: 'monthly' as const, priority: 0.8 })),
     { path: '/brands', lastModified: updated, changeFrequency: 'monthly', priority: 0.9 },
     ...brands.map((brand) => ({ path: `/brands/${brand.slug}`, lastModified: updated, changeFrequency: 'monthly' as const, priority: 0.8 })),
     { path: '/locations', lastModified: updated, changeFrequency: 'yearly', priority: 0.7 },

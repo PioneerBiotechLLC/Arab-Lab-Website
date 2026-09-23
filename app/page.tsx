@@ -64,14 +64,14 @@ export default function Home() {
 
     <PageSection id="program" className="bg-paper">
       <SectionIntro title="Four service lines, one partner." />
-      <Spotlight><ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{programs.map((program, index) => <li key={program.id}><NumberedCard index={index + 1} icon={icon(program.id)} title={program.title} body={program.body} href={`/solutions#${program.id}`} /></li>)}</ol></Spotlight>
+      <Spotlight><ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{programs.map((program, index) => <li key={program.id}><NumberedCard index={index + 1} icon={icon(program.id)} title={program.title} body={program.body} href={`/services/${program.slug}`} /></li>)}</ol></Spotlight>
     </PageSection>
 
     <PageSection id="solutions">
       <SectionIntro title="Organised by the problem your lab needs to solve." intro="Each solution links through to the partner whose technology addresses it." />
       <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {/* Feature tile: the one dark material in the grid gives the bento a focal point; its glow follows the pointer. */}
-        <Link href={`/solutions#${feature.id}`} data-spot className="spot-strong group relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded-3xl bg-ink p-8 text-white shadow-float md:col-span-2 lg:row-span-2 md:p-10">
+        <Link href={`/solutions/${feature.slug}`} data-spot className="spot-strong group relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded-3xl bg-ink p-8 text-white shadow-float md:col-span-2 lg:row-span-2 md:p-10">
           <span aria-hidden className="pointer-events-none absolute -top-24 -right-24 size-80 rounded-full bg-brand/25 blur-3xl" />
           <span aria-hidden className="pointer-events-none absolute -bottom-32 -left-16 size-72 rounded-full bg-white/5 blur-3xl" />
           <div className="relative">
@@ -82,7 +82,7 @@ export default function Home() {
             <span className="mt-6 inline-flex items-center gap-2 font-heading text-sm font-semibold text-orange-on-dark">Explore <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span>
           </div>
         </Link>
-        {problems.map((item, index) => <div key={item.id} className={index === problems.length - 1 ? 'md:col-span-2 lg:col-span-1' : ''}><CardLink icon={icon(item.id)} eyebrow={brandNames(item.brands)} title={item.title} body={item.body} href={`/solutions#${item.id}`} /></div>)}
+        {problems.map((item, index) => <div key={item.id} className={index === problems.length - 1 ? 'md:col-span-2 lg:col-span-1' : ''}><CardLink icon={icon(item.id)} eyebrow={brandNames(item.brands)} title={item.title} body={item.body} href={`/solutions/${item.slug}`} /></div>)}
       </Spotlight>
     </PageSection>
 

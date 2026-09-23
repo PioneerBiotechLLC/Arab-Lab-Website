@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { pageMetadata } from '@/lib/seo'
 import { pageSeo, seoProps } from '@/lib/seo-pages'
+import Link from 'next/link'
+import { ArrowUpRight } from 'lucide-react'
 import { Spotlight } from '@/components/motion'
 import { BrandChips, ButtonLink, ClosingCta, DarkBand, NumberedCard, PageSection, PageShell, SectionIntro } from '@/components/site'
 import { brandNames, company, programs, solutions } from '@/lib/site-data'
@@ -13,11 +15,11 @@ export default function SolutionsPage() {
     actions={<><ButtonLink href="/contact">Describe your application</ButtonLink><ButtonLink href="/brands" variant="secondary">See the partners</ButtonLink></>}>
     <PageSection>
       <SectionIntro title="Six problems, seven partners." />
-      <Spotlight className="grid gap-4 md:grid-cols-2">{solutions.map((item, index) => <NumberedCard key={item.id} id={item.id} index={index + 1} icon={icon(item.id)} eyebrow={brandNames(item.brands)} title={item.title} body={item.body}><BrandChips slugs={item.brands} /></NumberedCard>)}</Spotlight>
+      <Spotlight className="grid gap-4 md:grid-cols-2">{solutions.map((item, index) => <NumberedCard key={item.id} id={item.id} index={index + 1} icon={icon(item.id)} eyebrow={brandNames(item.brands)} title={item.title} body={item.body}><BrandChips slugs={item.brands} /><Link href={`/solutions/${item.slug}`} className="group relative mt-6 inline-flex items-center gap-2 py-2 font-mono text-xs text-orange">Read the full guide <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></Link></NumberedCard>)}</Spotlight>
     </PageSection>
     <PageSection className="bg-paper">
       <SectionIntro title="Four service lines." />
-      <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{programs.map((program, index) => <NumberedCard key={program.id} id={program.id} index={index + 1} icon={icon(program.id)} title={program.title} body={program.body} href="/contact" />)}</Spotlight>
+      <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{programs.map((program, index) => <NumberedCard key={program.id} id={program.id} index={index + 1} icon={icon(program.id)} title={program.title} body={program.body} href={`/services/${program.slug}`} />)}</Spotlight>
     </PageSection>
     <DarkBand overlap title={`“${company.mission}”`} />
     <ClosingCta />
