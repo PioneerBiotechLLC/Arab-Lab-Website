@@ -11,7 +11,7 @@ import { brandNames, brands, departments, markets, offices, programs, solutions 
 import { icon } from '@/lib/icons'
 
 export function generateMetadata(): Metadata {
-  return pageMetadata({ path: '/ar', title: arHome.seo.title, absoluteTitle: true, description: arHome.seo.description, locale: 'ar_AE', languages: languagesFor('/', '/ar'), noindex: !arabicApproved(), ogImage: { url: '/opengraph-image', alt: arHome.seo.ogAlt } })
+  return pageMetadata({ path: '/ar', title: arHome.seo.title, absoluteTitle: true, description: arHome.seo.description, locale: 'ar_AE', languages: languagesFor('/', '/ar'), noindex: !arabicApproved() })
 }
 
 const stats: [string, string][] = [

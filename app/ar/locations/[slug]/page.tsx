@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const copy = arLocations.offices[slug]
   if (!copy) return {}
-  return pageMetadata({ path: `/ar/locations/${slug}`, title: copy.seo.title, absoluteTitle: true, description: copy.seo.description, locale: 'ar_AE', languages: languagesFor(`/locations/${slug}`, `/ar/locations/${slug}`), noindex: !arabicApproved(), ogImage: { url: `/locations/${slug}/opengraph-image/card`, alt: copy.h1 } })
+  return pageMetadata({ path: `/ar/locations/${slug}`, title: copy.seo.title, absoluteTitle: true, description: copy.seo.description, locale: 'ar_AE', languages: languagesFor(`/locations/${slug}`, `/ar/locations/${slug}`), noindex: !arabicApproved() })
 }
 
 export default async function ArabicOffice({ params }: { params: Promise<{ slug: string }> }) {

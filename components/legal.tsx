@@ -34,7 +34,7 @@ function BlockView({ block }: { block: Block }) {
 }
 
 export function legalMetadata(locale: Locale, slug: string): Metadata {
-  return localizedMetadata(locale, `/${slug}`, localeData(locale).legalSeo(slug), `/${slug}/opengraph-image`)
+  return localizedMetadata(locale, `/${slug}`, localeData(locale).legalSeo(slug))
 }
 
 // One layout for the three legal documents in either language: hero, a sticky contents list, the sections, and

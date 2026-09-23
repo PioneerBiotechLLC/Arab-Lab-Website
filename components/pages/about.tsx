@@ -10,7 +10,7 @@ import { offices } from '@/lib/site-data'
 import { icon } from '@/lib/icons'
 import { ui } from '@/lib/ui'
 
-export const aboutMetadata = (locale: Locale): Metadata => localizedMetadata(locale, '/about', localeData(locale).pageSeo('/about'), '/about/opengraph-image')
+export const aboutMetadata = (locale: Locale): Metadata => localizedMetadata(locale, '/about', localeData(locale).pageSeo('/about'))
 
 export function AboutPage({ locale }: { locale: Locale }) {
   const d = localeData(locale)

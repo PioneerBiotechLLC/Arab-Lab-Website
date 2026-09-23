@@ -12,6 +12,7 @@ import { relatedPosts, translationOf, type Lang, type Post } from '@/lib/blog'
 import { brandNames, type Brand } from '@/lib/site-data'
 import { localeData } from '@/lib/content/locale'
 import { localePath } from '@/lib/i18n'
+import { socialCardPath } from '@/lib/social-card'
 import { icon } from '@/lib/icons'
 
 export const blogLabels = {
@@ -101,7 +102,6 @@ export async function PostLayout({ post, cta }: { post: Post; cta: React.ReactNo
       <PostGrid posts={related} />
     </PageSection>}
     {cta}
-    {/* Arabic posts reuse the English post's card (Satori cannot shape Arabic script). */}
-    <JsonLd data={blogPosting({ ...post, category: categoryName ?? post.category, url, image: lang === 'ar' ? (translation ? `/blog/${post.slug}/opengraph-image/card` : '/blog/opengraph-image') : `${url}/opengraph-image/card` })} />
+    <JsonLd data={blogPosting({ ...post, category: categoryName ?? post.category, url, image: socialCardPath(lang, '/blog/[slug]', { slug: post.slug }, 'card') })} />
   </PageShell>
 }

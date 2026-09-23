@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const en = translationOf(post)
   const indexable = post.status === 'published' && !post.needsNativeReview && arabicApproved()
   const languages = indexable && en?.status === 'published' ? { en: `/blog/${slug}`, ar: `/ar/blog/${slug}`, 'x-default': `/blog/${slug}` } : undefined
-  return pageMetadata({ path: `/ar/blog/${slug}`, title: post.seoTitle ?? post.title, absoluteTitle: true, ogTitle: post.title, description: post.description, locale: 'ar_AE', type: 'article', publishedTime: post.date, modifiedTime: post.updated, languages, noindex: !indexable, ogImage: en ? { url: `/blog/${slug}/opengraph-image/card`, alt: post.title } : { url: '/blog/opengraph-image', alt: post.title } })
+  return pageMetadata({ path: `/ar/blog/${slug}`, title: post.seoTitle ?? post.title, ogTitle: post.title, description: post.description, locale: 'ar_AE', type: 'article', publishedTime: post.date, modifiedTime: post.updated, languages, noindex: !indexable })
 }
 
 export default async function ArabicPost({ params }: { params: Promise<{ slug: string }> }) {

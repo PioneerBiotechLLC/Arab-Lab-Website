@@ -10,7 +10,7 @@ import { arabicApproved, languagesFor } from '@/lib/i18n'
 import { offices } from '@/lib/site-data'
 
 export function generateMetadata(): Metadata {
-  return pageMetadata({ path: '/ar/contact', title: arContact.seo.title, absoluteTitle: true, description: arContact.seo.description, locale: 'ar_AE', languages: languagesFor('/contact', '/ar/contact'), noindex: !arabicApproved(), ogImage: { url: '/contact/opengraph-image', alt: arContact.seo.ogAlt } })
+  return pageMetadata({ path: '/ar/contact', title: arContact.seo.title, absoluteTitle: true, description: arContact.seo.description, locale: 'ar_AE', languages: languagesFor('/contact', '/ar/contact'), noindex: !arabicApproved() })
 }
 
 const h2 = 'font-heading text-3xl font-bold text-ink'

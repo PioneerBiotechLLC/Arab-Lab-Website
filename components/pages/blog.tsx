@@ -48,7 +48,7 @@ const other = (locale: Locale): Locale => (locale === 'ar' ? 'en' : 'ar')
 export function blogIndexMetadata(locale: Locale): Metadata {
   const posts = publishedPosts(locale)
   const languages = posts.length && publishedPosts(other(locale)).length ? languagesFor('/blog') : undefined
-  const m = localizedMetadata(locale, '/blog', copy[locale].seo, '/blog/opengraph-image', { noindex: posts.length === 0, languages })
+  const m = localizedMetadata(locale, '/blog', copy[locale].seo, { noindex: posts.length === 0, languages })
   return { ...m, alternates: { ...m.alternates, types: { 'application/rss+xml': `${blogBase(locale)}/rss.xml` } } }
 }
 
@@ -80,7 +80,7 @@ export function blogCategoryMetadata(locale: Locale, slug: string): Metadata {
   const ar = locale === 'ar'
   const name = ar ? c.nameAr : c.name
   const hasOther = publishedPosts(other(locale)).some((p) => p.category === slug)
-  return localizedMetadata(locale, `/blog/category/${slug}`, { title: localeData(locale).pages.blogCategory.seoTitle(name), description: ar ? c.descriptionAr : c.description, ogAlt: `${name} — ${ar ? 'عرب لاب' : 'Arab Lab'}` }, `/blog/category/${slug}/opengraph-image/card`, hasOther ? {} : { languages: undefined })
+  return localizedMetadata(locale, `/blog/category/${slug}`, { title: localeData(locale).pages.blogCategory.seoTitle(name), description: ar ? c.descriptionAr : c.description }, hasOther ? {} : { languages: undefined })
 }
 
 export function BlogCategoryPage({ locale, slug }: { locale: Locale; slug: string }) {

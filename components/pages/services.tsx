@@ -11,7 +11,7 @@ import { brandNames } from '@/lib/site-data'
 import { icon } from '@/lib/icons'
 import { ui } from '@/lib/ui'
 
-export const servicesMetadata = (locale: Locale): Metadata => localizedMetadata(locale, '/services', localeData(locale).servicesHubSeo, '/services/opengraph-image')
+export const servicesMetadata = (locale: Locale): Metadata => localizedMetadata(locale, '/services', localeData(locale).servicesHubSeo)
 
 export function ServicesPage({ locale }: { locale: Locale }) {
   const d = localeData(locale)
@@ -34,7 +34,7 @@ export function ServicesPage({ locale }: { locale: Locale }) {
 
 export function serviceMetadata(locale: Locale, slug: string): Metadata {
   const content = localeData(locale).serviceContent.find((s) => s.slug === slug)
-  return content ? localizedMetadata(locale, `/services/${slug}`, content.seo, `/services/${slug}/opengraph-image/card`) : {}
+  return content ? localizedMetadata(locale, `/services/${slug}`, content.seo) : {}
 }
 
 export function ServicePage({ locale, slug }: { locale: Locale; slug: string }) {
