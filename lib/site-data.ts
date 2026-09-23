@@ -1,4 +1,6 @@
 // All copy on the site is sourced from the Arab Lab company profile and partner decks. Nothing here is invented.
+// Domain, contact details and offices come from lib/site.ts, the single source for site-wide constants.
+import { officeList, site } from './site'
 
 export const company = {
   name: 'Arab Lab Scientific Equipment L.L.C.',
@@ -9,13 +11,9 @@ export const company = {
   groupFounded: '2001',
 }
 
-export const contact = { email: 'info@arablab-scientific.com', phone: '+97172081908', phoneDisplay: '00971 72081908', website: 'https://arablab-scientific.com', websiteDisplay: 'arablab-scientific.com' }
+export const contact = { email: site.email, phone: site.phone, phoneDisplay: site.phoneDisplay, website: site.url, websiteDisplay: site.host }
 
-export const offices = [
-  { name: 'Ras Al Khaimah', short: 'HQ', address: '408, Julphar Tower, Al Hisn Road, Ras Al Khaimah, UAE' },
-  { name: 'Riyadh', short: '', address: '3808 Al Urubah Rd, Al Wurud, Riyadh 12252, Saudi Arabia' },
-  { name: 'Cairo', short: '', address: '87, Dar Masr, Al Kronfel, First Settlement, Cairo, Egypt' },
-]
+export const offices = officeList
 
 // The country is the last comma-separated segment of each address.
 export const countryOf = (office: { address: string }) => office.address.split(', ').at(-1) ?? ''
@@ -34,10 +32,10 @@ export const departments: { name: string; people: [string, string][] }[] = [
 
 // "Our Program" — the four service lines.
 export const programs = [
-  { id: 'pharma', title: 'Arab Lab Pharma & Biotech', body: 'Pharma and bioprocess solutions for various industries and applications.' },
-  { id: 'food', title: 'Arab Lab Food & Beverage', body: 'Complete solutions for the F&B sector.' },
-  { id: 'project', title: 'Arab Lab Project', body: 'Turnkey project delivery for various industries and applications.' },
-  { id: 'consultant', title: 'Pharmaceutical Consultant', body: 'Regulatory consultant and turn-key project services.' },
+  { id: 'pharma', slug: 'pharma-biotech', title: 'Arab Lab Pharma & Biotech', body: 'Pharma and bioprocess solutions for various industries and applications.' },
+  { id: 'food', slug: 'food-beverage', title: 'Arab Lab Food & Beverage', body: 'Complete solutions for the F&B sector.' },
+  { id: 'project', slug: 'turnkey-projects', title: 'Arab Lab Project', body: 'Turnkey project delivery for various industries and applications.' },
+  { id: 'consultant', slug: 'pharmaceutical-consultant', title: 'Pharmaceutical Consultant', body: 'Regulatory consultant and turn-key project services.' },
 ]
 
 export type Brand = {
@@ -169,13 +167,15 @@ export const brandBySlug = (slug: string) => brands.find((brand) => brand.slug =
 
 // Solutions are organised by the laboratory problem to solve, not by manufacturer. Each links through to the partners that address it.
 export const solutions = [
-  { id: 'sterility', title: 'Rapid Sterility & Microbial Testing', body: 'Cut sterility-test turnaround from the conventional 14 days to around 2, and test in a closed system designed to minimise false positive and false negative results.', brands: ['promicol', 'tailin'] },
-  { id: 'endotoxin', title: 'Endotoxin Detection & Bioprocessing Media', body: 'Endotoxin and pyrogen testing for raw materials, in-process samples and manufactured product, plus media for protein production and cell & gene therapy.', brands: ['lonza'] },
-  { id: 'filtration', title: 'Process Filtration & Single-Use Systems', body: 'Liquid and gas filtration from clarification through bioburden reduction to sterile filtration and mycoplasma removal, and automated single-use bioprocessing.', brands: ['parker'] },
-  { id: 'liquid-handling', title: 'Liquid Handling & Bioprocess Equipment', body: 'Instruments, consumables and accessories for cell, molecular and microbiology labs, with bioprocess hardware and software from R&D to production.', brands: ['eppendorf'] },
-  { id: 'culture-media', title: 'Culture Media', body: 'Pharmaceutical-grade microbiology media for environmental monitoring and sterility testing.', brands: ['pmm'] },
-  { id: 'enzymes', title: 'Enzymatic QC Reagents', body: 'Analytical enzymes and ready-to-use microbiological soils for pharmaceutical, clinical chemistry and food & beverage quality control.', brands: ['cpc-biotech'] },
+  { id: 'sterility', slug: 'rapid-sterility-testing', title: 'Rapid Sterility & Microbial Testing', body: 'Cut sterility-test turnaround from the conventional 14 days to around 2, and test in a closed system designed to minimise false positive and false negative results.', brands: ['promicol', 'tailin'] },
+  { id: 'endotoxin', slug: 'endotoxin-testing', title: 'Endotoxin Detection & Bioprocessing Media', body: 'Endotoxin and pyrogen testing for raw materials, in-process samples and manufactured product, plus media for protein production and cell & gene therapy.', brands: ['lonza'] },
+  { id: 'filtration', slug: 'process-filtration-single-use', title: 'Process Filtration & Single-Use Systems', body: 'Liquid and gas filtration from clarification through bioburden reduction to sterile filtration and mycoplasma removal, and automated single-use bioprocessing.', brands: ['parker'] },
+  { id: 'liquid-handling', slug: 'liquid-handling-bioprocess', title: 'Liquid Handling & Bioprocess Equipment', body: 'Instruments, consumables and accessories for cell, molecular and microbiology labs, with bioprocess hardware and software from R&D to production.', brands: ['eppendorf'] },
+  { id: 'culture-media', slug: 'pharmaceutical-culture-media', title: 'Culture Media', body: 'Pharmaceutical-grade microbiology media for environmental monitoring and sterility testing.', brands: ['pmm'] },
+  { id: 'enzymes', slug: 'enzymatic-qc-reagents', title: 'Enzymatic QC Reagents', body: 'Analytical enzymes and ready-to-use microbiological soils for pharmaceutical, clinical chemistry and food & beverage quality control.', brands: ['cpc-biotech'] },
 ]
 
 export const brandNames = (slugs: string[]) => slugs.map((slug) => brandBySlug(slug)?.name ?? slug).join(' · ')
 export const solutionsFor = (slug: string) => solutions.filter((solution) => solution.brands.includes(slug))
+export const solutionBySlug = (slug: string) => solutions.find((solution) => solution.slug === slug)
+export const programBySlug = (slug: string) => programs.find((program) => program.slug === slug)

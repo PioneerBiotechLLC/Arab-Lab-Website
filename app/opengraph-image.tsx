@@ -2,6 +2,7 @@ import { ImageResponse } from 'next/og'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { company, markets } from '@/lib/site-data'
+import { site } from '@/lib/site'
 
 // Generated at build from the site's own tokens and copy — no PNG to keep in sync.
 export const alt = 'Arab Lab Scientific Equipment — a trusted partner for Life Science industries'
@@ -38,7 +39,7 @@ export default async function Image() {
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'IBM Plex Mono', fontSize: 20, color: muted }}>
-        <span>arablab-scientific.com</span>
+        <span>{site.host}</span>
         <span>{markets.join(' · ')}</span>
       </div>
     </div>,

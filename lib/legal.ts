@@ -13,7 +13,7 @@ export type Block =
 export type LegalSection = { id: string; title: string; blocks: Block[] }
 export type LegalDoc = { slug: string; title: string; intro: string; updated: string; sections: LegalSection[] }
 
-const updated = '21 September 2026'
+const updated = '23 September 2026'
 const hq = offices[0]
 const email = `[${contact.email}](mailto:${contact.email})`
 const postal = `${company.name}, ${hq.address}`
@@ -41,6 +41,7 @@ export const privacy: LegalDoc = {
       'The website is hosted on Vercel. Like any web host, Vercel records standard server logs when a page is requested, which include your IP address, browser type and the page requested. These logs are used for security and to keep the service running.',
       'The site uses Vercel Web Analytics to understand which pages are read. It records aggregated page views and referrers and does not use cookies. Visits are counted with a short-lived hash, not a persistent identifier, and we cannot use it to identify an individual visitor.',
       'Fonts and all other assets are served from our own deployment, so viewing the site does not send requests to third-party font or advertising networks.',
+      'Each office page offers a map from Google Maps. It loads only if you choose "Show map"; from then on, Google receives your request and its own privacy policy applies.',
     ] },
     { id: 'cookies', title: 'Cookies and local storage', blocks: [
       'This website does not set cookies of its own and does not store anything in your browser\'s local storage. There is no cookie banner because there is nothing to consent to.',
@@ -165,6 +166,7 @@ export const dataCollection: LegalDoc = {
         ['IP address, browser, requested page, time', 'Vercel server logs', 'Security and keeping the site running', 'Potentially, in the raw log'],
         ['Page views, referrer, country, device type', 'Vercel Web Analytics', 'Aggregate understanding of which pages are read', 'No — counted with a short-lived hash, no cookie'],
         ['Reduced-motion and contrast preferences', 'Your browser, read by the page', 'Adjusting animation and contrast while you view the page', 'No — not sent to us or stored'],
+        ['Map request on an office page', 'Google Maps, only after you choose "Show map"', 'Showing the office location', 'By Google, under its own privacy policy'],
       ] } },
     ] },
     { id: 'not-collected', title: 'What the site does not do', blocks: [

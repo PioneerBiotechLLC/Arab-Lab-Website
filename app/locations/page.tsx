@@ -1,3 +1,8 @@
+import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
+import { languagesFor } from '@/lib/i18n'
+import { pageSeo, seoProps } from '@/lib/seo-pages'
+import Link from 'next/link'
 import { MapPin } from 'lucide-react'
 import { Spotlight } from '@/components/motion'
 import { ButtonLink, ClosingCta, DarkBand, GlassTile, PageSection, PageShell, SectionIntro } from '@/components/site'
@@ -6,8 +11,10 @@ import { icon } from '@/lib/icons'
 
 const mapsUrl = (address: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
 
+export const metadata: Metadata = pageMetadata({ path: '/locations', ...seoProps(pageSeo['/locations']), languages: languagesFor('/locations', '/ar/locations') })
+
 export default function LocationsPage() {
-  return <PageShell title="Regional presence, local response." intro={`${offices.length} offices keep Arab Lab close to laboratory teams across ${markets.join(', ')}. Headquarters: Ras Al Khaimah, UAE.`}
+  return <PageShell breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Locations', href: '/locations' }]} title="Regional presence, local response." intro={`${offices.length} offices keep Arab Lab close to laboratory teams across ${markets.join(', ')}. Headquarters: Ras Al Khaimah, UAE.`}
     actions={<><ButtonLink href="/contact">Contact the nearest office</ButtonLink><ButtonLink href="/about" variant="secondary">About Arab Lab</ButtonLink></>}>
     {markets.map((country, index) => {
       const local = offices.filter((office) => countryOf(office) === country)
@@ -15,9 +22,9 @@ export default function LocationsPage() {
         <SectionIntro title={country} intro={`${local.length} ${local.length === 1 ? 'office' : 'offices'}`} />
         <Spotlight className="grid gap-4 md:grid-cols-2">{local.map((office) => <article key={office.name} data-spot className="rounded-2xl border border-border bg-white p-7 shadow-card">
           <div className="flex items-center justify-between"><MapPin className="size-5 text-orange" />{office.short && <span className="rounded-full border border-orange/40 px-2 py-0.5 font-mono text-xs text-orange">{office.short}</span>}</div>
-          <h3 className="mt-8 font-heading text-2xl font-bold text-ink">{office.name}</h3>
+          <h3 className="mt-8 font-heading text-2xl font-bold text-ink"><Link href={`/locations/${office.slug}`} className="hover:text-orange">{office.name}</Link></h3>
           <p className="mt-3 max-w-xs text-sm leading-6 text-muted-foreground">{office.address}</p>
-          <div className="relative mt-8"><ButtonLink href={mapsUrl(office.address)} variant="secondary" target="_blank" rel="noreferrer">Get directions</ButtonLink></div>
+          <div className="relative mt-8 flex flex-wrap gap-3"><ButtonLink href={`/locations/${office.slug}`}>Office details</ButtonLink><ButtonLink href={mapsUrl(office.address)} variant="secondary" target="_blank" rel="noreferrer">Get directions</ButtonLink></div>
         </article>)}</Spotlight>
       </PageSection>
     })}

@@ -31,7 +31,7 @@ function BlockView({ block }: { block: Block }) {
 // One layout for the three legal documents: hero, a sticky contents list, the sections, and links to the other two.
 export function LegalPage({ doc }: { doc: LegalDoc }) {
   const others = legalDocs.filter((d) => d.slug !== doc.slug)
-  return <PageShell title={doc.title} intro={doc.intro}>
+  return <PageShell breadcrumbs={[{ name: 'Home', href: '/' }, { name: doc.title, href: `/${doc.slug}` }]} title={doc.title} intro={doc.intro}>
     <PageSection>
       <div className="grid gap-12 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-20">
         <nav aria-label="Contents" className="lg:sticky lg:top-28 lg:self-start">

@@ -142,3 +142,38 @@ a:active, button:active { transform: scale(.97); }
 @media (prefers-contrast: more) {
   :root { --border: var(--line); --line: var(--muted); }
 }
+
+/* Editorial review marker: {{VERIFY: …}} in content renders visibly so unconfirmed claims cannot slip through review.
+   The build fails in production while any remain in published content (scripts/seo/verify-markers.ts). */
+.verify { background: #FEF3C7; color: #7A2E0E; border-radius: 4px; padding: 0 .35em; font: 500 .8125em/1.6 'IBM Plex Mono', monospace; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+
+/* Long-form article typography for blog posts (rendered MDX). Uses the site tokens; no typography plugin. */
+.post-body { color: var(--muted); font-size: 1.0625rem; line-height: 1.8; }
+.post-body > * + * { margin-top: 1.25em; }
+.post-body h2 { margin-top: 2.4em; color: var(--ink); font: 700 1.75rem/1.25 'Poppins', sans-serif; letter-spacing: -0.01em; scroll-margin-top: 7rem; text-wrap: balance; }
+.post-body h3 { margin-top: 1.8em; color: var(--ink); font: 700 1.25rem/1.4 'Poppins', sans-serif; scroll-margin-top: 7rem; }
+.post-body h2 + *, .post-body h3 + * { margin-top: .75em; }
+.post-body strong { color: var(--ink); font-weight: 600; }
+.post-body a { color: var(--orange); font-weight: 500; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--orange) 40%, transparent); text-underline-offset: 4px; }
+.post-body a:hover { text-decoration-color: var(--orange); }
+.post-body ul, .post-body ol { padding-inline-start: 1.4em; }
+.post-body ul { list-style: disc; } .post-body ol { list-style: decimal; }
+.post-body li + li { margin-top: .5em; }
+.post-body li::marker { color: var(--brand); }
+.post-body blockquote { border-inline-start: 3px solid var(--brand); padding-inline-start: 1.1em; color: var(--ink); }
+.post-body code { font: 500 .9em 'IBM Plex Mono', monospace; background: var(--paper); border: 1px solid var(--border); border-radius: 6px; padding: .1em .35em; }
+.post-body .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 1rem; }
+.post-body table { width: 100%; min-width: 36rem; border-collapse: collapse; font-size: .9375rem; line-height: 1.6; }
+.post-body th { background: var(--paper); color: var(--ink); font: 500 .8125rem 'IBM Plex Mono', monospace; text-align: start; padding: .75rem 1rem; border-bottom: 1px solid var(--border); }
+.post-body td { padding: .75rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+.post-body tr:last-child td { border-bottom: 0; }
+.post-body[dir='rtl'] { font-size: 1.125rem; line-height: 2; }
+
+/* Arabic (/ar pages and the Arabic header/footer). Poppins, Inter and Plex Mono have no Arabic glyphs, so every
+   role switches to IBM Plex Sans Arabic; tracking is reset because letter-spacing breaks Arabic letter joins. */
+[lang='ar'] { font-family: var(--font-plex-arabic), 'IBM Plex Sans Arabic', 'Noto Sans Arabic', Tahoma, sans-serif; }
+[lang='ar'] .font-heading, [lang='ar'] .font-mono, [lang='ar'] .label, [lang='ar'] .post-body h2, [lang='ar'] .post-body h3 { font-family: var(--font-plex-arabic), 'IBM Plex Sans Arabic', 'Noto Sans Arabic', Tahoma, sans-serif; }
+[lang='ar'] * { letter-spacing: normal; }
+[lang='ar'] [lang='en'] { font-family: inherit; }
+[lang='ar'] h1, [lang='ar'] h2, [lang='ar'] h3 { line-height: 1.35; }
+[dir='rtl'] .lucide-arrow-up-right { scale: -1 1; }
