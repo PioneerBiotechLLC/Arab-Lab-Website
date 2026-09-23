@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { pageMetadata } from '@/lib/seo'
+import { pageSeo, seoProps } from '@/lib/seo-pages'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { Spotlight } from '@/components/motion'
@@ -30,7 +31,7 @@ const stops = [
 // A sensor readout: flat, a settling transient, then steady. Drawn once on load, then it cools into the dotted motif.
 const tracePath = 'M0 28 H130 L146 28 L156 8 L166 50 L176 12 L186 44 L196 18 L206 36 L218 24 L232 31 L248 27 L268 28.5 L290 28 H1000'
 
-export const metadata: Metadata = pageMetadata({ path: '/' })
+export const metadata: Metadata = pageMetadata({ path: '/', ...seoProps(pageSeo['/']) })
 
 export default function Home() {
   return <PageTransition><main id="content" tabIndex={-1} className="relative outline-none">

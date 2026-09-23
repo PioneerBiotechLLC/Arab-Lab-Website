@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { pageMetadata } from '@/lib/seo'
+import { brandSeo, seoProps } from '@/lib/seo-pages'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
@@ -11,7 +12,8 @@ export function generateStaticParams() { return brands.map((brand) => ({ slug: b
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  return pageMetadata({ path: `/brands/${slug}` })
+  const brand = brandBySlug(slug)
+  return brand ? pageMetadata({ path: `/brands/${slug}`, ...seoProps(brandSeo(brand)) }) : {}
 }
 
 export default async function BrandPage({ params }: { params: Promise<{ slug: string }> }) {

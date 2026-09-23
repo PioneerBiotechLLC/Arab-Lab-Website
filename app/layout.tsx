@@ -2,8 +2,8 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Inter, IBM_Plex_Mono, Poppins } from 'next/font/google'
 import { SiteFooter, SiteHeader } from '@/components/site'
-import { company } from '@/lib/site-data'
 import { site } from '@/lib/site'
+import { pageSeo } from '@/lib/seo-pages'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -18,8 +18,9 @@ const bing = process.env.NEXT_PUBLIC_BING_VERIFICATION
 // (Vercel serves preview deployments with X-Robots-Tag: noindex, so previews never compete with production.)
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: 'Arab Lab | Scientific Equipment',
-  description: company.positioning,
+  title: { default: pageSeo['/'].title, template: `%s | ${site.shortName}` },
+  description: pageSeo['/'].description,
+  applicationName: site.name,
   ...(gsc || bing ? { verification: { ...(gsc ? { google: gsc } : {}), ...(bing ? { other: { 'msvalidate.01': bing } } : {}) } } : {}),
 }
 export const viewport: Viewport = { colorScheme: 'light', themeColor: '#FFFFFF', userScalable: true }

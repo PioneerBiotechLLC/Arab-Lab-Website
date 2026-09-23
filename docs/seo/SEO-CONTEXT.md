@@ -86,8 +86,13 @@ Blog post keywords are listed in each post's frontmatter (`targetKeyword`).
 7. The contact form moved unchanged to `components/contact-form.tsx` so `/contact` can be a server component with metadata. It takes a `copy` prop for Arabic. Nothing was removed.
 8. Alt text: logo mark now "Arab Lab Scientific Equipment logo" (its link keeps `aria-label`, so the accessible name is unchanged); brand logos always carry the brand name, and Promicol's visible name is `aria-hidden` so it is announced once; the hero photo has a descriptive alt. The hero stays a `<picture>` for art direction. `images.unoptimized` is on, so `next/image` emits one `src` and `sizes`/`srcset` do not apply; the asset pipeline pre-sizes files.
 9. `lib/routes.ts` lists every indexable route; the sitemap and the audit read it. `pnpm seo:audit` (after `pnpm build`) checks titles, descriptions, H1s, canonicals, OG images, hreflang, JSON-LD and the sitemap.
+10. Search copy (title, description, OG alt, card text) lives in `lib/seo-pages.ts`. The root layout sets the template `%s | Arab Lab`; home, about, locations and contact use absolute titles so the brand name leads without repeating.
+11. Per-page social cards: each route segment has an `opengraph-image.tsx` (and a `twitter-image.tsx` re-export) rendered by `lib/og.tsx`, so every page has its own card and alt text. Dynamic routes use `generateImageMetadata` for per-item alt. Home keeps `app/opengraph-image.tsx`.
 
 ## VERIFY items
+
+- Brand titles and pages say each partner is supplied across the UAE, Saudi Arabia and Egypt (the brief's own pattern). Confirm territory coverage per brand.
+- CPC Biotech: the partner deck says "ready-to-use microbiological soils" (likely Italian *terreni*, i.e. culture media). Meta copy says "microbiological media"; confirm the English term.
 
 - Official Arabic name (عرب لاب?). Kept out of schema until verified (`site.arabicName.verified`).
 
@@ -101,3 +106,4 @@ Filled in during Phase 8. Collected so far:
 
 - 2026-09-23 · Phase 0 · Branch `seo-overhaul` created; discovery; this file.
 - 2026-09-23 · Phase 1 · `lib/site.ts`, www everywhere, canonicals, apex 301, sitemap, robots, verification tags, alt text, audit script.
+- 2026-09-23 · Phase 2 · Unique titles/descriptions on all 16 routes (all within 60/155), per-page OG title/description/card/alt.

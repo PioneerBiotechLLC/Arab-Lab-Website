@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { pageMetadata } from '@/lib/seo'
+import { pageSeo, seoProps } from '@/lib/seo-pages'
 import { Spotlight } from '@/components/motion'
 import { ButtonLink, ClosingCta, DarkBand, NumberedCard, OfficeTiles, PageSection, PageShell, SectionIntro } from '@/components/site'
 import { brands, company, departments, leadership, markets, offices } from '@/lib/site-data'
@@ -12,7 +13,7 @@ const facts: [string, string][] = [
   [String(brands.length), 'Partner manufacturers'],
 ]
 
-export const metadata: Metadata = pageMetadata({ path: '/about' })
+export const metadata: Metadata = pageMetadata({ path: '/about', ...seoProps(pageSeo['/about']) })
 
 export default function AboutPage() {
   return <PageShell title="A trusted partner for Life Science industries." intro={company.positioning} stats={facts}
