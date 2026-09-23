@@ -20,6 +20,8 @@ export type PageMeta = {
   type?: 'website' | 'article'
   publishedTime?: string
   modifiedTime?: string
+  /** Explicit social image (used by /ar pages, which reuse the English page's card: Satori cannot shape Arabic). */
+  ogImage?: { url: string; alt: string }
 }
 
 export function pageMetadata(m: PageMeta): Metadata {
@@ -37,8 +39,9 @@ export function pageMetadata(m: PageMeta): Metadata {
       locale: m.locale ?? 'en_US',
       type: m.type ?? 'website',
       ...(m.type === 'article' ? { publishedTime: m.publishedTime, modifiedTime: m.modifiedTime } : {}),
+      ...(m.ogImage ? { images: [{ url: m.ogImage.url, alt: m.ogImage.alt, width: 1200, height: 630 }] } : {}),
     }
-    metadata.twitter = { card: 'summary_large_image', title: fullTitle, description }
+    metadata.twitter = { card: 'summary_large_image', title: fullTitle, description, ...(m.ogImage ? { images: [{ url: m.ogImage.url, alt: m.ogImage.alt }] } : {}) }
   }
   if (m.noindex) metadata.robots = { index: false, follow: true }
   return metadata

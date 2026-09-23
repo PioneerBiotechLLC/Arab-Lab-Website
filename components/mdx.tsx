@@ -23,7 +23,8 @@ export function preprocess(source: string) {
   // Escape chapter numbers in the prose, then turn markers into components; marker notes keep their text verbatim.
   return source.split(/(\{\{VERIFY:[^}]*\}\})/g).map((part) => {
     const marker = part.match(/^\{\{VERIFY:\s*([^}]*)\}\}$/)
-    return marker ? `<Verify note={${JSON.stringify(marker[1].trim())}} />` : part.replace(/<(\d[\d.]*)>/g, '&lt;$1&gt;')
+    // Chapter references such as "USP <71>" are isolated (<bdi>) so they keep their order inside Arabic text.
+    return marker ? `<Verify note={${JSON.stringify(marker[1].trim())}} />` : part.replace(/\b(USP)\s*<(\d[\d.]*)>/g, '<bdi>$1 &lt;$2&gt;</bdi>').replace(/<(\d[\d.]*)>/g, '&lt;$1&gt;')
   }).join('')
 }
 

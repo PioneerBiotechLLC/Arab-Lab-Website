@@ -7,10 +7,12 @@ import { seoProps } from '@/lib/seo-pages'
 import { blogSeo } from '@/lib/blog-seo'
 import { categories } from '@/lib/blog-categories'
 import { visiblePosts, publishedPosts } from '@/lib/blog'
+import { languagesFor } from '@/lib/i18n'
 
 // Until the first post is published the index stays out of search results (noindex) and out of the sitemap.
 export function generateMetadata(): Metadata {
-  return { ...pageMetadata({ path: '/blog', ...seoProps(blogSeo), noindex: publishedPosts().length === 0 }), alternates: { canonical: '/blog', types: { 'application/rss+xml': '/blog/rss.xml' } } }
+  const languages = publishedPosts().length && publishedPosts('ar').length ? languagesFor('/blog', '/ar/blog') : undefined
+  return { ...pageMetadata({ path: '/blog', ...seoProps(blogSeo), noindex: publishedPosts().length === 0 }), alternates: { canonical: '/blog', ...(languages ? { languages } : {}), types: { 'application/rss+xml': '/blog/rss.xml' } } }
 }
 
 export default function BlogIndex() {

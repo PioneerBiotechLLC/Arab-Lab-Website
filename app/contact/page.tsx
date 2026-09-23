@@ -2,11 +2,12 @@ import type { Metadata } from 'next'
 import { ContactForm } from '@/components/contact-form'
 import { ContactTiles, DarkBand, OfficeTiles, PageSection, PageShell } from '@/components/site'
 import { pageMetadata } from '@/lib/seo'
+import { languagesFor } from '@/lib/i18n'
 import { pageSeo, seoProps } from '@/lib/seo-pages'
 import { markets, offices } from '@/lib/site-data'
 
 // Server component so the route can carry metadata; the interactive form lives in components/contact-form.tsx.
-export const metadata: Metadata = pageMetadata({ path: '/contact', ...seoProps(pageSeo['/contact']) })
+export const metadata: Metadata = pageMetadata({ path: '/contact', ...seoProps(pageSeo['/contact']), languages: languagesFor('/contact', '/ar/contact') })
 
 export default function ContactPage() {
   return <PageShell breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Contact', href: '/contact' }]} title="A clear next step." intro="Choose the path that matches your need. We route each request to the right Arab Lab department.">

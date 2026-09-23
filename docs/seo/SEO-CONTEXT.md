@@ -42,6 +42,8 @@ Read this file first in any SEO session. It is the source of truth; keep it shor
 | 7 | MDX blog (en + ar), RSS, 10 EN drafts, 4 AR drafts, blog calendar |
 | 8 | `/ar` for home, blog, contact, locations; off-site checklist |
 
+All phases are complete on branch `seo-overhaul` (not pushed, not deployed).
+
 ## Keyword map
 
 | Page | Primary keyword | Secondary keywords |
@@ -104,24 +106,61 @@ Blog post keywords are listed in each post's frontmatter (`targetKeyword`).
 25. Frontmatter additions beyond the brief: `faq` (rendered as the visible FAQ and FAQPage, so schema always matches the page) and optional `seoTitle` (≤49 chars; post titles are often longer than a 60-char title tag allows).
 26. Posts were drafted with AI assistance for the technical team to review; the author is "Arab Lab Technical Team" and the author box describes the team, not a writing process. Every specific technical, numeric or regulatory claim carries a marker (72 across drafts).
 27. `pnpm seo:blog` checks each post: 1,200–1,800 words (Arabic ≥900), keyword terms in title, first 100 words and an H2, FAQ ≥3, ≥2 solution/brand links, seoTitle ≤49, description ≤155. All 14 pass. Verified the published path by publishing two posts in a test build: sitemap, RSS, BlogPosting/FAQPage/BreadcrumbList and footer link all appeared; reverted to draft.
+28. Arabic: see the i18n section below. Arabic posts link to English solution and brand pages, since those have no Arabic versions yet. Chapter references such as "USP <71>" are wrapped in `<bdi>` so they keep their order inside Arabic text; phone numbers, emails and English addresses are set `dir="ltr"`.
 
 ## VERIFY items
 
-- Office phone numbers: every office page and (Phase 6) LocalBusiness uses the main number +971 7 208 1908. Confirm whether Riyadh and Cairo have local numbers.
-- Opening hours per office (needed for Google Business Profile and LocalBusiness `openingHours`); none stated yet.
+Full per-claim list with file and line: [`VERIFY.md`](VERIFY.md) (regenerate with `node scripts/seo/verify-markers.ts --md docs/seo/VERIFY.md`; `pnpm seo:verify` prints it).
 
-- `/services/pharmaceutical-consultant`: name the current UAE authority for product registration (MOHAP or the Emirates Drug Establishment). Marker is on the page; it blocks production until resolved.
-
-- Brand titles and pages say each partner is supplied across the UAE, Saudi Arabia and Egypt (the brief's own pattern). Confirm territory coverage per brand.
-- CPC Biotech: the partner deck says "ready-to-use microbiological soils" (likely Italian *terreni*, i.e. culture media). Meta copy says "microbiological media"; confirm the English term.
-
+**Site facts and published pages** (resolve before merging to main; the one on-page marker blocks production builds):
+- `/services/pharmaceutical-consultant`: name the current UAE authority for product registration (MOHAP or the Emirates Drug Establishment). Marker is on the page.
 - Official Arabic name (عرب لاب?). Kept out of schema until verified (`site.arabicName.verified`).
+- Brand titles and pages say each partner is supplied across the UAE, Saudi Arabia and Egypt (the brief's own pattern). Confirm territory coverage per brand.
+- CPC Biotech: the partner deck says "ready-to-use microbiological soils" (likely Italian *terreni*, i.e. culture media). Site copy says "microbiological media"; confirm the English term.
+- Office phone numbers: office pages and LocalBusiness use the main number +971 7 208 1908. Confirm whether Riyadh and Cairo have local numbers.
+- Opening hours per office (Google Business Profile and LocalBusiness `openingHours`); none stated yet.
+- Arabic office addresses in `lib/ar.ts` are renderings of the English addresses; confirm the official Arabic spellings.
+
+**Draft blog posts** (76 markers; drafts never block builds): pharmacopoeia chapter wording and dates (USP <71>, <85>, <1223>, Ph. Eur. 2.6.1, 2.6.14, 2.6.30, 2.6.32, 5.1.6), numeric parameters (incubation temperatures, endotoxin limits, spike recovery, filter challenge levels, pipetting angles and depths, scaling safety factors), EU GMP Annex 1 clauses (PUPSIT, EM limits), ISO 8655 and ISO 14644 references, and every regulator role, system name and pathway in the UAE, Saudi Arabia and Egypt. The regulatory overview post alone carries 13.
+
+## i18n: what was built and the proposed next step
+
+**Built (smallest non-breaking approach):** `app/ar/` with a nested layout (`lang="ar" dir="rtl"`, IBM Plex Sans Arabic, not preloaded on English pages). The shared header and footer switch to Arabic labels and RTL on `/ar` paths and show an English/العربية switcher where a counterpart exists. Arabic pages: `/ar`, `/ar/contact`, `/ar/locations` (+3 offices), `/ar/blog` (+ posts). Copy lives in `lib/ar.ts`. Social cards reuse the English card for each page, because the OG renderer cannot shape Arabic script.
+
+**Gate:** `ARABIC_APPROVED` in `lib/i18n.ts` (or `AR_APPROVED=1`). Until approved, Arabic pages are noindex, show a review banner, are absent from the sitemap, carry no hreflang, and the switcher is hidden (visible in `pnpm dev`). Verified both states: gated build has zero Arabic URLs in the sitemap and no hreflang; approved build emits reciprocal en/ar/x-default for 6 page pairs in both page heads and the sitemap, and `/ar` becomes indexable with a self-canonical.
+
+**Known limitation:** server-rendered `<html lang>` stays `en` on `/ar` pages; a client effect corrects it after hydration, and every Arabic region carries `lang="ar"`. Google relies on hreflang, not `<html lang>`, so ranking impact is small; Bing and screen readers benefit from the server value.
+
+**Proposed next step (needs your approval, because it moves files):** two root layouts via route groups, `app/(en)/layout.tsx` and `app/(ar)/ar/layout.tsx`, each rendering its own `<html lang dir>`. Every existing page folder moves under `app/(en)/` with no URL change. Then translate the remaining pages (about, solutions, services, brands) into `app/(ar)/ar/…`, and add their hreflang pairs to `arPaths`.
 
 ## Manual off-site checklist
 
-Filled in during Phase 8. Collected so far:
-- Set `NEXT_PUBLIC_GSC_VERIFICATION` (and optionally `NEXT_PUBLIC_BING_VERIFICATION`) on Vercel, then verify and submit `/sitemap.xml`.
-- At Vercel/DNS, make `http://arablab-scientific.com` redirect straight to `https://www.arablab-scientific.com` in one hop.
+1. **Search Console and Bing Webmaster Tools.** Add the site, put the tokens in `NEXT_PUBLIC_GSC_VERIFICATION` / `NEXT_PUBLIC_BING_VERIFICATION` on Vercel, redeploy, verify, then submit `https://www.arablab-scientific.com/sitemap.xml` in both.
+2. **Google Business Profile** for each office (Ras Al Khaimah HQ, Riyadh, Cairo): exact name "Arab Lab Scientific Equipment", the address as on the office page, phone, hours, category (e.g. laboratory equipment supplier), website URL pointing to that office page, photos.
+3. **Client reviews.** Ask satisfied customers to review each Business Profile; reply to every review.
+4. **Facebook page:** set the website field to `https://www.arablab-scientific.com` (www, https) and align name, address and phone.
+5. **NAP consistency** on LinkedIn, Facebook, ZoomInfo and the UAE International Investors Council listing: same legal name, HQ address, +971 7 208 1908, and the www URL.
+6. **Partner backlinks.** Ask Eppendorf, Parker, Lonza, Promicol, PMM, CPC Biotech and Tailin to list Arab Lab on their distributor or "where to buy" pages, linking to the matching `/brands/[slug]` page.
+7. **ARABLAB LIVE exhibitor listing** (if exhibiting): use the full name "Arab Lab Scientific Equipment" and link to the site, which helps separate the company from the event.
+8. **Host redirect.** At Vercel/DNS, make `http://arablab-scientific.com` go straight to `https://www.arablab-scientific.com` in one hop (it currently takes two).
+9. **Before merging:** resolve published-page markers, review drafts you want live (set `status: published`), native review of Arabic (then set `ARABIC_APPROVED = true` and `needsNativeReview: false` on approved posts), and run `pnpm build`, `pnpm seo:audit`, `pnpm seo:blog`.
+10. **After deploy:** run Google's Rich Results Test on the home, an office, a brand and a published post; watch Search Console coverage for the new URLs.
+
+## Reports
+
+- [`AUDIT.md`](AUDIT.md): every built page with target keyword, title, description, H1, word count, schema types, robots and issues (`pnpm seo:audit --md docs/seo/AUDIT.md` after a build).
+- [`VERIFY.md`](VERIFY.md): every review marker by file and line.
+- [`BLOG-CALENDAR.md`](BLOG-CALENDAR.md): the next 12 posts.
+
+## Commands
+
+| Command | What it does |
+|---|---|
+| `pnpm build` | Lists VERIFY markers, then builds; fails on Vercel production if a marker is in published content |
+| `pnpm seo:audit` | Audits the last build (add `--md docs/seo/AUDIT.md` to write the report) |
+| `pnpm seo:blog` | Checks every post against the brief |
+| `pnpm seo:verify` | Lists every review marker |
+| `pnpm exec tsc --noEmit` | Type check (the build skips it) |
 
 ## Changelog
 
@@ -133,3 +172,4 @@ Filled in during Phase 8. Collected so far:
 - 2026-09-23 · Phase 5 · Office pages for Ras Al Khaimah, Riyadh, Cairo with click-to-load maps; hub and footer link to them; privacy pages mention the map.
 - 2026-09-23 · Phase 6 · Organization (site-wide), WebSite (home), LocalBusiness (offices); About FAQ for the ARABLAB disambiguation; schema-dts typing.
 - 2026-09-23 · Phase 7 · MDX blog with RSS and categories; 10 EN drafts (1,204–1,397 words) and 4 AR drafts; `BLOG-CALENDAR.md` with 12 more posts.
+- 2026-09-23 · Phase 8 · `/ar` home, contact, locations (+3), blog behind an approval gate; RTL header/footer; reciprocal hreflang when approved; off-site checklist; AUDIT.md and VERIFY.md.

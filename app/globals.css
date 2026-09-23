@@ -168,3 +168,12 @@ a:active, button:active { transform: scale(.97); }
 .post-body td { padding: .75rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
 .post-body tr:last-child td { border-bottom: 0; }
 .post-body[dir='rtl'] { font-size: 1.125rem; line-height: 2; }
+
+/* Arabic (/ar pages and the Arabic header/footer). Poppins, Inter and Plex Mono have no Arabic glyphs, so every
+   role switches to IBM Plex Sans Arabic; tracking is reset because letter-spacing breaks Arabic letter joins. */
+[lang='ar'] { font-family: var(--font-plex-arabic), 'IBM Plex Sans Arabic', 'Noto Sans Arabic', Tahoma, sans-serif; }
+[lang='ar'] .font-heading, [lang='ar'] .font-mono, [lang='ar'] .label, [lang='ar'] .post-body h2, [lang='ar'] .post-body h3 { font-family: var(--font-plex-arabic), 'IBM Plex Sans Arabic', 'Noto Sans Arabic', Tahoma, sans-serif; }
+[lang='ar'] * { letter-spacing: normal; }
+[lang='ar'] [lang='en'] { font-family: inherit; }
+[lang='ar'] h1, [lang='ar'] h2, [lang='ar'] h3 { line-height: 1.35; }
+[dir='rtl'] .lucide-arrow-up-right { scale: -1 1; }

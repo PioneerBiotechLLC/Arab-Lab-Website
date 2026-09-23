@@ -96,6 +96,7 @@ export async function PostLayout({ post, cta }: { post: Post; cta: React.ReactNo
       <PostGrid posts={related} />
     </PageSection>}
     {cta}
-    <JsonLd data={blogPosting({ ...post, category: category?.name ?? post.category, url, image: `${url}/opengraph-image/card` })} />
+    {/* Arabic posts reuse the English post's card (Satori cannot shape Arabic script). */}
+    <JsonLd data={blogPosting({ ...post, category: category?.name ?? post.category, url, image: lang === 'ar' ? (translation ? `/blog/${post.slug}/opengraph-image/card` : '/blog/opengraph-image') : `${url}/opengraph-image/card` })} />
   </PageShell>
 }

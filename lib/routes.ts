@@ -4,6 +4,7 @@ import { site } from './site'
 import { brands, programs, solutions } from './site-data'
 import { officeList } from './site'
 import { publishedPosts } from './blog'
+import { arabicApproved, arPaths } from './i18n'
 
 export type RouteEntry = {
   path: string
@@ -17,7 +18,7 @@ export type RouteEntry = {
 const updated = site.contentUpdated
 
 export function indexableRoutes(): RouteEntry[] {
-  return [
+  return withArabic([
     { path: '/', lastModified: updated, changeFrequency: 'monthly', priority: 1 },
     { path: '/about', lastModified: updated, changeFrequency: 'yearly', priority: 0.7 },
     { path: '/solutions', lastModified: updated, changeFrequency: 'monthly', priority: 0.9 },
@@ -33,7 +34,7 @@ export function indexableRoutes(): RouteEntry[] {
     { path: '/privacy', lastModified: updated, changeFrequency: 'yearly', priority: 0.2 },
     { path: '/terms', lastModified: updated, changeFrequency: 'yearly', priority: 0.2 },
     { path: '/data-collection', lastModified: updated, changeFrequency: 'yearly', priority: 0.2 },
-  ]
+  ])
 }
 
 /** Blog index, published posts and categories that have published posts. Nothing is listed until a post is published. */
@@ -46,4 +47,20 @@ function blogRoutes(): RouteEntry[] {
     ...posts.map((p) => ({ path: `/blog/${p.slug}`, lastModified: p.updated, changeFrequency: 'monthly' as const, priority: 0.6 })),
     ...categories.map((c) => ({ path: `/blog/category/${c}`, lastModified: posts[0].updated, changeFrequency: 'weekly' as const, priority: 0.4 })),
   ]
+}
+
+/** Once Arabic is approved: add each Arabic counterpart and the en/ar/x-default alternates on both sides. */
+function withArabic(routes: RouteEntry[]): RouteEntry[] {
+  if (!arabicApproved()) return routes
+  const arPosts = publishedPosts('ar').filter((p) => !p.needsNativeReview)
+  const pairs: Record<string, string> = { ...arPaths, ...Object.fromEntries(arPosts.map((p) => [`/blog/${p.slug}`, `/ar/blog/${p.slug}`])) }
+  if (!arPosts.length) delete pairs['/blog']
+  const out: RouteEntry[] = []
+  for (const route of routes) {
+    const ar = pairs[route.path]
+    if (!ar) { out.push(route); continue }
+    const languages = { en: route.path, ar, 'x-default': route.path }
+    out.push({ ...route, languages }, { ...route, path: ar, languages })
+  }
+  return out
 }

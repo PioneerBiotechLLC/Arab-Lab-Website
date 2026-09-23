@@ -1,10 +1,12 @@
 'use client'
 // Quote and service request form, shared by /contact and /ar/contact. Moved here unchanged from app/contact/page.tsx
-// so the page can be a server component with its own metadata; `copy` localises the labels and messages.
+// so the page can be a server component with its own metadata; `locale` picks the English or Arabic copy.
+// (The copy contains functions, so it is chosen here in the client module rather than passed from a server page.)
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Check } from 'lucide-react'
 import { offices } from '@/lib/site-data'
+import { arContactCopy } from '@/lib/ar'
 
 type FieldName = 'name' | 'company' | 'email' | 'product' | 'quantity' | 'office' | 'issue'
 type FieldDef = { name: FieldName; required?: boolean; as?: 'textarea' | 'select'; type?: 'email'; options?: string[]; wide?: boolean }
@@ -50,7 +52,8 @@ const supportFields: FieldDef[] = [
 
 const fieldClass = 'rounded-lg border border-line bg-white px-3 py-3 text-ink outline-none focus:border-orange aria-[invalid=true]:border-danger-border'
 
-export function ContactForm({ support = false, copy = englishContactCopy }: { support?: boolean; copy?: ContactCopy }) {
+export function ContactForm({ support = false, locale = 'en' }: { support?: boolean; locale?: 'en' | 'ar' }) {
+  const copy: ContactCopy = locale === 'ar' ? arContactCopy : englishContactCopy
   const kind = support ? 'service' : 'quote'
   const fields = support ? supportFields : quoteFields
   const [values, setValues] = useState<Record<string, string>>(() => Object.fromEntries(fields.map((f) => [f.name, f.options?.[0] ?? ''])))
@@ -95,7 +98,7 @@ export function ContactForm({ support = false, copy = englishContactCopy }: { su
       const error = errors[field.name]
       const errorId = `${kind}-${field.name}-error`
       const shared = { name: field.name, value: values[field.name], required: field.required, 'aria-invalid': !!error, 'aria-describedby': error ? errorId : undefined, className: fieldClass, onBlur: () => check(field, values[field.name]), onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => update(field, e) }
-      const control = field.as === 'textarea' ? <textarea rows={4} {...shared} /> : field.as === 'select' ? <select {...shared}>{field.options?.map((o) => <option key={o} value={o}>{copy.officeLabel ? copy.officeLabel(o) : o}</option>)}</select> : <input type={field.type ?? 'text'} autoComplete={field.type === 'email' ? 'email' : undefined} inputMode={field.type === 'email' ? 'email' : undefined} {...shared} />
+      const control = field.as === 'textarea' ? <textarea rows={4} {...shared} /> : field.as === 'select' ? <select {...shared}>{field.options?.map((o) => <option key={o} value={o}>{copy.officeLabel ? copy.officeLabel(o) : o}</option>)}</select> : <input type={field.type ?? 'text'} dir={field.type === 'email' ? 'ltr' : undefined} autoComplete={field.type === 'email' ? 'email' : undefined} inputMode={field.type === 'email' ? 'email' : undefined} {...shared} />
       return <label key={field.name} className={`grid gap-2 text-sm text-muted-foreground ${field.wide ? 'md:col-span-2' : ''}`}>{copy.labels[field.name]}{control}{error && <span id={errorId} className="text-xs text-danger">{error}</span>}</label>
     })}
     <div className="flex flex-wrap items-center gap-4 md:col-span-2">

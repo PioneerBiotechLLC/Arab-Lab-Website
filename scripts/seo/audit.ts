@@ -5,6 +5,7 @@
 
 import { readFileSync, readdirSync, statSync, writeFileSync, existsSync } from 'node:fs'
 import { join, relative } from 'node:path'
+import { keywordFor } from './keywords.ts'
 
 const ROOT = join(import.meta.dirname, '../..')
 const APP = join(ROOT, '.next/server/app')
@@ -94,8 +95,8 @@ const esc = (s: string) => s.replace(/\|/g, '\\|')
 const lines = [
   `# SEO audit — ${new Date().toISOString().slice(0, 10)}`, '',
   `${rows.length} pages · ${rows.filter((r) => r.issues.length).length} with issues · sitemap issues: ${sitemapIssues.length}`, '',
-  '| Page | Title (chars) | Description (chars) | H1 | Words | Schema | Robots | Issues |', '|---|---|---|---|---|---|---|---|',
-  ...rows.map((r) => `| ${r.path} | ${esc(r.title)} (${r.title.length}) | ${esc(r.description)} (${r.description.length}) | ${esc(r.h1)} | ${r.words} | ${r.schema.join(', ') || '—'} | ${r.robots || 'index'}${r.hreflang.length ? ` · hreflang ${r.hreflang.join('/')}` : ''} | ${r.issues.join('; ') || 'ok'} |`),
+  '| Page | Target keyword | Title (chars) | Description (chars) | H1 | Words | Schema | Robots | Issues |', '|---|---|---|---|---|---|---|---|---|',
+  ...rows.map((r) => `| ${r.path} | ${esc(keywordFor[r.path] ?? '—')} | ${esc(r.title)} (${r.title.length}) | ${esc(r.description)} (${r.description.length}) | ${esc(r.h1)} | ${r.words} | ${r.schema.join(', ') || '—'} | ${r.robots || 'index'}${r.hreflang.length ? ` · hreflang ${r.hreflang.join('/')}` : ''} | ${r.issues.join('; ') || 'ok'} |`),
   '', '## Sitemap', '', ...(sitemapIssues.length ? sitemapIssues.map((s) => `- ${s}`) : ['- ok: every sitemap URL is a built, indexable page with a matching canonical, and every indexable page is listed']),
 ]
 const mdIndex = process.argv.indexOf('--md')

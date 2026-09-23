@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { pageMetadata } from '@/lib/seo'
+import { languagesFor } from '@/lib/i18n'
 import { pageSeo, seoProps } from '@/lib/seo-pages'
 import Link from 'next/link'
 import { MapPin } from 'lucide-react'
@@ -10,7 +11,7 @@ import { icon } from '@/lib/icons'
 
 const mapsUrl = (address: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
 
-export const metadata: Metadata = pageMetadata({ path: '/locations', ...seoProps(pageSeo['/locations']) })
+export const metadata: Metadata = pageMetadata({ path: '/locations', ...seoProps(pageSeo['/locations']), languages: languagesFor('/locations', '/ar/locations') })
 
 export default function LocationsPage() {
   return <PageShell breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Locations', href: '/locations' }]} title="Regional presence, local response." intro={`${offices.length} offices keep Arab Lab close to laboratory teams across ${markets.join(', ')}. Headquarters: Ras Al Khaimah, UAE.`}

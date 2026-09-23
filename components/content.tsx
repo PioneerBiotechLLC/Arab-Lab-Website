@@ -9,7 +9,8 @@ const linkClass = 'font-medium text-orange underline decoration-orange/40 underl
 
 /** Inline text with **bold**, [links](/path) and {{VERIFY: note}} review markers, which render as a visible highlight. */
 export function Rich({ text }: { text: string }) {
-  return <>{text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\)|\{\{VERIFY:[^}]*\}\})/g).filter(Boolean).map((part, i) => {
+  return <>{text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\)|\{\{VERIFY:[^}]*\}\}|USP <\d+>)/g).filter(Boolean).map((part, i) => {
+    if (/^USP <\d+>$/.test(part)) return <bdi key={i}>{part}</bdi>
     if (part.startsWith('**')) return <strong key={i} className="font-semibold text-ink">{part.slice(2, -2)}</strong>
     const verify = part.match(/^\{\{VERIFY:\s*([^}]*)\}\}$/)
     if (verify) return <mark key={i} className="verify" title="Needs confirmation before publishing">Verify: {verify[1].trim()}</mark>
@@ -20,9 +21,9 @@ export function Rich({ text }: { text: string }) {
 }
 
 /** Visible breadcrumb trail plus its BreadcrumbList structured data. The last item is the current page. */
-export function Breadcrumbs({ items }: { items: Crumb[] }) {
+export function Breadcrumbs({ items, label = 'Breadcrumb' }: { items: Crumb[]; label?: string }) {
   return <>
-    <nav aria-label="Breadcrumb" className="mb-8">
+    <nav aria-label={label} className="mb-8">
       <ol className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-muted-foreground">
         {items.map((item, i) => {
           const last = i === items.length - 1

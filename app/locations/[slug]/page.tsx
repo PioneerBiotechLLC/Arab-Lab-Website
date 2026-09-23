@@ -9,6 +9,7 @@ import { OfficeMap } from '@/components/office-map'
 import { JsonLd } from '@/components/json-ld'
 import { localBusiness } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
+import { languagesFor } from '@/lib/i18n'
 import { seoProps } from '@/lib/seo-pages'
 import { locationContent, locationContentBySlug } from '@/lib/content/locations'
 import { serviceContentBySlug } from '@/lib/content/services'
@@ -21,7 +22,7 @@ export function generateStaticParams() { return locationContent.map((l) => ({ sl
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const content = locationContentBySlug(slug)
-  return content ? pageMetadata({ path: `/locations/${slug}`, ...seoProps(content.seo) }) : {}
+  return content ? pageMetadata({ path: `/locations/${slug}`, ...seoProps(content.seo), languages: languagesFor(`/locations/${slug}`, `/ar/locations/${slug}`) }) : {}
 }
 
 export default async function LocationPage({ params }: { params: Promise<{ slug: string }> }) {
