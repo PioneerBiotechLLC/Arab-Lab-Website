@@ -49,7 +49,8 @@ export default function Home() {
             <span data-spine-origin className="trace-origin" />
           </div>
           <div className="max-w-2xl">
-            <h1 className="hero-title font-heading text-4xl font-bold leading-[1.08] tracking-[-0.015em] text-ink md:text-5xl md:tracking-[-0.02em] lg:text-6xl lg:tracking-[-0.03em]"><span className="block">Your lab is smart?</span><span className="block">We&apos;ll make it <span className="text-orange">smarter!</span></span></h1>
+            <h1 className="mb-5 max-w-xl font-heading text-base font-semibold leading-6 text-ink text-balance md:text-lg md:leading-7">Scientific &amp; Laboratory Equipment Supplier in the UAE, Saudi Arabia &amp; Egypt</h1>
+            <p className="hero-title font-heading text-4xl font-bold leading-[1.08] tracking-[-0.015em] text-ink md:text-5xl md:tracking-[-0.02em] lg:text-6xl lg:tracking-[-0.03em]"><span className="block">Your lab is smart?</span><span className="block">We&apos;ll make it <span className="text-orange">smarter!</span></span></p>
             <div className="hero-after">
               <p className="mt-7 max-w-xl text-lg leading-8 text-muted-foreground">{company.positioning}</p>
               <div className="mt-10 flex flex-wrap items-center gap-4"><ButtonLink href="/contact">Request a quote</ButtonLink><ButtonLink href="/brands" variant="secondary">View our brands</ButtonLink></div>

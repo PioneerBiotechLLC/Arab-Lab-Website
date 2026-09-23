@@ -9,7 +9,7 @@ import { icon } from '@/lib/icons'
 export const metadata: Metadata = pageMetadata({ path: '/brands', ...seoProps(pageSeo['/brands']) })
 
 export default function BrandsPage() {
-  return <PageShell title="Seven partners. One program." intro="Each partner manufacturer addresses a specific laboratory problem — from rapid sterility testing to process filtration and culture media."
+  return <PageShell breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Brands', href: '/brands' }]} title="Seven partners. One program." intro="Each partner manufacturer addresses a specific laboratory problem — from rapid sterility testing to process filtration and culture media."
     actions={<><ButtonLink href="/contact">Discuss your application</ButtonLink><ButtonLink href="/solutions" variant="secondary">Browse by problem</ButtonLink></>}>
     <PageSection>
       <SectionIntro title={`${brands.length} focused partners.`} />

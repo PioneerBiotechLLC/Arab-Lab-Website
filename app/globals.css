@@ -142,3 +142,7 @@ a:active, button:active { transform: scale(.97); }
 @media (prefers-contrast: more) {
   :root { --border: var(--line); --line: var(--muted); }
 }
+
+/* Editorial review marker: {{VERIFY: …}} in content renders visibly so unconfirmed claims cannot slip through review.
+   The build fails in production while any remain in published content (scripts/seo/verify-markers.ts). */
+.verify { background: #FEF3C7; color: #7A2E0E; border-radius: 4px; padding: 0 .35em; font: 500 .8125em/1.6 'IBM Plex Mono', monospace; box-decoration-break: clone; -webkit-box-decoration-break: clone; }

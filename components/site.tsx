@@ -7,6 +7,8 @@ import { usePathname } from 'next/navigation'
 import { ArrowUpRight, Globe, Mail, MapPin, Phone } from 'lucide-react'
 import { CountUp, Spotlight } from '@/components/motion'
 import { PageTransition } from '@/components/page-transition'
+import { Breadcrumbs } from '@/components/content'
+import type { Crumb } from '@/lib/schema'
 import { delay } from '@/lib/utils'
 import logoSizes from '@/lib/brand-logos.json'
 import { brandBySlug, contact, markets, offices } from '@/lib/site-data'
@@ -82,11 +84,12 @@ export function StatStrip({ stats }: { stats: [string, string][] }) {
 }
 
 // Inner-page hero: paper ground with a brand glow and a staggered entrance; an optional stat strip straddles its bottom edge like the homepage.
-export function PageShell({ children, title, intro, actions, stats }: { children: React.ReactNode; title: React.ReactNode; intro?: string; actions?: React.ReactNode; stats?: [string, string][] }) {
+export function PageShell({ children, title, intro, actions, stats, breadcrumbs }: { children: React.ReactNode; title: React.ReactNode; intro?: string; actions?: React.ReactNode; stats?: [string, string][]; breadcrumbs?: Crumb[] }) {
   return <PageTransition><main id="content" tabIndex={-1} className="outline-none">
     <section className={`relative overflow-hidden bg-paper ${stats ? '' : 'border-b border-border'}`}>
       <span aria-hidden className="pointer-events-none absolute -top-48 -right-40 size-[36rem] rounded-full bg-brand/10 blur-3xl" />
       <div className={`relative mx-auto max-w-7xl px-5 pt-20 lg:px-8 lg:pt-28 ${stats ? 'pb-36 lg:pb-40' : 'pb-20 lg:pb-28'}`}>
+        {breadcrumbs && <div className="rise" style={delay(0)}><Breadcrumbs items={breadcrumbs} /></div>}
         <h1 className="rise max-w-4xl font-heading text-4xl font-bold tracking-[-0.015em] text-ink text-balance md:text-6xl md:tracking-[-0.03em]" style={delay(0)}>{title}</h1>
         {intro && <p className="rise mt-6 max-w-2xl text-lg leading-8 text-muted-foreground" style={delay(1)}>{intro}</p>}
         {actions && <div className="rise mt-9 flex flex-wrap gap-4" style={delay(2)}>{actions}</div>}

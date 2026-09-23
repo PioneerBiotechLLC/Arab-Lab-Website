@@ -16,7 +16,7 @@ const facts: [string, string][] = [
 export const metadata: Metadata = pageMetadata({ path: '/about', ...seoProps(pageSeo['/about']) })
 
 export default function AboutPage() {
-  return <PageShell title="A trusted partner for Life Science industries." intro={company.positioning} stats={facts}
+  return <PageShell breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'About', href: '/about' }]} title="A trusted partner for Life Science industries." intro={company.positioning} stats={facts}
     actions={<><ButtonLink href="/contact">Talk to a specialist</ButtonLink><ButtonLink href="/brands" variant="secondary">Our partners</ButtonLink></>}>
     <PageSection>
       <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">

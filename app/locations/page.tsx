@@ -12,7 +12,7 @@ const mapsUrl = (address: string) => `https://www.google.com/maps/search/?api=1&
 export const metadata: Metadata = pageMetadata({ path: '/locations', ...seoProps(pageSeo['/locations']) })
 
 export default function LocationsPage() {
-  return <PageShell title="Regional presence, local response." intro={`${offices.length} offices keep Arab Lab close to laboratory teams across ${markets.join(', ')}. Headquarters: Ras Al Khaimah, UAE.`}
+  return <PageShell breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Locations', href: '/locations' }]} title="Regional presence, local response." intro={`${offices.length} offices keep Arab Lab close to laboratory teams across ${markets.join(', ')}. Headquarters: Ras Al Khaimah, UAE.`}
     actions={<><ButtonLink href="/contact">Contact the nearest office</ButtonLink><ButtonLink href="/about" variant="secondary">About Arab Lab</ButtonLink></>}>
     {markets.map((country, index) => {
       const local = offices.filter((office) => countryOf(office) === country)

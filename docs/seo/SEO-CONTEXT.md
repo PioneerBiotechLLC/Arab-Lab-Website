@@ -88,6 +88,11 @@ Blog post keywords are listed in each post's frontmatter (`targetKeyword`).
 9. `lib/routes.ts` lists every indexable route; the sitemap and the audit read it. `pnpm seo:audit` (after `pnpm build`) checks titles, descriptions, H1s, canonicals, OG images, hreflang, JSON-LD and the sitemap.
 10. Search copy (title, description, OG alt, card text) lives in `lib/seo-pages.ts`. The root layout sets the template `%s | Arab Lab`; home, about, locations and contact use absolute titles so the brand name leads without repeating.
 11. Per-page social cards: each route segment has an `opengraph-image.tsx` (and a `twitter-image.tsx` re-export) rendered by `lib/og.tsx`, so every page has its own card and alt text. Dynamic routes use `generateImageMetadata` for per-item alt. Home keeps `app/opengraph-image.tsx`.
+12. Home H1 is "Scientific & Laboratory Equipment Supplier in the UAE, Saudi Arabia & Egypt", set small above the slogan; the slogan became a `<p>` with the same classes, so its size and wipe animation are unchanged.
+13. Brand H1 is the logo (alt = brand name) followed by the text line "Supplier in the UAE, Saudi Arabia & Egypt", so the heading reads "[Brand] Supplier in…" without repeating the name visually.
+14. Brand copy beyond the partner decks is in `lib/content/brands.ts`. Portfolio categories describe each manufacturer's public range, not Arab Lab stock; FAQs avoid distributor-status claims and invite availability checks instead.
+15. Review markers: `{{VERIFY: …}}` in content renders as a visible highlight (`Rich` in `components/content.tsx`) and is stripped from JSON-LD. `pnpm build` runs `scripts/seo/verify-markers.ts` first; on Vercel production it fails while markers remain in published content (drafts excluded; override `SEO_ALLOW_VERIFY=1`). `pnpm seo:verify` lists them.
+16. Breadcrumbs (visible + BreadcrumbList) come from the `breadcrumbs` prop on `PageShell`. FAQs render through `FaqList`, which emits FAQPage for exactly the questions shown. Note: Google shows FAQ rich results only for a few authoritative sites since 2023, so FAQPage mainly helps other engines and AI answers.
 
 ## VERIFY items
 
@@ -107,3 +112,4 @@ Filled in during Phase 8. Collected so far:
 - 2026-09-23 · Phase 0 · Branch `seo-overhaul` created; discovery; this file.
 - 2026-09-23 · Phase 1 · `lib/site.ts`, www everywhere, canonicals, apex 301, sitemap, robots, verification tags, alt text, audit script.
 - 2026-09-23 · Phase 2 · Unique titles/descriptions on all 16 routes (all within 60/155), per-page OG title/description/card/alt.
+- 2026-09-23 · Phase 3 · Keyword H1 on home; brand pages expanded to 560–670 words with categories, applications, fit, availability and FAQ; breadcrumbs on all inner pages; heading-order and word-count checks; production marker guard.

@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node --disable-warning=ExperimentalWarning scripts/seo/verify-markers.ts && next build",
     "start": "next start",
     "lint": "eslint .",
     "assets": "node --disable-warning=ExperimentalWarning scripts/assets/generate.ts",
     "logos": "node --disable-warning=ExperimentalWarning scripts/assets/logos.ts",
-    "seo:audit": "node --disable-warning=ExperimentalWarning scripts/seo/audit.ts"
+    "seo:audit": "node --disable-warning=ExperimentalWarning scripts/seo/audit.ts",
+    "seo:verify": "node --disable-warning=ExperimentalWarning scripts/seo/verify-markers.ts --list"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",

@@ -16,7 +16,7 @@ const decode = (s: string) => s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').rep
 const text = (html: string) => decode(html.replace(/<img[^>]*alt="([^"]*)"[^>]*>/g, ' $1 ').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim()
 const attr = (tag: string, name: string) => decode(tag.match(new RegExp(`${name}="([^"]*)"`))?.[1] ?? '')
 
-type Row = { path: string; title: string; description: string; h1: string; h1Count: number; canonical: string; robots: string; ogImage: string; hreflang: string[]; schema: string[]; issues: string[] }
+type Row = { path: string; title: string; description: string; h1: string; h1Count: number; canonical: string; robots: string; ogImage: string; hreflang: string[]; schema: string[]; words: number; issues: string[] }
 
 function schemaIssues(node: any, where: string[]): string[] {
   const out: string[] = []
@@ -52,6 +52,11 @@ for (const file of walk(APP)) {
   for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
     try { const data = JSON.parse(m[1]); for (const node of data['@graph'] ?? [data]) issues.push(...schemaIssues(node, schema)) } catch (e) { issues.push('JSON-LD does not parse') }
   }
+  // Heading order: no level may be skipped on the way down (h2 → h4 is a skip; h4 → h2 is fine).
+  const levels = [...body.matchAll(/<h([1-6])[\s>]/g)].map((m) => Number(m[1]))
+  levels.forEach((lv, i) => { if (i && lv > levels[i - 1] + 1) issues.push(`heading skip h${levels[i - 1]}→h${lv}`) })
+  const main = body.match(/<main[\s\S]*?<\/main>/)?.[0] ?? ''
+  const words = text(main.replace(/<script[\s\S]*?<\/script>/g, '')).split(/\s+/).filter(Boolean).length
   const robots = meta('robots')
   const ogImage = meta('og:image')
   if (!title) issues.push('no title')
@@ -66,7 +71,7 @@ for (const file of walk(APP)) {
   const visible = text(body.replace(/<script[\s\S]*?<\/script>/g, ''))
   const markers = (visible.match(/\{\{VERIFY|Verify:/g) ?? []).length
   if (markers) issues.push(`${markers} VERIFY marker(s) visible`)
-  rows.push({ path, title, description, h1: h1s.join(' ‖ '), h1Count: h1s.length, canonical, robots, ogImage, hreflang, schema: [...new Set(schema)], issues })
+  rows.push({ path, title, description, h1: h1s.join(' ‖ '), h1Count: h1s.length, canonical, robots, ogImage, hreflang, schema: [...new Set(schema)], words, issues: [...new Set(issues)] })
 }
 rows.sort((a, b) => a.path.localeCompare(b.path))
 
@@ -89,8 +94,8 @@ const esc = (s: string) => s.replace(/\|/g, '\\|')
 const lines = [
   `# SEO audit — ${new Date().toISOString().slice(0, 10)}`, '',
   `${rows.length} pages · ${rows.filter((r) => r.issues.length).length} with issues · sitemap issues: ${sitemapIssues.length}`, '',
-  '| Page | Title (chars) | Description (chars) | H1 | Schema | Robots | Issues |', '|---|---|---|---|---|---|---|',
-  ...rows.map((r) => `| ${r.path} | ${esc(r.title)} (${r.title.length}) | ${esc(r.description)} (${r.description.length}) | ${esc(r.h1)} | ${r.schema.join(', ') || '—'} | ${r.robots || 'index'}${r.hreflang.length ? ` · hreflang ${r.hreflang.join('/')}` : ''} | ${r.issues.join('; ') || 'ok'} |`),
+  '| Page | Title (chars) | Description (chars) | H1 | Words | Schema | Robots | Issues |', '|---|---|---|---|---|---|---|---|',
+  ...rows.map((r) => `| ${r.path} | ${esc(r.title)} (${r.title.length}) | ${esc(r.description)} (${r.description.length}) | ${esc(r.h1)} | ${r.words} | ${r.schema.join(', ') || '—'} | ${r.robots || 'index'}${r.hreflang.length ? ` · hreflang ${r.hreflang.join('/')}` : ''} | ${r.issues.join('; ') || 'ok'} |`),
   '', '## Sitemap', '', ...(sitemapIssues.length ? sitemapIssues.map((s) => `- ${s}`) : ['- ok: every sitemap URL is a built, indexable page with a matching canonical, and every indexable page is listed']),
 ]
 const mdIndex = process.argv.indexOf('--md')
