@@ -2,6 +2,8 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Inter, IBM_Plex_Mono, Poppins } from 'next/font/google'
 import { SiteFooter, SiteHeader } from '@/components/site'
+import { JsonLd } from '@/components/json-ld'
+import { organization } from '@/lib/schema'
 import { site } from '@/lib/site'
 import { pageSeo } from '@/lib/seo-pages'
 import './globals.css'
@@ -27,5 +29,5 @@ export const viewport: Viewport = { colorScheme: 'light', themeColor: '#FFFFFF',
 
 // Header and footer live here so they persist across navigations — one fixed spatial anchor while page content transitions.
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={`${inter.variable} ${poppins.variable} ${plex.variable}`}><body className="antialiased"><a href="#content" className="skip-link">Skip to content</a><SiteHeader />{children}<SiteFooter /><Analytics /></body></html>
+  return <html lang="en" className={`${inter.variable} ${poppins.variable} ${plex.variable}`}><body className="antialiased"><a href="#content" className="skip-link">Skip to content</a><SiteHeader />{children}<SiteFooter /><JsonLd data={organization()} /><Analytics /></body></html>
 }

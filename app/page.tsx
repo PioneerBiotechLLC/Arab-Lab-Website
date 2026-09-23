@@ -6,6 +6,8 @@ import { ArrowUpRight } from 'lucide-react'
 import { Spotlight } from '@/components/motion'
 import { PageTransition } from '@/components/page-transition'
 import { Spine } from '@/components/spine'
+import { JsonLd } from '@/components/json-ld'
+import { website } from '@/lib/schema'
 import { AccentTile, BrandTile, ButtonLink, CardLink, ClosingCta, DarkBand, NumberedCard, OfficeTiles, PageSection, SectionIntro, StatStrip } from '@/components/site'
 import { eyebrowOnDark } from '@/lib/utils'
 import { icon } from '@/lib/icons'
@@ -36,6 +38,7 @@ export const metadata: Metadata = pageMetadata({ path: '/', ...seoProps(pageSeo[
 export default function Home() {
   return <PageTransition><main id="content" tabIndex={-1} className="relative outline-none">
     <Spine stops={stops} />
+    <JsonLd data={website()} />
 
     <section className="bg-white">
       <div className="relative overflow-hidden">

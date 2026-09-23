@@ -98,6 +98,8 @@ Blog post keywords are listed in each post's frontmatter (`targetKeyword`).
 19. Service copy states Arab Lab facts only (departments, offices, the four service lines as worded on the site). Turnkey and consulting scope is described generally and "agreed per engagement", with no claims about past projects or approvals.
 20. Office pages (`/locations/[slug]`, 370–395 words) render from `lib/content/locations.ts`; each carries market-specific copy (HQ heritage, SFDA, EDA) so the three pages are not near-duplicates. `/locations` stays the hub; its cards, the footer, the office tiles and brand pages now link to the office pages.
 21. Maps are click-to-load (`components/office-map.tsx`): no request reaches Google until "Show map" is pressed (verified: 0 requests before, map loads after). This keeps the privacy pages true; both now mention the map. Swap to an always-on `loading="lazy"` iframe only together with a privacy-page update.
+22. Structured data (`lib/schema.ts`, typed with `schema-dts`): Organization on every page from the root layout, with `disambiguatingDescription` ("a company, not the ARABLAB trade exhibition"), `legalName`, `alternateName`, HQ address, contact point, the three offices and `sameAs`; WebSite on the home page (site-name signal); LocalBusiness on each office page; BreadcrumbList on all inner pages; FAQPage wherever a FAQ is visible; BlogPosting on posts (Phase 7). The About page gained a 4-question FAQ that answers the ARABLAB name clash. Schema text is plain: markers and inline markdown are stripped.
+23. Validation: `pnpm seo:audit` parses every JSON-LD block and checks required fields per type (Organization name/url/logo, LocalBusiness address, BreadcrumbList positions and URLs, FAQPage Q&A, BlogPosting headline/date/author/image). Run Google's Rich Results Test on the live URLs after deploy.
 
 ## VERIFY items
 
@@ -125,3 +127,4 @@ Filled in during Phase 8. Collected so far:
 - 2026-09-23 · Phase 3 · Keyword H1 on home; brand pages expanded to 560–670 words with categories, applications, fit, availability and FAQ; breadcrumbs on all inner pages; heading-order and word-count checks; production marker guard.
 - 2026-09-23 · Phase 4 · 6 solution pages, 4 service pages, `/services` hub; internal links re-pointed; `/solutions` kept as hub with anchors.
 - 2026-09-23 · Phase 5 · Office pages for Ras Al Khaimah, Riyadh, Cairo with click-to-load maps; hub and footer link to them; privacy pages mention the map.
+- 2026-09-23 · Phase 6 · Organization (site-wide), WebSite (home), LocalBusiness (offices); About FAQ for the ARABLAB disambiguation; schema-dts typing.

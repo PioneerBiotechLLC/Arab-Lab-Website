@@ -6,6 +6,8 @@ import { Spotlight } from '@/components/motion'
 import { ButtonLink, ClosingCta, GlassTile, DarkBand, NumberedCard, PageSection, PageShell, SectionIntro } from '@/components/site'
 import { Prose } from '@/components/content'
 import { OfficeMap } from '@/components/office-map'
+import { JsonLd } from '@/components/json-ld'
+import { localBusiness } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
 import { seoProps } from '@/lib/seo-pages'
 import { locationContent, locationContentBySlug } from '@/lib/content/locations'
@@ -34,6 +36,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
   return <PageShell breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Locations', href: '/locations' }, { name: office.name, href: `/locations/${slug}` }]}
     title={content.h1} intro={content.intro}
     actions={<><ButtonLink href="/contact">Contact this office</ButtonLink><ButtonLink href={directions} variant="secondary" target="_blank" rel="noreferrer">Get directions</ButtonLink></>}>
+    <JsonLd data={localBusiness(office)} />
     <PageSection>
       <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div>
