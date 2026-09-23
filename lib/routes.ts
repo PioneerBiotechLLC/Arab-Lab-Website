@@ -2,6 +2,7 @@
 // so a new page type is registered once. Routes that are noindex (drafts, unapproved Arabic pages) never appear.
 import { site } from './site'
 import { brands, programs, solutions } from './site-data'
+import { officeList } from './site'
 
 export type RouteEntry = {
   path: string
@@ -25,6 +26,7 @@ export function indexableRoutes(): RouteEntry[] {
     { path: '/brands', lastModified: updated, changeFrequency: 'monthly', priority: 0.9 },
     ...brands.map((brand) => ({ path: `/brands/${brand.slug}`, lastModified: updated, changeFrequency: 'monthly' as const, priority: 0.8 })),
     { path: '/locations', lastModified: updated, changeFrequency: 'yearly', priority: 0.7 },
+    ...officeList.map((o) => ({ path: `/locations/${o.slug}`, lastModified: updated, changeFrequency: 'yearly' as const, priority: 0.8 })),
     { path: '/contact', lastModified: updated, changeFrequency: 'yearly', priority: 0.8 },
     { path: '/privacy', lastModified: updated, changeFrequency: 'yearly', priority: 0.2 },
     { path: '/terms', lastModified: updated, changeFrequency: 'yearly', priority: 0.2 },

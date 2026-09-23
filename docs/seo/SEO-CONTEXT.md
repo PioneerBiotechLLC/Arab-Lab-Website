@@ -96,8 +96,13 @@ Blog post keywords are listed in each post's frontmatter (`targetKeyword`).
 17. Solution pages (`/solutions/[slug]`, 665–870 words) and service pages (`/services/[slug]`, 500–670 words) render from `lib/content/solutions.ts` and `lib/content/services.ts`. A small `/services` hub was added so service breadcrumbs have a parent. `solutions` and `programs` in site-data gained a `slug`; their `id` stays as the `/solutions#…` anchor and asset name.
 18. `/solutions` keeps every section and anchor; each card gained a "Read the full guide" link. Home, `/brands` and brand pages now link to the dedicated solution and service pages instead of anchors. The footer lists Services.
 19. Service copy states Arab Lab facts only (departments, offices, the four service lines as worded on the site). Turnkey and consulting scope is described generally and "agreed per engagement", with no claims about past projects or approvals.
+20. Office pages (`/locations/[slug]`, 370–395 words) render from `lib/content/locations.ts`; each carries market-specific copy (HQ heritage, SFDA, EDA) so the three pages are not near-duplicates. `/locations` stays the hub; its cards, the footer, the office tiles and brand pages now link to the office pages.
+21. Maps are click-to-load (`components/office-map.tsx`): no request reaches Google until "Show map" is pressed (verified: 0 requests before, map loads after). This keeps the privacy pages true; both now mention the map. Swap to an always-on `loading="lazy"` iframe only together with a privacy-page update.
 
 ## VERIFY items
+
+- Office phone numbers: every office page and (Phase 6) LocalBusiness uses the main number +971 7 208 1908. Confirm whether Riyadh and Cairo have local numbers.
+- Opening hours per office (needed for Google Business Profile and LocalBusiness `openingHours`); none stated yet.
 
 - `/services/pharmaceutical-consultant`: name the current UAE authority for product registration (MOHAP or the Emirates Drug Establishment). Marker is on the page; it blocks production until resolved.
 
@@ -119,3 +124,4 @@ Filled in during Phase 8. Collected so far:
 - 2026-09-23 · Phase 2 · Unique titles/descriptions on all 16 routes (all within 60/155), per-page OG title/description/card/alt.
 - 2026-09-23 · Phase 3 · Keyword H1 on home; brand pages expanded to 560–670 words with categories, applications, fit, availability and FAQ; breadcrumbs on all inner pages; heading-order and word-count checks; production marker guard.
 - 2026-09-23 · Phase 4 · 6 solution pages, 4 service pages, `/services` hub; internal links re-pointed; `/solutions` kept as hub with anchors.
+- 2026-09-23 · Phase 5 · Office pages for Ras Al Khaimah, Riyadh, Cairo with click-to-load maps; hub and footer link to them; privacy pages mention the map.
