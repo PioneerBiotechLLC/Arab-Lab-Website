@@ -4,7 +4,7 @@ import { site } from './site'
 import { brands, programs, solutions } from './site-data'
 import { officeList } from './site'
 import { publishedPosts } from './blog'
-import { arabicApproved, arPaths } from './i18n'
+import { arabicApproved, localePath } from './i18n'
 
 export type RouteEntry = {
   path: string
@@ -49,16 +49,23 @@ function blogRoutes(): RouteEntry[] {
   ]
 }
 
-/** Once Arabic is approved: add each Arabic counterpart and the en/ar/x-default alternates on both sides. */
+/** Once Arabic is approved: add each Arabic counterpart and the en/ar/x-default alternates on both sides. Every page
+ * has an Arabic version at /ar + path; blog posts and categories only where an Arabic post is published. */
 function withArabic(routes: RouteEntry[]): RouteEntry[] {
   if (!arabicApproved()) return routes
   const arPosts = publishedPosts('ar').filter((p) => !p.needsNativeReview)
-  const pairs: Record<string, string> = { ...arPaths, ...Object.fromEntries(arPosts.map((p) => [`/blog/${p.slug}`, `/ar/blog/${p.slug}`])) }
-  if (!arPosts.length) delete pairs['/blog']
+  const arSlugs = new Set(arPosts.map((p) => p.slug))
+  const arCategories = new Set(arPosts.map((p) => p.category))
+  const hasArabic = (path: string) => {
+    if (path === '/blog') return arPosts.length > 0
+    if (path.startsWith('/blog/category/')) return arCategories.has(path.slice('/blog/category/'.length))
+    if (path.startsWith('/blog/')) return arSlugs.has(path.slice('/blog/'.length))
+    return true
+  }
   const out: RouteEntry[] = []
   for (const route of routes) {
-    const ar = pairs[route.path]
-    if (!ar) { out.push(route); continue }
+    if (!hasArabic(route.path)) { out.push(route); continue }
+    const ar = localePath('ar', route.path)
     const languages = { en: route.path, ar, 'x-default': route.path }
     out.push({ ...route, languages }, { ...route, path: ar, languages })
   }

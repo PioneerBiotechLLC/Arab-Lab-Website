@@ -6,6 +6,10 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // English and Arabic have separate root layouts (app/(en), app/ar), so unmatched URLs use app/global-not-found.tsx.
+  experimental: {
+    globalNotFound: true,
+  },
   // Canonical host is www. Vercel already redirects the apex domain (308); this 301 is the app-level backstop
   // for any host or proxy that reaches the app on the bare domain. Keep the host redirect at Vercel/DNS as well.
   async redirects() {
