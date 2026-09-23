@@ -1,9 +1,9 @@
 // Arabic copy for the /ar pages (home, contact, locations, blog chrome). Written natively, not translated line by line.
-// needsNativeReview: true — nothing here is indexable until a native speaker approves it (lib/i18n.ts).
+// Approved by the client on 2026-09-23 (lib/i18n.ts ARABIC_APPROVED); edits after that need a fresh native review.
 // Brand, product and standard names stay in Latin script, as they are used in the Arabic-speaking industry.
 import type { ContactCopy } from '@/components/contact-form'
 
-export const needsNativeReview = true
+export const needsNativeReview = false
 
 export const arOfficeNames: Record<string, string> = { 'Ras Al Khaimah': 'رأس الخيمة', Riyadh: 'الرياض', Cairo: 'القاهرة' }
 export const arCountries: Record<string, string> = { UAE: 'الإمارات العربية المتحدة', 'Saudi Arabia': 'المملكة العربية السعودية', Egypt: 'جمهورية مصر العربية' }

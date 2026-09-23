@@ -8,7 +8,7 @@ Read this file first in any SEO session. It is the source of truth; keep it shor
 |---|---|
 | Legal name | Arab Lab Scientific Equipment L.L.C. |
 | Brand | Arab Lab |
-| Alternate names | ArabLab, Arab Lab Scientific, عرب لاب `{{VERIFY: official Arabic name}}` |
+| Alternate names | ArabLab, Arab Lab Scientific, عرب لاب (confirmed with the Arabic pages, 2026-09-23) |
 | Canonical domain | https://www.arablab-scientific.com (www) |
 | Email / phone | info@arablab-scientific.com · +971 7 208 1908 |
 | HQ | 408, Julphar Tower, Al Hisn Road, Ras Al Khaimah, UAE |
@@ -114,12 +114,10 @@ Full per-claim list with file and line: [`VERIFY.md`](VERIFY.md) (regenerate wit
 
 **Site facts and published pages** (no markers remain on published pages; confirm these off-page facts when you can):
 - `/services/pharmaceutical-consultant`: resolved at merge by leaving the neutral wording "the federal authority in the UAE" and removing the marker. To name the body (MOHAP or the Emirates Drug Establishment), confirm it first.
-- Official Arabic name (عرب لاب?). Kept out of schema until verified (`site.arabicName.verified`).
 - Brand titles and pages say each partner is supplied across the UAE, Saudi Arabia and Egypt (the brief's own pattern). Confirm territory coverage per brand.
 - CPC Biotech: the partner deck says "ready-to-use microbiological soils" (likely Italian *terreni*, i.e. culture media). Site copy says "microbiological media"; confirm the English term.
 - Office phone numbers: office pages and LocalBusiness use the main number +971 7 208 1908. Confirm whether Riyadh and Cairo have local numbers.
 - Opening hours per office (Google Business Profile and LocalBusiness `openingHours`); none stated yet.
-- Arabic office addresses in `lib/ar.ts` are renderings of the English addresses; confirm the official Arabic spellings.
 
 **Draft blog posts** (76 markers; drafts never block builds): pharmacopoeia chapter wording and dates (USP <71>, <85>, <1223>, Ph. Eur. 2.6.1, 2.6.14, 2.6.30, 2.6.32, 5.1.6), numeric parameters (incubation temperatures, endotoxin limits, spike recovery, filter challenge levels, pipetting angles and depths, scaling safety factors), EU GMP Annex 1 clauses (PUPSIT, EM limits), ISO 8655 and ISO 14644 references, and every regulator role, system name and pathway in the UAE, Saudi Arabia and Egypt. The regulatory overview post alone carries 13.
 
@@ -127,7 +125,7 @@ Full per-claim list with file and line: [`VERIFY.md`](VERIFY.md) (regenerate wit
 
 **Built (smallest non-breaking approach):** `app/ar/` with a nested layout (`lang="ar" dir="rtl"`, IBM Plex Sans Arabic, not preloaded on English pages). The shared header and footer switch to Arabic labels and RTL on `/ar` paths and show an English/العربية switcher where a counterpart exists. Arabic pages: `/ar`, `/ar/contact`, `/ar/locations` (+3 offices), `/ar/blog` (+ posts). Copy lives in `lib/ar.ts`. Social cards reuse the English card for each page, because the OG renderer cannot shape Arabic script.
 
-**Gate:** `ARABIC_APPROVED` in `lib/i18n.ts` (or `AR_APPROVED=1`). Until approved, Arabic pages are noindex, show a review banner, are absent from the sitemap, carry no hreflang, and the switcher is hidden (visible in `pnpm dev`). Verified both states: gated build has zero Arabic URLs in the sitemap and no hreflang; approved build emits reciprocal en/ar/x-default for 6 page pairs in both page heads and the sitemap, and `/ar` becomes indexable with a self-canonical.
+**Gate:** `ARABIC_APPROVED` in `lib/i18n.ts` (or `AR_APPROVED=1`). **Approved and switched on 2026-09-23** for the Arabic pages (copy, company name عرب لاب and office addresses); the four Arabic blog posts remain drafts with `needsNativeReview: true` and stay out until published and reviewed. Before approval, Arabic pages are noindex, show a review banner, are absent from the sitemap, carry no hreflang, and the switcher is hidden (visible in `pnpm dev`). Verified both states: gated build has zero Arabic URLs in the sitemap and no hreflang; approved build emits reciprocal en/ar/x-default for 6 page pairs in both page heads and the sitemap, and `/ar` becomes indexable with a self-canonical.
 
 **Known limitation:** server-rendered `<html lang>` stays `en` on `/ar` pages; a client effect corrects it after hydration, and every Arabic region carries `lang="ar"`. Google relies on hreflang, not `<html lang>`, so ranking impact is small; Bing and screen readers benefit from the server value.
 
@@ -174,3 +172,4 @@ Full per-claim list with file and line: [`VERIFY.md`](VERIFY.md) (regenerate wit
 - 2026-09-23 · Phase 7 · MDX blog with RSS and categories; 10 EN drafts (1,204–1,397 words) and 4 AR drafts; `BLOG-CALENDAR.md` with 12 more posts.
 - 2026-09-23 · Phase 8 · `/ar` home, contact, locations (+3), blog behind an approval gate; RTL header/footer; reciprocal hreflang when approved; off-site checklist; AUDIT.md and VERIFY.md.
 - 2026-09-23 · Merge · Removed the one on-page marker (UAE authority kept as "the federal authority in the UAE"); merged `seo-overhaul` into `main`.
+- 2026-09-23 · Arabic approved · `ARABIC_APPROVED = true`: /ar pages indexable, in the sitemap with reciprocal hreflang, switcher shown, review banner gone; عرب لاب added to Organization `alternateName`.

@@ -11,7 +11,7 @@ export const site = {
   /** Name variants for schema.org `alternateName`. */
   alternateNames: ['Arab Lab', 'ArabLab', 'Arab Lab Scientific'],
   /** Arabic name is used in schema only once verified (SEO-CONTEXT VERIFY list). */
-  arabicName: { value: 'عرب لاب', verified: false },
+  arabicName: { value: 'عرب لاب', verified: true },
   email: 'info@arablab-scientific.com',
   phone: '+97172081908',
   phoneDisplay: '+971 7 208 1908',
