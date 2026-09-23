@@ -2,18 +2,25 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Inter, IBM_Plex_Mono, Poppins } from 'next/font/google'
 import { SiteFooter, SiteHeader } from '@/components/site'
-import { company, contact } from '@/lib/site-data'
+import { company } from '@/lib/site-data'
+import { site } from '@/lib/site'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const poppins = Poppins({ subsets: ['latin'], weight: ['600', '700'], variable: '--font-poppins' })
 const plex = IBM_Plex_Mono({ subsets: ['latin'], weight: ['500'], variable: '--font-plex' })
 
-// metadataBase makes the OG/Twitter image URLs absolute in production; Vercel previews resolve to their own host.
+// Search engine verification tokens come from env so they never need a code change (see .env.example).
+const gsc = process.env.NEXT_PUBLIC_GSC_VERIFICATION
+const bing = process.env.NEXT_PUBLIC_BING_VERIFICATION
+
+// metadataBase is always the canonical www host, so canonicals and OG/Twitter image URLs are absolute on www everywhere.
+// (Vercel serves preview deployments with X-Robots-Tag: noindex, so previews never compete with production.)
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : contact.website),
+  metadataBase: new URL(site.url),
   title: 'Arab Lab | Scientific Equipment',
   description: company.positioning,
+  ...(gsc || bing ? { verification: { ...(gsc ? { google: gsc } : {}), ...(bing ? { other: { 'msvalidate.01': bing } } : {}) } } : {}),
 }
 export const viewport: Viewport = { colorScheme: 'light', themeColor: '#FFFFFF', userScalable: true }
 

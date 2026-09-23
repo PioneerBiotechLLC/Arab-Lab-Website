@@ -1,7 +1,11 @@
+import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import { Spotlight } from '@/components/motion'
 import { BrandChips, ButtonLink, ClosingCta, DarkBand, NumberedCard, PageSection, PageShell, SectionIntro } from '@/components/site'
 import { brandNames, company, programs, solutions } from '@/lib/site-data'
 import { icon } from '@/lib/icons'
+
+export const metadata: Metadata = pageMetadata({ path: '/solutions' })
 
 export default function SolutionsPage() {
   return <PageShell title="Organised by the problem, not the manufacturer." intro="Each solution is framed around what your laboratory needs to test, make or release — and links through to the partner whose technology addresses it."

@@ -28,7 +28,7 @@ export function ButtonLink({ href, variant = 'primary', children, ...rest }: { h
 
 export function Logo({ full = false }: { full?: boolean }) {
   return <Link href="/" transitionTypes={['nav-back']} className="group inline-flex items-center gap-3 py-0.5" aria-label="Arab Lab home">
-    <Image src="/logo-mark.webp" alt="" width={512} height={465} priority className="h-10 w-auto shrink-0" />
+    <Image src="/logo-mark.webp" alt="Arab Lab Scientific Equipment logo" width={512} height={465} priority className="h-10 w-auto shrink-0" />
     <span className="flex flex-col">
       <span className="font-heading text-lg font-bold leading-none tracking-tight text-ink">ARAB <span className="text-orange">LAB</span></span>
       {full && <span className="mt-1 font-mono text-xs text-muted-foreground">Scientific equipment L.L.C.</span>}
@@ -153,14 +153,14 @@ export function CardLink({ eyebrow, title, body, href, icon }: { eyebrow: string
 // Every partner logo is normalised to the same 660×200 transparent canvas by `pnpm logos`,
 // so one box sizes all seven and the marks read at a consistent optical weight.
 // The logo stands in for the partner's name wherever it appears, so no heading repeats it. A wordmark
-// carries the name itself (alt text does the same for assistive tech); a bare symbol gets the name set
-// beside it as a lockup. Logos share one 660×200 canvas (`pnpm logos`), so one height sizes them all.
+// carries the name itself; a bare symbol gets the name set beside it as a lockup. The image alt is always the
+// brand name, and the visible name beside a symbol is aria-hidden so assistive tech announces it once. Logos share one 660×200 canvas (`pnpm logos`), so one height sizes them all.
 export function BrandMark({ brand, size = 'h-9', text = 'text-xl' }: { brand: { name: string; slug: string; mark?: 'wordmark' | 'symbol' }; size?: string; text?: string }) {
   const symbol = brand.mark === 'symbol'
   const dims = (logoSizes as Record<string, { width: number; height: number }>)[brand.slug] ?? { width: 660, height: 200 }
   return <span className="flex items-center gap-3">
-    <Image src={`/brands/${brand.slug}.webp`} alt={symbol ? '' : brand.name} {...dims} className={`${size} w-auto max-w-full shrink-0`} />
-    {symbol && <span className={`font-heading ${text} font-bold tracking-[-0.01em] text-ink`}>{brand.name}</span>}
+    <Image src={`/brands/${brand.slug}.webp`} alt={brand.name} {...dims} className={`${size} w-auto max-w-full shrink-0`} />
+    {symbol && <span aria-hidden className={`font-heading ${text} font-bold tracking-[-0.01em] text-ink`}>{brand.name}</span>}
   </span>
 }
 

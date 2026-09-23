@@ -1,7 +1,11 @@
+import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import { Spotlight } from '@/components/motion'
 import { AccentTile, BrandTile, ButtonLink, ClosingCta, DarkBand, GlassTile, PageSection, PageShell, SectionIntro } from '@/components/site'
 import { brandNames, brands, solutions } from '@/lib/site-data'
 import { icon } from '@/lib/icons'
+
+export const metadata: Metadata = pageMetadata({ path: '/brands' })
 
 export default function BrandsPage() {
   return <PageShell title="Seven partners. One program." intro="Each partner manufacturer addresses a specific laboratory problem — from rapid sterility testing to process filtration and culture media."

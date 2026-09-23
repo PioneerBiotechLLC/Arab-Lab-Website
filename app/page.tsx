@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { Spotlight } from '@/components/motion'
@@ -28,6 +30,8 @@ const stops = [
 // A sensor readout: flat, a settling transient, then steady. Drawn once on load, then it cools into the dotted motif.
 const tracePath = 'M0 28 H130 L146 28 L156 8 L166 50 L176 12 L186 44 L196 18 L206 36 L218 24 L232 31 L248 27 L268 28.5 L290 28 H1000'
 
+export const metadata: Metadata = pageMetadata({ path: '/' })
+
 export default function Home() {
   return <PageTransition><main id="content" tabIndex={-1} className="relative outline-none">
     <Spine stops={stops} />
@@ -35,7 +39,7 @@ export default function Home() {
     <section className="bg-white">
       <div className="relative overflow-hidden">
         {/* Oversized wrapper so the scroll parallax never exposes an edge. */}
-        <div className="hero-parallax absolute inset-x-0 -top-[10%] -bottom-[10%]"><picture><source media="(max-width: 1023px)" srcSet="/hero/hero-mobile.webp" /><img src="/hero/hero.webp" alt="" fetchPriority="high" decoding="async" className="absolute inset-0 h-full w-full object-cover object-[70%_center]" /></picture></div>
+        <div className="hero-parallax absolute inset-x-0 -top-[10%] -bottom-[10%]"><picture><source media="(max-width: 1023px)" srcSet="/hero/hero-mobile.webp" /><img src="/hero/hero.webp" alt="Automated liquid-handling workstation in a pharmaceutical quality-control laboratory, with an aseptic isolator behind it" width={2560} height={1440} fetchPriority="high" decoding="async" className="absolute inset-0 h-full w-full object-cover object-[70%_center]" /></picture></div>
         <div className="absolute inset-0 bg-white/85 lg:bg-transparent lg:bg-linear-to-r lg:from-white lg:via-white/85 lg:to-white/15" />
         <div className="relative mx-auto max-w-7xl px-5 pt-16 pb-40 lg:px-8 lg:pt-28 lg:pb-52">
           {/* The readout. Starts at the spine's x (origin node) and runs to the content edge; the spine continues down from the origin. */}

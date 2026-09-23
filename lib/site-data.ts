@@ -1,4 +1,6 @@
 // All copy on the site is sourced from the Arab Lab company profile and partner decks. Nothing here is invented.
+// Domain, contact details and offices come from lib/site.ts, the single source for site-wide constants.
+import { officeList, site } from './site'
 
 export const company = {
   name: 'Arab Lab Scientific Equipment L.L.C.',
@@ -9,13 +11,9 @@ export const company = {
   groupFounded: '2001',
 }
 
-export const contact = { email: 'info@arablab-scientific.com', phone: '+97172081908', phoneDisplay: '00971 72081908', website: 'https://arablab-scientific.com', websiteDisplay: 'arablab-scientific.com' }
+export const contact = { email: site.email, phone: site.phone, phoneDisplay: site.phoneDisplay, website: site.url, websiteDisplay: site.host }
 
-export const offices = [
-  { name: 'Ras Al Khaimah', short: 'HQ', address: '408, Julphar Tower, Al Hisn Road, Ras Al Khaimah, UAE' },
-  { name: 'Riyadh', short: '', address: '3808 Al Urubah Rd, Al Wurud, Riyadh 12252, Saudi Arabia' },
-  { name: 'Cairo', short: '', address: '87, Dar Masr, Al Kronfel, First Settlement, Cairo, Egypt' },
-]
+export const offices = officeList
 
 // The country is the last comma-separated segment of each address.
 export const countryOf = (office: { address: string }) => office.address.split(', ').at(-1) ?? ''

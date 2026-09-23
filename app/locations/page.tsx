@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import { MapPin } from 'lucide-react'
 import { Spotlight } from '@/components/motion'
 import { ButtonLink, ClosingCta, DarkBand, GlassTile, PageSection, PageShell, SectionIntro } from '@/components/site'
@@ -5,6 +7,8 @@ import { countryOf, departments, markets, offices } from '@/lib/site-data'
 import { icon } from '@/lib/icons'
 
 const mapsUrl = (address: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
+
+export const metadata: Metadata = pageMetadata({ path: '/locations' })
 
 export default function LocationsPage() {
   return <PageShell title="Regional presence, local response." intro={`${offices.length} offices keep Arab Lab close to laboratory teams across ${markets.join(', ')}. Headquarters: Ras Al Khaimah, UAE.`}

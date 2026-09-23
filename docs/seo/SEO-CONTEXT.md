@@ -79,15 +79,25 @@ Blog post keywords are listed in each post's frontmatter (`targetKeyword`).
 
 1. `pnpm build` is used where the brief says `npm run build`; the repo is a pnpm project.
 2. Titles are capped at 60 characters even where the brief's example is longer (the home example is 70).
+3. `lib/site.ts` is the single source for URL, names, phone, offices (structured addresses) and socials. `lib/site-data.ts` derives `contact` and `offices` from it. Phone display is now `+971 7 208 1908` for NAP consistency.
+4. `metadataBase` is always the www host. Vercel serves previews with `X-Robots-Tag: noindex`, so previews never compete.
+5. Canonicals are set per page through `pageMetadata()` in `lib/seo.ts`. None is set in the root layout, because children would inherit it.
+6. Apex→www: Vercel already answers 308 on the apex. An app-level 301 in `next.config.mjs` is the backstop (verified locally). `http://arablab-scientific.com` currently takes two hops (http→https apex→www); fix at the host so it is one.
+7. The contact form moved unchanged to `components/contact-form.tsx` so `/contact` can be a server component with metadata. It takes a `copy` prop for Arabic. Nothing was removed.
+8. Alt text: logo mark now "Arab Lab Scientific Equipment logo" (its link keeps `aria-label`, so the accessible name is unchanged); brand logos always carry the brand name, and Promicol's visible name is `aria-hidden` so it is announced once; the hero photo has a descriptive alt. The hero stays a `<picture>` for art direction. `images.unoptimized` is on, so `next/image` emits one `src` and `sizes`/`srcset` do not apply; the asset pipeline pre-sizes files.
+9. `lib/routes.ts` lists every indexable route; the sitemap and the audit read it. `pnpm seo:audit` (after `pnpm build`) checks titles, descriptions, H1s, canonicals, OG images, hreflang, JSON-LD and the sitemap.
 
 ## VERIFY items
 
-- Official Arabic name (عرب لاب?).
+- Official Arabic name (عرب لاب?). Kept out of schema until verified (`site.arabicName.verified`).
 
 ## Manual off-site checklist
 
-Filled in during Phase 8.
+Filled in during Phase 8. Collected so far:
+- Set `NEXT_PUBLIC_GSC_VERIFICATION` (and optionally `NEXT_PUBLIC_BING_VERIFICATION`) on Vercel, then verify and submit `/sitemap.xml`.
+- At Vercel/DNS, make `http://arablab-scientific.com` redirect straight to `https://www.arablab-scientific.com` in one hop.
 
 ## Changelog
 
 - 2026-09-23 · Phase 0 · Branch `seo-overhaul` created; discovery; this file.
+- 2026-09-23 · Phase 1 · `lib/site.ts`, www everywhere, canonicals, apex 301, sitemap, robots, verification tags, alt text, audit script.

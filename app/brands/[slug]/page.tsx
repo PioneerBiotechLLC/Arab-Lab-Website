@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
@@ -6,6 +8,11 @@ import { AccentTile, BrandMark, BrandTile, ButtonLink, ClosingCta, NumberedCard,
 import { brandBySlug, brands, solutionsFor } from '@/lib/site-data'
 
 export function generateStaticParams() { return brands.map((brand) => ({ slug: brand.slug })) }
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  return pageMetadata({ path: `/brands/${slug}` })
+}
 
 export default async function BrandPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params

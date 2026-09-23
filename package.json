@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "assets": "node --disable-warning=ExperimentalWarning scripts/assets/generate.ts",
-    "logos": "node --disable-warning=ExperimentalWarning scripts/assets/logos.ts"
+    "logos": "node --disable-warning=ExperimentalWarning scripts/assets/logos.ts",
+    "seo:audit": "node --disable-warning=ExperimentalWarning scripts/seo/audit.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
