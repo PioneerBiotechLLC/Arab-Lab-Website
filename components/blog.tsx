@@ -9,7 +9,10 @@ import { MdxBody } from '@/components/mdx'
 import { blogPosting } from '@/lib/schema'
 import { categoryBySlug } from '@/lib/blog-categories'
 import { relatedPosts, translationOf, type Lang, type Post } from '@/lib/blog'
-import { brandBySlug, brandNames, solutionBySlug, type Brand } from '@/lib/site-data'
+import { brandNames, type Brand } from '@/lib/site-data'
+import { localeData } from '@/lib/content/locale'
+import { localePath } from '@/lib/i18n'
+import { socialCardPath } from '@/lib/social-card'
 import { icon } from '@/lib/icons'
 
 export const blogLabels = {
@@ -46,14 +49,17 @@ export async function PostLayout({ post, cta }: { post: Post; cta: React.ReactNo
   const lang = post.lang
   const t = blogLabels[lang]
   const category = categoryBySlug(post.category)
-  const solutions = post.relatedSolutions.map(solutionBySlug).filter((s) => !!s)
-  const brands = post.relatedBrands.map(brandBySlug).filter((b): b is Brand => !!b)
+  const categoryName = category && (lang === 'ar' ? category.nameAr : category.name)
+  const categoryHref = category && `${blogBase(lang)}/category/${category.slug}`
+  const d = localeData(lang)
+  const solutions = post.relatedSolutions.map((slug) => d.solutions.find((s) => s.slug === slug)).filter((s) => !!s)
+  const brands = post.relatedBrands.map((slug) => d.brands.find((b) => b.slug === slug)).filter((b): b is Brand => !!b)
   const related = relatedPosts(post)
   const translation = translationOf(post)
   const url = `${blogBase(lang)}/${post.slug}`
   const toc = post.faq.length ? [...post.toc, { id: 'faq', text: t.faq }] : post.toc
 
-  return <PageShell breadcrumbs={[{ name: t.home, href: homeHref(lang) }, { name: t.blog, href: blogBase(lang) }, ...(category && lang === 'en' ? [{ name: category.name, href: `/blog/category/${category.slug}` }] : []), { name: post.title, href: url }]}
+  return <PageShell breadcrumbs={[{ name: t.home, href: homeHref(lang) }, { name: t.blog, href: blogBase(lang) }, ...(category ? [{ name: categoryName!, href: categoryHref! }] : []), { name: post.title, href: url }]}
     title={<span className="block text-3xl leading-tight md:text-5xl">{post.title}</span>} intro={post.description}>
     {(post.status === 'draft' || post.needsNativeReview) && <div className="border-b border-danger-border/40 bg-[#FEF3F2] px-5 py-3 text-center text-sm text-danger">{post.status === 'draft' ? t.draft : ''} {post.needsNativeReview ? t.review : ''}</div>}
     <PageSection>
@@ -63,7 +69,7 @@ export async function PostLayout({ post, cta }: { post: Post; cta: React.ReactNo
             <div><dt className="font-mono text-xs text-muted-foreground">{t.published}</dt><dd className="mt-0.5 text-ink"><time dateTime={post.date}>{formatDate(post.date, lang)}</time></dd></div>
             {post.updated !== post.date && <div><dt className="font-mono text-xs text-muted-foreground">{t.updated}</dt><dd className="mt-0.5 text-ink"><time dateTime={post.updated}>{formatDate(post.updated, lang)}</time></dd></div>}
             <div className="flex items-center gap-2 text-ink"><Clock aria-hidden className="size-4 text-orange" />{post.readingMinutes} {t.minRead}</div>
-            {category && lang === 'en' && <div><Link href={`/blog/category/${category.slug}`} className="font-medium text-orange hover:text-amber">{category.name}</Link></div>}
+            {category && <div><Link href={categoryHref!} className="font-medium text-orange hover:text-amber">{categoryName}</Link></div>}
             {translation && <div><Link href={`${blogBase(translation.lang)}/${translation.slug}`} hrefLang={translation.lang} className="font-medium text-orange hover:text-amber">{t.translation}</Link></div>}
           </dl>
           {toc.length > 1 && <nav aria-label={t.contents} className="mt-8 hidden lg:block">
@@ -87,7 +93,7 @@ export async function PostLayout({ post, cta }: { post: Post; cta: React.ReactNo
     {(solutions.length > 0 || brands.length > 0) && <PageSection className="bg-paper">
       <SectionIntro title={t.solutions} />
       <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {solutions.map((item) => <CardLink key={item.id} icon={icon(item.id)} eyebrow={brandNames(item.brands)} title={item.title} body={item.body} href={`/solutions/${item.slug}`} />)}
+        {solutions.map((item) => <CardLink key={item.id} icon={icon(item.id)} eyebrow={brandNames(item.brands)} title={item.title} body={item.body} href={localePath(lang, `/solutions/${item.slug}`)} />)}
         {brands.map((brand) => <BrandTile key={brand.slug} brand={brand} detailed />)}
       </Spotlight>
     </PageSection>}
@@ -96,7 +102,6 @@ export async function PostLayout({ post, cta }: { post: Post; cta: React.ReactNo
       <PostGrid posts={related} />
     </PageSection>}
     {cta}
-    {/* Arabic posts reuse the English post's card (Satori cannot shape Arabic script). */}
-    <JsonLd data={blogPosting({ ...post, category: category?.name ?? post.category, url, image: lang === 'ar' ? (translation ? `/blog/${post.slug}/opengraph-image/card` : '/blog/opengraph-image') : `${url}/opengraph-image/card` })} />
+    <JsonLd data={blogPosting({ ...post, category: categoryName ?? post.category, url, image: socialCardPath(lang, '/blog/[slug]', { slug: post.slug }, 'card') })} />
   </PageShell>
 }

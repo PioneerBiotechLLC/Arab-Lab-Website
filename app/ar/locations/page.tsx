@@ -10,7 +10,7 @@ import { arabicApproved, languagesFor } from '@/lib/i18n'
 import { countryOf, markets, offices } from '@/lib/site-data'
 
 export function generateMetadata(): Metadata {
-  return pageMetadata({ path: '/ar/locations', title: arLocations.seo.title, absoluteTitle: true, description: arLocations.seo.description, locale: 'ar_AE', languages: languagesFor('/locations', '/ar/locations'), noindex: !arabicApproved(), ogImage: { url: '/locations/opengraph-image', alt: arLocations.seo.ogAlt } })
+  return pageMetadata({ path: '/ar/locations', title: arLocations.seo.title, absoluteTitle: true, description: arLocations.seo.description, locale: 'ar_AE', languages: languagesFor('/locations', '/ar/locations'), noindex: !arabicApproved() })
 }
 
 const mapsUrl = (address: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`

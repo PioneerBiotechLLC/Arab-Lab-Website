@@ -21,7 +21,7 @@ for (const lang of ['en', 'ar']) {
     const words = clean.split(/\s+/).filter(Boolean).length + faq.reduce((n, x) => n + `${x.q} ${x.a}`.split(/\s+/).length, 0)
     const first100 = clean.replace(/[*_]/g, '').split(/\s+/).slice(0, 100).join(' ')
     const h2 = [...content.matchAll(/^## (.+)$/gm)].map((m) => m[1])
-    const links = (content.match(/\]\(\/(solutions|brands)\//g) ?? []).length
+    const links = (content.match(/\]\(\/(ar\/)?(solutions|brands)\//g) ?? []).length
     const markers = (content.match(/\{\{VERIFY/g) ?? []).length
     const kw = String(data.targetKeyword)
     const checks = { words: lang === 'ar' ? words >= 900 : words >= 1200 && words <= 1800, title: has(data.title, kw), first100: has(first100, kw), h2: h2.some((h) => has(h, kw)), faq: faq.length >= 3, links: links >= 2, seoTitle: !data.seoTitle || String(data.seoTitle).length <= 49, description: String(data.description).length <= 155 }

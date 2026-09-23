@@ -26,6 +26,7 @@ Read this file first in any SEO session. It is the source of truth; keep it shor
 - Content data: `lib/site-data.ts` (company, offices, brands, solutions, programs). Site constants: `lib/site.ts` (from Phase 1).
 - Shared UI: `components/site.tsx` (client). Every inner page uses `PageShell`.
 - Legal pages: `lib/legal.ts` + `components/legal.tsx`.
+- Bilingual structure (English `app/(en)`, Arabic `app/ar`, shared views in `components/pages`, per-locale data via `lib/content/locale.ts`): see the i18n section.
 - Contact form posts to `app/api/contact/route.ts` (Resend + spam guard in `lib/contact-guard.ts`).
 
 ## Plan
@@ -121,15 +122,21 @@ Full per-claim list with file and line: [`VERIFY.md`](VERIFY.md) (regenerate wit
 
 **Blog posts:** all 14 approved by the client and published on 2026-09-23. Their 76 notes were removed; the sentences were written in general terms, so no specific figure, date or clause number is stated in the text. The removed notes are kept in [`VERIFY-ARCHIVE.md`](VERIFY-ARCHIVE.md) for a later technical fact-check.
 
-## i18n: what was built and the proposed next step
+## i18n: the bilingual site
 
-**Built (smallest non-breaking approach):** `app/ar/` with a nested layout (`lang="ar" dir="rtl"`, IBM Plex Sans Arabic, not preloaded on English pages). The shared header and footer switch to Arabic labels and RTL on `/ar` paths and show an English/العربية switcher where a counterpart exists. Arabic pages: `/ar`, `/ar/contact`, `/ar/locations` (+3 offices), `/ar/blog` (+ posts). Copy lives in `lib/ar.ts`. Social cards reuse the English card for each page, because the OG renderer cannot shape Arabic script.
+**Structure (2026-09-23, client asked for the whole site in Arabic):** two root layouts. English pages live in `app/(en)/` (a route group, so URLs are unchanged) with `<html lang="en">`; Arabic pages live in `app/ar/` with `<html lang="ar" dir="rtl">`, IBM Plex Sans Arabic preloaded. Every English page has an Arabic counterpart at `/ar` + the same path (48 pairs, including all 10 blog posts and their categories), with reciprocal en/ar/x-default hreflang in page heads and the sitemap. Moving between languages is a full page load (separate root layouts). Unmatched URLs render `app/global-not-found.tsx` (bilingual; `experimental.globalNotFound` in next.config).
 
-**Gate:** `ARABIC_APPROVED` in `lib/i18n.ts` (or `AR_APPROVED=1`). **Approved and switched on 2026-09-23** for the Arabic pages (copy, company name عرب لاب and office addresses); the four Arabic blog posts were approved and published the same day. Before approval, Arabic pages are noindex, show a review banner, are absent from the sitemap, carry no hreflang, and the switcher is hidden (visible in `pnpm dev`). Verified both states: gated build has zero Arabic URLs in the sitemap and no hreflang; approved build emits reciprocal en/ar/x-default for 6 page pairs in both page heads and the sitemap, and `/ar` becomes indexable with a self-canonical.
+**Where things live:**
+- Page views shared by both languages: `components/pages/` (about, brands, solutions, services, blog index and categories) and `components/legal.tsx`. Route files in `app/(en)` and `app/ar` are thin wrappers that pass a locale. Home, contact and locations keep separate English and Arabic files.
+- Per-locale data: `lib/content/locale.ts` (`localeData(locale)`) joins English data (`lib/site-data.ts`, `lib/content/*.ts`, `lib/content/pages.ts`) and Arabic data (`lib/content/ar/*.ts`, `lib/ar.ts`) on the same slugs and ids.
+- Interface strings (nav, footer, card labels, closing CTA): `lib/ui.ts`. Client components read the locale from the path (`useLocale()` in `components/site.tsx`).
+- Paths: `localePath(locale, path)`, `englishPath`, `languagesFor(enPath)` and `joinList` in `lib/i18n.ts`. Metadata: `localizedMetadata()` in `lib/seo.ts`.
+- Social cards: every Arabic segment has its own `opengraph-image.tsx`/`twitter-image.tsx` that renders the English card (Satori cannot shape Arabic) with Arabic alt text. Next adds a hash suffix to image routes inside the `(en)` group (for example `/about/opengraph-image-kvopxe`), so never hard-code card URLs; `lib/social-card.ts` reproduces the suffix for structured data.
+- RSS: `/blog/rss.xml` and `/ar/blog/rss.xml` (`lib/rss.ts`).
 
-**Known limitation:** server-rendered `<html lang>` stays `en` on `/ar` pages; a client effect corrects it after hydration, and every Arabic region carries `lang="ar"`. Google relies on hreflang, not `<html lang>`, so ranking impact is small; Bing and screen readers benefit from the server value.
+**Arabic copy:** pages, legal documents and all 10 blog posts. The client approved the first Arabic pages on 2026-09-23 and then asked for the full translation without further confirmation, so everything is published and indexable (`needsNativeReview: false`). The legal pages are translations and each links to its English original; no "English prevails" clause was added (a legal choice for the client). Staff names are transliterated (for example م. سلمانول, م. همراس for non-Arabic names).
 
-**Proposed next step (needs your approval, because it moves files):** two root layouts via route groups, `app/(en)/layout.tsx` and `app/(ar)/ar/layout.tsx`, each rendering its own `<html lang dir>`. Every existing page folder moves under `app/(en)/` with no URL change. Then translate the remaining pages (about, solutions, services, brands) into `app/(ar)/ar/…`, and add their hreflang pairs to `arPaths`.
+**Switch:** `ARABIC_APPROVED` in `lib/i18n.ts` still takes every Arabic page out of search (noindex, no sitemap entries, no hreflang) if set to false.
 
 ## Manual off-site checklist
 
@@ -174,3 +181,4 @@ Full per-claim list with file and line: [`VERIFY.md`](VERIFY.md) (regenerate wit
 - 2026-09-23 · Merge · Removed the one on-page marker (UAE authority kept as "the federal authority in the UAE"); merged `seo-overhaul` into `main`.
 - 2026-09-23 · Arabic approved · `ARABIC_APPROVED = true`: /ar pages indexable, in the sitemap with reciprocal hreflang, switcher shown, review banner gone; عرب لاب added to Organization `alternateName`.
 - 2026-09-23 · Blog published · Client approved all 14 posts: `status: published`, Arabic `needsNativeReview: false`, 76 notes removed and archived in `VERIFY-ARCHIVE.md`. `/blog` and `/ar/blog` are indexable, in the sitemap and RSS, and linked from the footer.
+- 2026-09-23 · Full Arabic site · Separate root layouts (`app/(en)`, `app/ar`) with server-rendered `lang`/`dir`; Arabic versions of every page (48 pairs) and all 10 blog posts; shared page views; Arabic social cards, RSS and blog categories; Blog in the header nav and a blog index listing every article; bilingual 404.

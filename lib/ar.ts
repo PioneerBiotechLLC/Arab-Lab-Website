@@ -1,4 +1,4 @@
-// Arabic copy for the /ar pages (home, contact, locations, blog chrome). Written natively, not translated line by line.
+// Arabic copy for the /ar home, contact, locations and blog chrome (other pages: lib/content/ar). Written natively.
 // Approved by the client on 2026-09-23 (lib/i18n.ts ARABIC_APPROVED); edits after that need a fresh native review.
 // Brand, product and standard names stay in Latin script, as they are used in the Arabic-speaking industry.
 import type { ContactCopy } from '@/components/contact-form'
@@ -14,8 +14,6 @@ export const arAddresses: Record<string, string> = {
   cairo: '87 دار مصر، القرنفل، التجمع الأول، القاهرة، جمهورية مصر العربية',
 }
 
-export const arNav: [string, string][] = [['عن الشركة', '/about'], ['الحلول', '/solutions'], ['العلامات التجارية', '/brands'], ['المواقع', '/ar/locations'], ['تواصل معنا', '/ar/contact']]
-
 export const arChrome = {
   home: 'الرئيسية',
   getInTouch: 'تواصل معنا',
@@ -26,9 +24,7 @@ export const arChrome = {
   blog: 'المدونة',
   switchTo: 'English',
   switchToAr: 'العربية',
-  legal: [['سياسة الخصوصية', '/privacy'], ['الشروط والأحكام', '/terms'], ['جمع البيانات', '/data-collection']] as [string, string][],
   rights: '© 2026 عرب لاب للمعدات العلمية ذ.م.م',
-  englishOnly: 'بالإنجليزية',
   review: 'النص العربي في هذه الصفحة بانتظار مراجعة لغوية من متحدث أصلي، ولن يُفهرس قبل اعتماده.',
 }
 
@@ -99,7 +95,7 @@ export const arContactCopy: ContactCopy = {
   submit: { quote: 'إرسال الطلب', service: 'تواصل مع قسم الخدمة', sending: 'جارٍ الإرسال…' },
   error: 'تعذّر إرسال الطلب. تحقّق من اتصالك وحاول مرة أخرى.',
   received: { title: 'تم استلام طلبك.', body: (support) => `سيراجع قسم ${support ? 'الخدمة' : 'المبيعات والشؤون التجارية'} بياناتك ويتواصل معك قريباً.` },
-  privacy: { lead: 'نستخدم ما ترسله فقط للرد على هذا الطلب. راجع ', link: 'سياسة الخصوصية', href: '/privacy', tail: ' (بالإنجليزية).' },
+  privacy: { lead: 'نستخدم ما ترسله فقط للرد على هذا الطلب. راجع ', link: 'سياسة الخصوصية', href: '/ar/privacy', tail: '.' },
   honeypot: 'الموقع الإلكتروني',
   officeLabel: (name) => arOfficeNames[name] ?? name,
 }
