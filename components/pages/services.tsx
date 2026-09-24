@@ -61,7 +61,7 @@ export function ServicePage({ locale, slug }: { locale: Locale; slug: string }) 
     </PageSection>}
     <PageSection className={(content.sections.length + (related.length ? 1 : 0)) % 2 ? 'bg-paper' : ''}>
       <SectionIntro title={t.teamsTitle} intro={t.teamsIntro} />
-      <Spotlight className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{teams.map((team, index) => <NumberedCard key={team.key} index={index + 1} icon={icon(team.key)} title={team.name} body={team.people.map(([, role]) => role).join(' · ')} />)}</Spotlight>
+      <Spotlight className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{teams.map((team, index) => <NumberedCard key={team.key} index={index + 1} icon={icon(team.key)} title={team.name} body={team.roles.join(' · ')} />)}</Spotlight>
     </PageSection>
     <PageSection className={(content.sections.length + (related.length ? 1 : 0)) % 2 ? '' : 'bg-paper'}>
       <SectionIntro title={t.faqTitle} />

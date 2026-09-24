@@ -29,7 +29,7 @@ export default function LocationsPage() {
       </PageSection>
     })}
     <DarkBand overlap title="The right department, wherever you are." intro="Every request is routed to the Arab Lab department that owns it.">
-      <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">{departments.map((department) => <GlassTile key={department.name} icon={icon(department.name, 'size-5 text-brand')} title={department.name} body={department.people.map(([, role]) => role).join(' · ')} />)}</Spotlight>
+      <Spotlight className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">{departments.map((department) => <GlassTile key={department.name} icon={icon(department.name, 'size-5 text-brand')} title={department.name} body={department.roles.join(' · ')} />)}</Spotlight>
     </DarkBand>
     <ClosingCta />
   </PageShell>

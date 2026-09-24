@@ -134,7 +134,7 @@ Full per-claim list with file and line: [`VERIFY.md`](VERIFY.md) (regenerate wit
 - Social cards: every Arabic segment has its own `opengraph-image.tsx`/`twitter-image.tsx` that renders the English card (Satori cannot shape Arabic) with Arabic alt text. Next adds a hash suffix to image routes inside the `(en)` group (for example `/about/opengraph-image-kvopxe`), so never hard-code card URLs; `lib/social-card.ts` reproduces the suffix for structured data.
 - RSS: `/blog/rss.xml` and `/ar/blog/rss.xml` (`lib/rss.ts`).
 
-**Arabic copy:** pages, legal documents and all 10 blog posts. The client approved the first Arabic pages on 2026-09-23 and then asked for the full translation without further confirmation, so everything is published and indexable (`needsNativeReview: false`). The legal pages are translations and each links to its English original; no "English prevails" clause was added (a legal choice for the client). Staff names are transliterated (for example م. سلمانول, م. همراس for non-Arabic names).
+**Arabic copy:** pages, legal documents and all 10 blog posts. The client approved the first Arabic pages on 2026-09-23 and then asked for the full translation without further confirmation, so everything is published and indexable (`needsNativeReview: false`). The legal pages are translations and each links to its English original; no "English prevails" clause was added (a legal choice for the client). Staff are not named on the site (removed 2026-09-24 at the client's request): departments list roles only, and the CEO, Eng. Rahma Omran Al-Shamsi (م. رحمة عمران الشامسي), is the one person named.
 
 **Switch:** `ARABIC_APPROVED` in `lib/i18n.ts` still takes every Arabic page out of search (noindex, no sitemap entries, no hreflang) if set to false.
 

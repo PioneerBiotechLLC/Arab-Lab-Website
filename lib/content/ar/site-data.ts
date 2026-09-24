@@ -123,14 +123,14 @@ export const arBrandText: Record<string, BrandText> = {
   },
 }
 
-/** Department names and people, keyed by the English department name (which also selects the icon). */
-export const arDepartments: Record<string, { name: string; people: [string, string][] }> = {
-  Commercial: { name: 'التجاري', people: [['د. حامد', 'مدير تطوير الأعمال']] },
-  Sales: { name: 'المبيعات', people: [['د. محمود', 'أخصائي مبيعات'], ['م. خالد', 'مهندس مبيعات']] },
-  'Life Science': { name: 'علوم الحياة', people: [['د. ذبيح الله', 'المدير الفني لعلوم الحياة']] },
-  Analytical: { name: 'العلوم التحليلية', people: [['د. أحمد', 'المدير الفني للعلوم التحليلية']] },
-  Service: { name: 'الخدمة', people: [['م. سلمانول', 'مدير الخدمة'], ['م. همراس', 'مهندس خدمة']] },
-  Operational: { name: 'العمليات', people: [['أ. إيمان', 'مديرة العمليات'], ['أ. ياسمين', 'المالية والموارد البشرية'], ['أ. رائد', 'منسق الموارد البشرية والشؤون الإدارية'], ['أ. إنجي', 'المناقصات والتخطيط'], ['أ. سليمان', 'منسق الخدمات اللوجستية']] },
+/** Department names and roles, keyed by the English department name (which also selects the icon). */
+export const arDepartments: Record<string, { name: string; roles: string[] }> = {
+  Commercial: { name: 'التجاري', roles: ['مدير تطوير الأعمال'] },
+  Sales: { name: 'المبيعات', roles: ['أخصائي مبيعات', 'مهندس مبيعات'] },
+  'Life Science': { name: 'علوم الحياة', roles: ['المدير الفني لعلوم الحياة'] },
+  Analytical: { name: 'العلوم التحليلية', roles: ['المدير الفني للعلوم التحليلية'] },
+  Service: { name: 'الخدمة', roles: ['مدير الخدمة', 'مهندس خدمة'] },
+  Operational: { name: 'العمليات', roles: ['مديرة العمليات', 'المالية والموارد البشرية', 'منسق الموارد البشرية والشؤون الإدارية', 'المناقصات والتخطيط', 'منسق الخدمات اللوجستية'] },
 }
 
 export const arLeadership = { name: 'م. رحمة عمران الشامسي', role: 'الرئيسة التنفيذية', note: 'مجلس المستثمرين الدوليين في الإمارات' }

@@ -21,13 +21,13 @@ export const markets = [...new Set(offices.map(countryOf))]
 
 export const leadership = { name: 'Eng. Rahma Omran Al-Shamsi', role: 'Chief Executive Officer', note: 'UAE International Investors Council' }
 
-export const departments: { name: string; people: [string, string][] }[] = [
-  { name: 'Commercial', people: [['Dr. Hamed', 'Business Development Manager']] },
-  { name: 'Sales', people: [['Dr. Mahmoud', 'Sales Specialist'], ['Eng. Khaled', 'Sales Engineer']] },
-  { name: 'Life Science', people: [['Dr. Zabiulla', 'Technical Manager, Life Science']] },
-  { name: 'Analytical', people: [['Dr. Ahmed', 'Technical Manager, Analytical Science']] },
-  { name: 'Service', people: [['Eng. Salmanul', 'Service Manager'], ['Eng. Hamras', 'Service Engineer']] },
-  { name: 'Operational', people: [['Mrs. Eman', 'Operations Manager'], ['Mrs. Yasmin', 'Finance & HR'], ['Mr. Raed', 'HR & Admin Coordinator'], ['Mrs. Enjy', 'Tender & Planning'], ['Mr. Souliman', 'Logistics Coordinator']] },
+export const departments: { name: string; roles: string[] }[] = [
+  { name: 'Commercial', roles: ['Business Development Manager'] },
+  { name: 'Sales', roles: ['Sales Specialist', 'Sales Engineer'] },
+  { name: 'Life Science', roles: ['Technical Manager, Life Science'] },
+  { name: 'Analytical', roles: ['Technical Manager, Analytical Science'] },
+  { name: 'Service', roles: ['Service Manager', 'Service Engineer'] },
+  { name: 'Operational', roles: ['Operations Manager', 'Finance & HR', 'HR & Admin Coordinator', 'Tender & Planning', 'Logistics Coordinator'] },
 ]
 
 // "Our Program" — the four service lines.
