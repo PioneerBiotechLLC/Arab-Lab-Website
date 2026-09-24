@@ -6,8 +6,8 @@ import { company, offices } from '../site-data'
 export type PagesCopy = {
   about: {
     crumb: string; title: string; facts: [string, string, string, string]; primary: string; secondary: string
-    heritageTitle: string; based: string; leadership: string; mission: string; deptTitle: string; deptIntro: (n: number) => string
-    deptEyebrow: string; faqTitle: string; faq: { q: string; a: string }[]; coverageTitle: string; coverageIntro: (n: number, markets: string) => string
+    heritageTitle: string; based: string; leadership: string; mission: string
+    faqTitle: string; faq: { q: string; a: string }[]; coverageTitle: string; coverageIntro: (n: number, markets: string) => string
   }
   brands: {
     crumb: string; title: string; intro: string; primary: string; secondary: string; countTitle: (n: number) => string; accent: string; matchedTitle: string
@@ -39,9 +39,6 @@ export const enPages: PagesCopy = {
     based: 'Arab Lab is based in Ras Al Khaimah and serves the biopharma and pharmaceutical industry and laboratories sector across the region.',
     leadership: 'Leadership',
     mission: 'Our mission',
-    deptTitle: 'Specialists at every handoff.',
-    deptIntro: (n) => `${n} departments, each owning a precise part of the laboratory workflow.`,
-    deptEyebrow: 'Department',
     faqTitle: 'About Arab Lab: frequently asked questions',
     // Answers the branded questions people search for, including the name clash with the ARABLAB exhibition.
     faq: [

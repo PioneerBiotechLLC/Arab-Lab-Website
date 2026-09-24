@@ -1,13 +1,11 @@
 // About page, shared by /about and /ar/about.
 import type { Metadata } from 'next'
-import { Spotlight } from '@/components/motion'
-import { ButtonLink, ClosingCta, DarkBand, NumberedCard, OfficeTiles, PageSection, PageShell, SectionIntro } from '@/components/site'
+import { ButtonLink, ClosingCta, DarkBand, OfficeTiles, PageSection, PageShell, SectionIntro } from '@/components/site'
 import { FaqList } from '@/components/content'
 import { localizedMetadata } from '@/lib/seo'
 import { joinList, localePath, type Locale } from '@/lib/i18n'
 import { localeData } from '@/lib/content/locale'
 import { offices } from '@/lib/site-data'
-import { icon } from '@/lib/icons'
 import { ui } from '@/lib/ui'
 
 export const aboutMetadata = (locale: Locale): Metadata => localizedMetadata(locale, '/about', localeData(locale).pageSeo('/about'))
@@ -32,12 +30,6 @@ export function AboutPage({ locale }: { locale: Locale }) {
           <div className="rounded-3xl border border-border bg-paper p-8 shadow-card"><p className="label">{t.mission}</p><blockquote className="mt-5 font-heading text-xl font-semibold leading-8 text-ink">“{d.company.mission}”</blockquote></div>
         </div>
       </div>
-    </PageSection>
-    <PageSection className="bg-paper">
-      <SectionIntro title={t.deptTitle} intro={t.deptIntro(d.departments.length)} />
-      <Spotlight className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{d.departments.map((department, index) => <NumberedCard key={department.key} index={index + 1} icon={icon(department.key)} eyebrow={t.deptEyebrow} title={department.name}>
-        <ul className="mt-4 grid gap-1.5 text-sm leading-6 text-muted-foreground">{department.roles.map((role) => <li key={role}>{role}</li>)}</ul>
-      </NumberedCard>)}</Spotlight>
     </PageSection>
     <PageSection>
       <SectionIntro title={t.faqTitle} />
