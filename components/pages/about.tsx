@@ -36,7 +36,7 @@ export function AboutPage({ locale }: { locale: Locale }) {
     <PageSection className="bg-paper">
       <SectionIntro title={t.deptTitle} intro={t.deptIntro(d.departments.length)} />
       <Spotlight className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{d.departments.map((department, index) => <NumberedCard key={department.key} index={index + 1} icon={icon(department.key)} eyebrow={t.deptEyebrow} title={department.name}>
-        <ul className="mt-4 grid gap-2 text-sm leading-6">{department.people.map(([name, role]) => <li key={name}><span className="block font-semibold text-ink">{name}</span><span className="block text-muted-foreground">{role}</span></li>)}</ul>
+        <ul className="mt-4 grid gap-1.5 text-sm leading-6 text-muted-foreground">{department.roles.map((role) => <li key={role}>{role}</li>)}</ul>
       </NumberedCard>)}</Spotlight>
     </PageSection>
     <PageSection>

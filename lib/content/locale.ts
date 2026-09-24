@@ -19,7 +19,7 @@ import { arPageSeo, arPages } from './ar/pages'
 
 type Program = (typeof programs)[number]
 type Solution = (typeof solutions)[number]
-type Department = { key: string; name: string; people: [string, string][] }
+type Department = { key: string; name: string; roles: string[] }
 
 export type LocaleData = {
   locale: Locale
