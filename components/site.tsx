@@ -1,6 +1,6 @@
 'use client'
 
-import { ViewTransition } from 'react'
+import { ViewTransition, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -42,6 +42,7 @@ export function Logo({ full = false, ar = false }: { full?: boolean; ar?: boolea
 
 // Every page exists in both languages under the same path, so the switcher links to the counterpart by prefix.
 // `switcher` comes from the root layout (lib/i18n.ts arabicLinksEnabled); `showBlog` once a post is published.
+// Below lg the nav folds behind a menu button into a full-height panel hung from the header, so the button stays put to close it.
 export function SiteHeader({ switcher = false, showBlog = false }: { switcher?: boolean; showBlog?: boolean }) {
   const pathname = usePathname()
   const ar = isArabicPath(pathname)
@@ -49,25 +50,83 @@ export function SiteHeader({ switcher = false, showBlog = false }: { switcher?: 
   const items = t.nav.filter(([, href]) => showBlog || !href.endsWith('/blog'))
   const currentIndex = items.findIndex(([, href]) => pathname === href || pathname.startsWith(`${href}/`))
   const counterpart = switcher ? (ar ? englishPath(pathname) : localePath('ar', pathname)) : undefined
+  const contactHref = ar ? '/ar/contact' : '/contact'
+  // Moving right along the nav (down the menu) is "forward": content slides left; moving back slides right.
+  const direction = (index: number) => [index > currentIndex ? 'nav-forward' : 'nav-back']
+  // The menu remembers the path it was opened on, so any navigation (a link, back/forward) closes it with no effect to sync.
+  const [menuPath, setMenuPath] = useState<string | null>(null)
+  const open = menuPath === pathname
+  const close = () => setMenuPath(null)
+  const headerRef = useRef<HTMLElement>(null)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+
+  // While open the panel is the page: everything outside the header goes inert and stops scrolling (the gutter is kept so
+  // nothing shifts), Escape hands focus back to the button, and widening past lg — where the inline nav returns — closes it.
+  useEffect(() => {
+    if (!open) return
+    const root = document.documentElement
+    const outside = [...document.body.children].filter((el) => el !== headerRef.current && !el.hasAttribute('inert'))
+    outside.forEach((el) => el.setAttribute('inert', ''))
+    Object.assign(root.style, { overflow: 'hidden', scrollbarGutter: 'stable' })
+    const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') { setMenuPath(null); toggleRef.current?.focus() } }
+    const wide = matchMedia('(min-width: 64rem)')
+    const onWide = () => { if (wide.matches) setMenuPath(null) }
+    document.addEventListener('keydown', onKey)
+    wide.addEventListener('change', onWide)
+    return () => {
+      outside.forEach((el) => el.removeAttribute('inert'))
+      Object.assign(root.style, { overflow: '', scrollbarGutter: '' })
+      document.removeEventListener('keydown', onKey)
+      wide.removeEventListener('change', onWide)
+    }
+  }, [open])
+
   // Translucent chrome that solidifies with scroll (::before, scroll-driven); the ::after gradient is a soft scroll edge in place of a 1px divider.
   // Named for view transitions so it stays fixed while page content slides beneath it.
-  return <header data-header dir={ar ? 'rtl' : undefined} lang={ar ? 'ar' : undefined} style={{ viewTransitionName: 'site-header' }} className="sticky top-0 z-50 bg-white/60 backdrop-blur-xl after:pointer-events-none after:absolute after:inset-x-0 after:top-full after:h-6 after:bg-linear-to-b after:from-white/70 after:to-transparent">
-    <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-y-2 px-5 py-4 lg:px-8">
+  return <header ref={headerRef} data-header data-open={open || undefined} dir={ar ? 'rtl' : undefined} lang={ar ? 'ar' : undefined} style={{ viewTransitionName: 'site-header' }} className="sticky top-0 z-50 bg-white/60 backdrop-blur-xl after:pointer-events-none after:absolute after:inset-x-0 after:top-full after:h-6 after:bg-linear-to-b after:from-white/70 after:to-transparent">
+    <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 py-4 lg:px-8">
       <Logo full ar={ar} />
-      <div className="order-2 flex items-center gap-5 lg:order-3">
-        {counterpart && <Link href={counterpart} hrefLang={ar ? 'en' : 'ar'} lang={ar ? 'en' : 'ar'} className="py-3 text-sm font-medium text-muted-foreground hover:text-ink">{t.switchTo}</Link>}
-        <Link href={ar ? '/ar/contact' : '/contact'} transitionTypes={['nav-forward']} className="btn flex items-center gap-2 py-3 font-heading text-sm font-semibold text-orange hover:text-amber">{t.getInTouch}<span aria-hidden className="btn-node" /></Link>
-      </div>
-      <nav aria-label="Primary" className="order-3 flex basis-full gap-6 overflow-x-auto text-sm font-medium whitespace-nowrap lg:order-2 lg:basis-auto lg:overflow-visible">
+      <nav aria-label="Primary" className="hidden gap-6 text-sm font-medium whitespace-nowrap lg:flex">
         {items.map(([label, href], index) => {
           const current = index === currentIndex
-          // Moving right along the nav is "forward": content slides left; moving left slides right.
-          return <Link key={href} href={href} transitionTypes={[index > currentIndex ? 'nav-forward' : 'nav-back']} aria-current={current ? 'page' : undefined} className="relative px-1 py-3 text-muted-foreground hover:text-ink aria-[current=page]:text-ink">
+          return <Link key={href} href={href} transitionTypes={direction(index)} aria-current={current ? 'page' : undefined} className="relative px-1 py-3 text-muted-foreground hover:text-ink aria-[current=page]:text-ink">
             {label}
             {current && <ViewTransition name="nav-indicator" share="nav-indicator" default="none"><span aria-hidden className="absolute inset-x-0 bottom-1.5 h-0.5 rounded-full bg-orange" /></ViewTransition>}
           </Link>
         })}
       </nav>
+      <div className="hidden items-center gap-5 lg:flex">
+        {counterpart && <Link href={counterpart} hrefLang={ar ? 'en' : 'ar'} lang={ar ? 'en' : 'ar'} className="py-3 text-sm font-medium text-muted-foreground hover:text-ink">{t.switchTo}</Link>}
+        <Link href={contactHref} transitionTypes={['nav-forward']} className="btn flex items-center gap-2 py-3 font-heading text-sm font-semibold text-orange hover:text-amber">{t.getInTouch}<span aria-hidden className="btn-node" /></Link>
+      </div>
+      <button ref={toggleRef} type="button" aria-expanded={open} aria-controls="site-menu" aria-label={t.menu} onClick={() => setMenuPath(open ? null : pathname)} className="grid size-11 shrink-0 place-items-center rounded-full border border-line bg-white/70 text-ink backdrop-blur hover:border-ink lg:hidden">
+        <span aria-hidden className="menu-icon"><span /><span /></span>
+      </button>
+    </div>
+    {/* Links sit on a short spine — the site's connector line — with the orange trace drawn down to the current page. */}
+    <div id="site-menu" data-menu className="absolute inset-x-0 top-full h-[calc(100dvh_-_100%)] overflow-hidden border-t border-border bg-white lg:hidden">
+      <span aria-hidden className="pointer-events-none absolute -end-48 -bottom-48 size-[30rem] rounded-full bg-brand/10 blur-3xl" />
+      <div className="relative flex h-full flex-col overflow-y-auto overscroll-contain">
+        <nav aria-label="Primary" className="px-5 pt-6">
+          <ul className="menu-spine relative" style={{ '--lit': currentIndex } as React.CSSProperties}>
+            {items.map(([label, href], index) => <li key={href} style={delay(index)}>
+              <Link href={href} onClick={close} transitionTypes={direction(index)} aria-current={index === currentIndex ? 'page' : undefined} className="flex h-14 items-center gap-5 font-heading text-[1.75rem] font-bold tracking-[-0.01em] text-ink aria-[current=page]:text-orange">
+                <span aria-hidden className="menu-dot" />{label}
+              </Link>
+            </li>)}
+          </ul>
+        </nav>
+        <div className="menu-foot mt-auto px-5 pt-10 pb-[max(1.5rem,env(safe-area-inset-bottom))]" style={delay(items.length)}>
+          <div className="grid divide-y divide-border border-y border-border text-sm font-medium">
+            <a href={`tel:${contact.phone}`} className="flex items-center gap-3 py-3.5 text-ink hover:text-orange"><Phone className="size-4 text-orange" /><span dir="ltr">{contact.phoneDisplay}</span></a>
+            <a href={`mailto:${contact.email}`} className="flex items-center gap-3 py-3.5 text-ink hover:text-orange"><Mail className="size-4 text-orange" /><span dir="ltr">{contact.email}</span></a>
+          </div>
+          <div className="mt-5 flex gap-3">
+            {counterpart && <Link href={counterpart} onClick={close} hrefLang={ar ? 'en' : 'ar'} lang={ar ? 'en' : 'ar'} className={button.secondary}>{t.switchTo}</Link>}
+            <Link href={contactHref} onClick={close} transitionTypes={['nav-forward']} className={`btn ${button.primary} flex-1 justify-center`}>{t.getInTouch}<span aria-hidden className="btn-node" /></Link>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 }

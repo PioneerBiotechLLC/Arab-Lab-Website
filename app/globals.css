@@ -24,9 +24,8 @@
   /* The instrument curve: slow-in, decisive settle — used for the hero trace and headline wipe. */
   --ease-trace: cubic-bezier(.5, 0, .15, 1); }
 * { border-color: var(--border); }
-/* scroll-padding keeps anchor targets clear of the sticky header (two rows below lg, one row above). */
-html { background: var(--white); scroll-behavior: smooth; scroll-padding-top: 8.5rem; }
-@media (min-width: 64rem) { html { scroll-padding-top: 5.5rem; } }
+/* scroll-padding keeps anchor targets clear of the sticky header (one row at every width). */
+html { background: var(--white); scroll-behavior: smooth; scroll-padding-top: 5.5rem; }
 body { margin: 0; background: var(--white); color: var(--ink); font-family: 'Inter', sans-serif; }
 .font-heading { font-family: 'Poppins', sans-serif; }
 .font-mono { font-family: 'IBM Plex Mono', monospace; }
@@ -95,6 +94,35 @@ a:active, button:active { transform: scale(.97); }
 
 /* Header solidifies with scroll: a ::before layer fades in beneath the content (opacity only, so it stays on the compositor). */
 [data-header]::before { content: ''; position: absolute; inset: 0; z-index: -1; opacity: 0; background: rgb(255 255 255 / .9); box-shadow: 0 1px 0 rgb(15 36 56 / .06), 0 8px 24px -16px rgb(15 36 56 / .2); }
+/* With the menu open the header is solid and drops its scroll edge, so it reads as one sheet with the panel. */
+[data-header][data-open]::before { animation: none; opacity: 1; }
+[data-header][data-open]::after { opacity: 0; }
+
+/* ───────────── Mobile menu ─────────────
+   Two strokes, the lower one shorter (end-aligned in RTL), that cross into a close mark. */
+.menu-icon { position: relative; width: 18px; height: 10px; }
+.menu-icon > span { position: absolute; inset-inline: 0; height: 2px; border-radius: 1px; background: currentColor; transition: translate 320ms var(--ease-out), rotate 320ms var(--ease-out), clip-path 320ms var(--ease-out); }
+.menu-icon > span:first-child { top: 0; }
+.menu-icon > span:last-child { bottom: 0; clip-path: inset(0 7px 0 0); }
+[dir='rtl'] .menu-icon > span:last-child { clip-path: inset(0 0 0 7px); }
+[aria-expanded='true'] > .menu-icon > span:first-child { translate: 0 4px; rotate: 45deg; }
+[aria-expanded='true'] > .menu-icon > span:last-child { translate: 0 -4px; rotate: -45deg; clip-path: inset(0); }
+/* The panel wipes down from under the header and the links rise in order behind it; the orange trace then draws down the
+   spine and lights the current page's node. On close the whole sheet wipes up at once and its contents reset once hidden.
+   visibility (delayed on close) keeps a closed panel out of the tab order and the accessibility tree. */
+[data-menu] { visibility: hidden; clip-path: inset(0 0 100% 0); transition: clip-path 280ms cubic-bezier(.4, 0, 1, 1), visibility 0s linear 280ms; }
+[data-open] [data-menu] { visibility: visible; clip-path: inset(0); transition: clip-path 560ms var(--ease-out); }
+[data-menu] li, .menu-foot { opacity: 0; translate: 0 12px; transition: opacity 0s linear 280ms, translate 0s linear 280ms; }
+[data-open] [data-menu] li, [data-open] .menu-foot { opacity: 1; translate: 0 0; transition: opacity 360ms var(--ease-out), translate 560ms var(--ease-out); transition-delay: calc(90ms + var(--i, 0) * 45ms); }
+/* Spine rows are the links' h-14; track and trace share the page spine's dot pattern so they stay in register. */
+.menu-spine { --row: 3.5rem; }
+.menu-spine::before, .menu-spine::after { content: ''; position: absolute; inset-inline-start: 4px; top: calc(var(--row) / 2); width: 2px; background: radial-gradient(circle at 1px 1px, currentColor 1px, transparent 1.4px) 0 0 / 2px 8px repeat-y; pointer-events: none; }
+.menu-spine::before { bottom: calc(var(--row) / 2); color: var(--line); opacity: .35; }
+.menu-spine::after { height: max(0px, var(--lit) * var(--row)); color: var(--brand); clip-path: inset(0 0 100% 0); transition: clip-path 0s linear 280ms; }
+[data-open] .menu-spine::after { clip-path: inset(0); transition: clip-path 700ms var(--ease-trace) 240ms; }
+.menu-dot { position: relative; z-index: 1; flex: none; width: 10px; height: 10px; border-radius: 999px; border: 2px solid var(--brand); background: var(--white); transition: background-color 220ms var(--ease-out), box-shadow 220ms var(--ease-out); }
+[data-menu] a:hover .menu-dot, [data-menu] a:focus-visible .menu-dot, [data-menu] a:active .menu-dot { background: var(--brand); }
+[data-open] [aria-current='page'] .menu-dot { background: var(--brand); box-shadow: 0 0 0 4px rgb(var(--brand-rgb) / .18); transition-delay: 760ms; }
 
 /* Pointer spotlight: Spotlight writes --mx/--my in px; the glow is a plain gradient so it tracks 1:1 with no script in the paint path. */
 [data-spot] { --mx: 50%; --my: 50%; position: relative; }
@@ -135,6 +163,11 @@ a:active, button:active { transform: scale(.97); }
   .hero-after, .hero-strip { animation: none !important; opacity: 1; }
   .spine-draw { height: 100% !important; }
   .spine-dot, [data-spot]::after { transition: none !important; }
+  /* The menu cross-fades in place: no wipe, no rise, the trace already drawn to a lit node. */
+  [data-menu] { clip-path: none !important; opacity: 0; transition: opacity 150ms ease-out, visibility 0s linear 150ms !important; }
+  [data-open] [data-menu] { opacity: 1; transition: opacity 150ms ease-out !important; }
+  [data-menu] li, .menu-foot { translate: none !important; opacity: 1 !important; transition: none !important; }
+  .menu-spine::after, .menu-icon > span, [aria-current='page'] .menu-dot { transition: none !important; }
 }
 @media (prefers-reduced-transparency: reduce) {
   [data-header] { background: var(--white); backdrop-filter: none; }

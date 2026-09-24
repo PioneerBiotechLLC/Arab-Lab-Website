@@ -12,6 +12,8 @@ type Ui = {
   breadcrumb: string
   getInTouch: string
   logoLabel: string
+  /** Accessible name of the mobile menu button; aria-expanded carries its state. */
+  menu: string
   footerBlurb: (markets: string) => string
   rights: string
   offices: string
@@ -36,6 +38,7 @@ export const ui: Record<Locale, Ui> = {
     breadcrumb: 'Breadcrumb',
     getInTouch: 'Get In Touch',
     logoLabel: 'Arab Lab home',
+    menu: 'Menu',
     footerBlurb: (markets) => `A trusted partner for Life Science industries across ${markets}.`,
     rights: '© 2026 Arab Lab Scientific Equipment L.L.C.',
     offices: 'Offices',
@@ -58,6 +61,7 @@ export const ui: Record<Locale, Ui> = {
     breadcrumb: 'مسار التنقل',
     getInTouch: arChrome.getInTouch,
     logoLabel: arChrome.logoLabel,
+    menu: 'القائمة',
     footerBlurb: () => arChrome.footerBlurb,
     rights: arChrome.rights,
     offices: arChrome.offices,
