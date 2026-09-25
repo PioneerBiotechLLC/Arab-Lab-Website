@@ -10,7 +10,7 @@ Read this file first in any SEO session. It is the source of truth; keep it shor
 | Brand | Arab Lab |
 | Alternate names | ArabLab, Arab Lab Scientific, عرب لاب (confirmed with the Arabic pages, 2026-09-23) |
 | Canonical domain | https://www.arablab-scientific.com (www) |
-| Email / phone | info@arablab-scientific.com · +971 7 208 1908 |
+| Email / phone | info@arablab-scientific.com · +971 7 501 6631 |
 | HQ | 408, Julphar Tower, Al Hisn Road, Ras Al Khaimah, UAE |
 | Riyadh | 3808 Al Urubah Rd, Al Wurud, Riyadh 12252, Saudi Arabia |
 | Cairo | 87, Dar Masr, Al Kronfel, First Settlement, Cairo, Egypt |
@@ -82,7 +82,7 @@ Blog post keywords are listed in each post's frontmatter (`targetKeyword`).
 
 1. `pnpm build` is used where the brief says `npm run build`; the repo is a pnpm project.
 2. Titles are capped at 60 characters even where the brief's example is longer (the home example is 70).
-3. `lib/site.ts` is the single source for URL, names, phone, offices (structured addresses) and socials. `lib/site-data.ts` derives `contact` and `offices` from it. Phone display is now `+971 7 208 1908` for NAP consistency.
+3. `lib/site.ts` is the single source for URL, names, phone, offices (structured addresses) and socials. `lib/site-data.ts` derives `contact` and `offices` from it. Phone display is now `+971 7 501 6631` for NAP consistency.
 4. `metadataBase` is always the www host. Vercel serves previews with `X-Robots-Tag: noindex`, so previews never compete.
 5. Canonicals are set per page through `pageMetadata()` in `lib/seo.ts`. None is set in the root layout, because children would inherit it.
 6. Apex→www: Vercel already answers 308 on the apex. An app-level 301 in `next.config.mjs` is the backstop (verified locally). `http://arablab-scientific.com` currently takes two hops (http→https apex→www); fix at the host so it is one.
@@ -117,7 +117,7 @@ Full per-claim list with file and line: [`VERIFY.md`](VERIFY.md) (regenerate wit
 - `/services/pharmaceutical-consultant`: resolved at merge by leaving the neutral wording "the federal authority in the UAE" and removing the marker. To name the body (MOHAP or the Emirates Drug Establishment), confirm it first.
 - Brand titles and pages say each partner is supplied across the UAE, Saudi Arabia and Egypt (the brief's own pattern). Confirm territory coverage per brand.
 - CPC Biotech: the partner deck says "ready-to-use microbiological soils" (likely Italian *terreni*, i.e. culture media). Site copy says "microbiological media"; confirm the English term.
-- Office phone numbers: office pages and LocalBusiness use the main number +971 7 208 1908. Confirm whether Riyadh and Cairo have local numbers.
+- Office phone numbers: office pages and LocalBusiness use the main number +971 7 501 6631. Confirm whether Riyadh and Cairo have local numbers.
 - Opening hours per office (Google Business Profile and LocalBusiness `openingHours`); none stated yet.
 
 **Blog posts:** all 14 approved by the client and published on 2026-09-23. Their 76 notes were removed; the sentences were written in general terms, so no specific figure, date or clause number is stated in the text. The removed notes are kept in [`VERIFY-ARCHIVE.md`](VERIFY-ARCHIVE.md) for a later technical fact-check.
@@ -144,7 +144,7 @@ Full per-claim list with file and line: [`VERIFY.md`](VERIFY.md) (regenerate wit
 2. **Google Business Profile** for each office (Ras Al Khaimah HQ, Riyadh, Cairo): exact name "Arab Lab Scientific Equipment", the address as on the office page, phone, hours, category (e.g. laboratory equipment supplier), website URL pointing to that office page, photos.
 3. **Client reviews.** Ask satisfied customers to review each Business Profile; reply to every review.
 4. **Facebook page:** set the website field to `https://www.arablab-scientific.com` (www, https) and align name, address and phone.
-5. **NAP consistency** on LinkedIn, Facebook, ZoomInfo and the UAE International Investors Council listing: same legal name, HQ address, +971 7 208 1908, and the www URL.
+5. **NAP consistency** on LinkedIn, Facebook, ZoomInfo and the UAE International Investors Council listing: same legal name, HQ address, +971 7 501 6631, and the www URL.
 6. **Partner backlinks.** Ask Eppendorf, Parker, Lonza, Promicol, PMM, CPC Biotech and Tailin to list Arab Lab on their distributor or "where to buy" pages, linking to the matching `/brands/[slug]` page.
 7. **ARABLAB LIVE exhibitor listing** (if exhibiting): use the full name "Arab Lab Scientific Equipment" and link to the site, which helps separate the company from the event.
 8. **Host redirect.** At Vercel/DNS, make `http://arablab-scientific.com` go straight to `https://www.arablab-scientific.com` in one hop (it currently takes two).

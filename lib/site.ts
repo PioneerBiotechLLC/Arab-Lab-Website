@@ -13,8 +13,8 @@ export const site = {
   /** Arabic name is used in schema only once verified (SEO-CONTEXT VERIFY list). */
   arabicName: { value: 'عرب لاب', verified: true },
   email: 'info@arablab-scientific.com',
-  phone: '+97172081908',
-  phoneDisplay: '+971 7 208 1908',
+  phone: '+97175016631',
+  phoneDisplay: '+971 7 501 6631',
   logo: '/logo-mark.webp',
   socials: {
     linkedin: 'https://ae.linkedin.com/company/arab-lab-scientific',
