@@ -19,7 +19,7 @@ export const locationContent: LocationContent[] = [
     intro: 'Arab Lab Scientific Equipment is headquartered at Julphar Tower in Ras Al Khaimah, UAE, and serves laboratories across the Emirates from here.',
     seo: {
       title: 'Arab Lab Ras Al Khaimah | Headquarters, Julphar Tower', absoluteTitle: true,
-      description: 'Arab Lab Scientific Equipment headquarters: 408, Julphar Tower, Al Hisn Road, Ras Al Khaimah, UAE. Phone +971 7 208 1908. Map and directions.',
+      description: 'Arab Lab Scientific Equipment headquarters: 408, Julphar Tower, Al Hisn Road, Ras Al Khaimah, UAE. Phone +971 7 501 6631. Map and directions.',
       ogAlt: 'Arab Lab Scientific Equipment headquarters in Ras Al Khaimah, UAE',
       card: { kicker: 'Headquarters · UAE', title: 'Arab Lab Ras Al Khaimah', subtitle: '408, Julphar Tower, Al Hisn Road, Ras Al Khaimah' },
     },

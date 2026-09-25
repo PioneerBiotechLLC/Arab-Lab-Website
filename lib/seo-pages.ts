@@ -37,7 +37,7 @@ export const pageSeo = {
   },
   '/contact': {
     title: 'Contact Arab Lab Scientific Equipment | Quote & Service', absoluteTitle: true,
-    description: 'Request a quote or send a service request to Arab Lab. Each enquiry goes to the right team in the UAE, Saudi Arabia or Egypt. Call +971 7 208 1908.',
+    description: 'Request a quote or send a service request to Arab Lab. Each enquiry goes to the right team in the UAE, Saudi Arabia or Egypt. Call +971 7 501 6631.',
     ogAlt: 'Contact Arab Lab Scientific Equipment for quotes and service requests',
     card: { kicker: 'Contact', title: 'A clear next step.', subtitle: 'Quote requests and service requests, routed to the right Arab Lab department.' },
   },
