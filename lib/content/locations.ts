@@ -34,12 +34,12 @@ export const locationContent: LocationContent[] = [
   {
     slug: 'riyadh',
     h1: 'Arab Lab Riyadh Office',
-    intro: 'Arab Lab’s Riyadh office in Al Wurud serves pharmaceutical, biotech and laboratory customers across Saudi Arabia.',
+    intro: 'Arab Lab’s Riyadh office in Al Malaz serves pharmaceutical, biotech and laboratory customers across Saudi Arabia.',
     seo: {
       title: 'Arab Lab Riyadh | Lab Equipment Supplier, Saudi Arabia', absoluteTitle: true,
-      description: 'Arab Lab Riyadh office: 3808 Al Urubah Rd, Al Wurud, Riyadh 12252, Saudi Arabia. Laboratory and pharma QC solutions for the Kingdom. Map and directions.',
+      description: 'Arab Lab Riyadh office: 7154 Jarir St, Al Malaz, Riyadh 12831-2515, Saudi Arabia. Laboratory and pharma QC solutions for the Kingdom. Map and directions.',
       ogAlt: 'Arab Lab Scientific Equipment office in Riyadh, Saudi Arabia',
-      card: { kicker: 'Office · Saudi Arabia', title: 'Arab Lab Riyadh', subtitle: '3808 Al Urubah Rd, Al Wurud, Riyadh 12252' },
+      card: { kicker: 'Office · Saudi Arabia', title: 'Arab Lab Riyadh', subtitle: '7154 Jarir St, Al Malaz, 3rd Floor, Riyadh 12831-2515' },
     },
     market: 'Saudi Arabia',
     paragraphs: [

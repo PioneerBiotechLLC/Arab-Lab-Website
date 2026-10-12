@@ -12,7 +12,7 @@ Read this file first in any SEO session. It is the source of truth; keep it shor
 | Canonical domain | https://www.arablab-scientific.com (www) |
 | Email / phone | info@arablab-scientific.com · +971 7 501 6631 |
 | HQ | 408, Julphar Tower, Al Hisn Road, Ras Al Khaimah, UAE |
-| Riyadh | 3808 Al Urubah Rd, Al Wurud, Riyadh 12252, Saudi Arabia |
+| Riyadh | 7154 Jarir St, Al Malaz, 3rd Floor, Riyadh 12831-2515, Saudi Arabia |
 | Cairo | 87, Dar Masr, Al Kronfel, First Settlement, Cairo, Egypt |
 | Service lines | Pharma & Biotech · Food & Beverage · Project (turnkey) · Pharmaceutical Consultant (regulatory + turnkey) |
 | Partner brands | Eppendorf, Parker, Lonza, Promicol, PMM, CPC Biotech, Tailin |
