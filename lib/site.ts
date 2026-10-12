@@ -40,7 +40,7 @@ export type Office = {
 
 export const officeList: Office[] = [
   { slug: 'ras-al-khaimah', name: 'Ras Al Khaimah', short: 'HQ', address: '408, Julphar Tower, Al Hisn Road, Ras Al Khaimah, UAE', street: '408, Julphar Tower, Al Hisn Road', locality: 'Ras Al Khaimah', region: 'Ras Al Khaimah', country: 'UAE', countryCode: 'AE', headquarters: true },
-  { slug: 'riyadh', name: 'Riyadh', short: '', address: '3808 Al Urubah Rd, Al Wurud, Riyadh 12252, Saudi Arabia', street: '3808 Al Urubah Rd, Al Wurud', locality: 'Riyadh', postalCode: '12252', country: 'Saudi Arabia', countryCode: 'SA', headquarters: false },
+  { slug: 'riyadh', name: 'Riyadh', short: '', address: '7154 Jarir St, Al Malaz, 3rd Floor, Riyadh 12831-2515, Saudi Arabia', street: '7154 Jarir St, Al Malaz, 3rd Floor', locality: 'Riyadh', postalCode: '12831-2515', country: 'Saudi Arabia', countryCode: 'SA', headquarters: false },
   { slug: 'cairo', name: 'Cairo', short: '', address: '87, Dar Masr, Al Kronfel, First Settlement, Cairo, Egypt', street: '87, Dar Masr, Al Kronfel, First Settlement', locality: 'Cairo', country: 'Egypt', countryCode: 'EG', headquarters: false },
 ]
 
