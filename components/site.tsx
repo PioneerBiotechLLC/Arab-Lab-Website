@@ -235,7 +235,7 @@ export function CardLink({ eyebrow, title, body, href, icon }: { eyebrow: string
 
 // Brand tile with a watermark initial; `detailed` adds the summary and a profile link.
 // Every partner logo is normalised to the same 660×200 transparent canvas by `pnpm logos`,
-// so one box sizes all seven and the marks read at a consistent optical weight.
+// so one box sizes them all and the marks read at a consistent optical weight.
 // The logo stands in for the partner's name wherever it appears, so no heading repeats it. A wordmark
 // carries the name itself; a bare symbol gets the name set beside it as a lockup. The image alt is always the
 // brand name, and the visible name beside a symbol is aria-hidden so assistive tech announces it once. Logos share one 660×200 canvas (`pnpm logos`), so one height sizes them all.

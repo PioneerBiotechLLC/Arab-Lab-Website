@@ -115,7 +115,7 @@ export const terms: LegalDoc = {
     ] },
     { id: 'ip', title: 'Intellectual property', blocks: [
       `The text, layout, graphics and code of this website belong to ${company.name} or are used with permission. You may view and print pages for your own reference and share links to them. You may not copy, republish or reuse the content commercially without our written permission.`,
-      'Eppendorf, Parker, Lonza, Promicol, PMM, CPC Biotech, Tailin and the other product and company names that appear on the site are trademarks of their respective owners. They appear here to identify the manufacturers Arab Lab represents and do not imply that those owners endorse this website. Nothing on the site grants any right to use them.',
+      'Eppendorf, Parker, Lonza, Promicol, PMM, CPC Biotech, Tailin, SERVA and the other product and company names that appear on the site are trademarks of their respective owners. They appear here to identify the manufacturers Arab Lab represents and do not imply that those owners endorse this website. Nothing on the site grants any right to use them.',
     ] },
     { id: 'acceptable', title: 'Acceptable use', blocks: [
       { list: [

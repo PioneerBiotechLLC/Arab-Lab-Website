@@ -91,7 +91,7 @@ export default function Home() {
     </PageSection>
 
     <PageSection id="partners" className="bg-paper">
-      <SectionIntro title="Global technology. Local accountability." intro="Seven partner manufacturers, each addressing a specific laboratory problem." />
+      <SectionIntro title="Global technology. Local accountability." intro="Eight partner manufacturers, each addressing a specific laboratory problem." />
       <Spotlight className="grid grid-cols-2 gap-4 md:grid-cols-4">{brands.map((brand) => <BrandTile key={brand.slug} brand={brand} />)}<AccentTile href="/brands" label="All brands" /></Spotlight>
     </PageSection>
 

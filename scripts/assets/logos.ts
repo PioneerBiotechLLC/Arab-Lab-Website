@@ -5,7 +5,7 @@
 // Masters live in design-src/brands/ exactly as each partner supplied them. This writes
 // public/brands/<slug>.webp: a 200px-tall transparent canvas as wide as the mark itself, the mark
 // trimmed, scaled to a constant ink area (so a compact mark reads as large as a long wordmark),
-// capped in height and centred vertically. One CSS height then sizes all seven, and each image's
+// capped in height and centred vertically. One CSS height then sizes them all, and each image's
 // box is exactly as wide as what it shows. Widths are written to lib/brand-logos.json so the
 // <Image> attributes match and nothing shifts on load.
 //
@@ -35,6 +35,7 @@ const masters: Record<string, string> = {
   pmm: 'PMM-logo.png',
   'cpc-biotech': 'CPC Biotech-logo.png',
   tailin: 'Tailin.svg',
+  serva: 'serva-logo.png',
 }
 
 /** Mean luminance of the pixels a mark actually paints — a white mark would vanish on a white tile. */

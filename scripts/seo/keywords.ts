@@ -22,6 +22,7 @@ export const keywordFor: Record<string, string> = {
   '/brands/pmm': 'PMM supplier UAE',
   '/brands/cpc-biotech': 'CPC Biotech supplier UAE',
   '/brands/tailin': 'Tailin supplier UAE',
+  '/brands/serva': 'SERVA supplier UAE',
   '/locations': 'Arab Lab offices',
   '/locations/ras-al-khaimah': 'Arab Lab Ras Al Khaimah',
   '/locations/riyadh': 'Arab Lab Riyadh',

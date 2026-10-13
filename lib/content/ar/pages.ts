@@ -27,7 +27,7 @@ export const arPages: PagesCopy = {
   },
   brands: {
     crumb: 'العلامات التجارية',
-    title: 'سبعة شركاء. برنامج واحد.',
+    title: 'ثمانية شركاء. برنامج واحد.',
     intro: 'يعالج كل شريك مصنّع مشكلة مخبرية محددة، من اختبار العقم السريع إلى الترشيح في العمليات وأوساط الاستنبات.',
     primary: 'ناقش تطبيقك معنا',
     secondary: 'تصفح حسب المشكلة',
@@ -112,8 +112,8 @@ export const arPageSeo: Record<'/about' | '/solutions' | '/brands', PageSeo> = {
   },
   '/brands': {
     title: 'العلامات الشريكة: Eppendorf وLonza وParker وغيرها',
-    description: 'سبعة شركاء مصنّعين من عرب لاب في الإمارات والسعودية ومصر: Eppendorf وParker وLonza وPromicol وPMM وCPC Biotech وTailin.',
-    ogAlt: 'العلامات الشريكة لعرب لاب: Eppendorf وParker وLonza وPromicol وPMM وCPC Biotech وTailin',
-    card: { kicker: 'Partner brands', title: 'Seven partners. One program.' },
+    description: 'ثمانية شركاء مصنّعين من عرب لاب في الإمارات والسعودية ومصر: Eppendorf وParker وLonza وPromicol وPMM وCPC Biotech وTailin وSERVA.',
+    ogAlt: 'العلامات الشريكة لعرب لاب: Eppendorf وParker وLonza وPromicol وPMM وCPC Biotech وTailin وSERVA',
+    card: { kicker: 'Partner brands', title: 'Eight partners. One program.' },
   },
 }
