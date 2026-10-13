@@ -161,6 +161,22 @@ export const brands: Brand[] = [
       { title: 'Validation support', body: 'Experienced teams building regulatory qualification strategies for fast approvals.' },
     ],
   },
+  {
+    name: 'SERVA', slug: 'serva',
+    summary: 'Electrophoresis systems, precast gels and reagents, with biochemicals, enzymes and microscopy reagents for life science research, from a Heidelberg company founded in 1953.',
+    profile: [
+      'SERVA was founded in 1953 in Heidelberg, a major centre of the life sciences, by the chemist Dr. Nikolaus Grubhofer to supply research laboratories with fine biochemical reagents. Its first catalogue, in 1961, listed around 450 products.',
+      'From the 1970s SERVA developed its own electrophoresis and chromatography reagents. After periods within Boehringer Ingelheim, Novex and Invitrogen, a management buy-out in July 2002 made it independent again. In July 2025 it joined LICORbio as a LICORbio brand, and it remains based in Heidelberg.',
+      'SERVA supplies research laboratories in academia and industry through a global distribution network. Precast gels for isoelectric focusing, carrier ampholytes and other specialities are still produced in-house, and the company is certified to ISO 9001:2015.',
+    ],
+    facts: [['Founded', '1953 · Heidelberg, Germany'], ['Focus', 'Electrophoresis · Biochemicals'], ['Quality', 'ISO 9001:2015 certified']],
+    capabilities: [
+      { title: 'Electrophoresis', body: 'Isoelectric focusing, SDS and native PAGE, 2D electrophoresis, blotting and nucleic acid electrophoresis.' },
+      { title: 'Gels, stains & buffers', body: 'Precast gels, gel media, staining reagents and buffers, with IEF gels and carrier ampholytes made in-house.' },
+      { title: 'Laboratory equipment', body: 'Electrophoresis devices, and staining and shaker units.' },
+      { title: 'Biochemicals & enzymes', body: 'Collagenases and neutral protease, mass spectrometry enzymes, and reagents for cell culture, molecular biology and microscopy.' },
+    ],
+  },
 ]
 
 export const brandBySlug = (slug: string) => brands.find((brand) => brand.slug === slug)

@@ -133,4 +133,22 @@ export const brandContent: Record<string, BrandContent> = {
       { q: 'Does Tailin help with validation?', a: 'Yes. Tailin has experienced validation teams that build regulatory qualification strategies for fast approvals.' },
     ],
   },
+  serva: {
+    intro: 'Arab Lab supplies SERVA electrophoresis systems, reagents and biochemicals to laboratories in the UAE, Saudi Arabia and Egypt. SERVA covers protein and nucleic acid separation end to end, from sample preparation through gels, buffers and stains to the instruments that run them.',
+    categories: [
+      { name: 'Electrophoresis', detail: 'Products for isoelectric focusing, SDS and native PAGE, 2D gel electrophoresis, blotting and nucleic acid electrophoresis, plus gel-free electrophoresis.' },
+      { name: 'Gel media, stains and buffers', detail: 'Precast gels, gel media, staining reagents and buffers. Precast IEF gels and carrier ampholytes are produced in-house.' },
+      { name: 'Laboratory equipment', detail: 'Electrophoresis devices, and staining and shaker units.' },
+      { name: 'Sample preparation and mass spectrometry', detail: 'Protein, DNA/RNA and dialysis products for sample preparation, and glycosidases, endoproteinases, solvents and isotope-labelling reagents for mass spectrometry.' },
+      { name: 'Enzymes and life science reagents', detail: 'Collagenases and neutral protease; enzyme substrates, cofactors and inhibitors; and reagents for cell culture, cell analysis, molecular biology, microbiology and microscopy, including cryo-EM grids.' },
+    ],
+    applications: 'SERVA products are used to separate, detect and characterise proteins and nucleic acids: isoelectric focusing and 2D electrophoresis in proteomics, SDS-PAGE and western blotting, sample preparation for mass spectrometry, and enzymatic tissue dissociation with collagenases for cell isolation.',
+    industries: ['Academic and research institutes', 'Pharmaceutical and biotech R&D', 'Proteomics and mass spectrometry laboratories', 'Cell isolation and cell culture laboratories'],
+    faq: [
+      { q: 'Which SERVA products can I source through Arab Lab?', a: 'SERVA’s portfolio covers electrophoresis reagents and gels, laboratory equipment, sample preparation, mass spectrometry reagents, enzymes, and life science and microscopy reagents. Tell us the application or catalogue number and we will confirm availability and lead time for your country.' },
+      { q: 'What is SERVA known for?', a: 'Electrophoresis. SERVA has developed its own electrophoresis reagents since the 1970s and still produces precast gels for isoelectric focusing and carrier ampholytes in-house.' },
+      { q: 'Is SERVA quality certified?', a: 'Yes. SERVA is certified to ISO 9001:2015.' },
+      { q: 'Do you supply SERVA in Saudi Arabia and Egypt?', a: 'Arab Lab serves customers in the UAE, Saudi Arabia and Egypt from offices in Ras Al Khaimah, Riyadh and Cairo. Each request is routed to the office that covers your country.' },
+    ],
+  },
 }

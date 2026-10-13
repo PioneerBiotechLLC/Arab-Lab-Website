@@ -25,9 +25,9 @@ export const pageSeo = {
   },
   '/brands': {
     title: 'Partner Brands: Eppendorf, Lonza, Parker & More',
-    description: 'Seven partner manufacturers from Arab Lab across the UAE, Saudi Arabia and Egypt: Eppendorf, Parker, Lonza, Promicol, PMM, CPC Biotech and Tailin.',
-    ogAlt: 'Arab Lab partner brands: Eppendorf, Parker, Lonza, Promicol, PMM, CPC Biotech and Tailin',
-    card: { kicker: 'Partner brands', title: 'Seven partners. One program.', subtitle: 'Eppendorf · Parker · Lonza · Promicol · PMM · CPC Biotech · Tailin' },
+    description: 'Eight partner manufacturers from Arab Lab in the UAE, Saudi Arabia and Egypt: Eppendorf, Parker, Lonza, Promicol, PMM, CPC Biotech, Tailin and SERVA.',
+    ogAlt: 'Arab Lab partner brands: Eppendorf, Parker, Lonza, Promicol, PMM, CPC Biotech, Tailin and SERVA',
+    card: { kicker: 'Partner brands', title: 'Eight partners. One program.', subtitle: 'Eppendorf · Parker · Lonza · Promicol · PMM · CPC Biotech · Tailin · SERVA' },
   },
   '/locations': {
     title: 'Arab Lab Offices – Ras Al Khaimah, Riyadh & Cairo', absoluteTitle: true,
@@ -66,6 +66,7 @@ const brandDescriptions: Record<string, string> = {
   pmm: 'PMM pharmaceutical culture media for environmental monitoring and sterility testing, made in Germany and supplied by Arab Lab in the UAE, KSA and Egypt.',
   'cpc-biotech': 'CPC Biotech analytical enzymes and ready-to-use microbiological media for pharma, clinical and food QC, from Arab Lab in the UAE, KSA and Egypt.',
   tailin: 'Tailin aseptic isolators, VHPS decontamination and closed sterility test pumps and canisters, supplied by Arab Lab in the UAE, Saudi Arabia and Egypt.',
+  serva: 'SERVA electrophoresis systems, precast gels, stains and biochemicals for protein and nucleic acid analysis, from Arab Lab in the UAE, KSA and Egypt.',
 }
 
 export function brandSeo(brand: Brand): PageSeo {

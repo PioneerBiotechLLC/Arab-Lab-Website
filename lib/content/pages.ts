@@ -52,7 +52,7 @@ export const enPages: PagesCopy = {
   },
   brands: {
     crumb: 'Brands',
-    title: 'Seven partners. One program.',
+    title: 'Eight partners. One program.',
     intro: 'Each partner manufacturer addresses a specific laboratory problem — from rapid sterility testing to process filtration and culture media.',
     primary: 'Discuss your application',
     secondary: 'Browse by problem',
